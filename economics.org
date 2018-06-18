@@ -1,0 +1,138 @@
+#+Title: Doing economics with python
+#+Author: Jan Boone
+
+
+* Introduction
+
+This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is mainly based on cite:tirole_2017.
+
+* Python packages that we will be using
+
+#+BEGIN_SRC ipython
+import pandas as pd
+import numpy as np
+import pymc3 as pm
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats, optimize
+
+plt.style.use('seaborn')
+%matplotlib inline
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[32]:
+:END:
+
+
+
+
+
+* Why do we love the market?
+
+
+Let's consider an economy with ~number_of_agents~ agents who have a valuation for the good that we consider. 
+
+
+#+BEGIN_SRC ipython
+number_of_agents = 1000
+number_of_goods = 100
+
+valuations = sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse = True)
+
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[24]:
+:END:
+
+What is the economic name for the following:
+
+#+BEGIN_SRC ipython
+valuations[number_of_goods]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[25]:
+# text/plain
+: 125.06881296917715
+:END:
+
+#+BEGIN_SRC ipython
+def demand(p,valuations):
+    return sum(valuations>p)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[26]:
+:END:
+
+#+BEGIN_SRC ipython
+range_p = np.arange(60,150)
+
+plt.plot([demand(p,valuations) for p in range_p],range_p, label = "demand")
+plt.plot([number_of_goods for p in range_p],range_p, label="supply")
+plt.legend()
+plt.xlabel("$Q$")
+plt.ylabel("$P$")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[29]:
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-coCFP6.png]]
+
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+:END:
+
+
+#+BEGIN_SRC ipython
+def excess_demand(p,valuations,number_of_goods):
+    return demand(p,valuations)-number_of_goods
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[30]:
+:END:
+
+#+BEGIN_SRC ipython
+optimize.fsolve(lambda x: excess_demand(x,valuations,number_of_goods),120)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[34]:
+# text/plain
+: array([125.10838145])
+:END:
+
+
+Now we give ~number_of_goods~ agents one unit of the good. They become suppliers.
+
+
+
+
+
+** Why do others not love the market?
+
+
+
+
+
+* Financial crisis
+
+
+
+** Why these bonus contracts?
+
+
+
