@@ -22,57 +22,89 @@ plt.style.use('seaborn')
 
 #+RESULTS:
 :RESULTS:
-# Out[32]:
+# Out[1]:
+# output
+: /Users/boone/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+:   from ._conv import register_converters as _register_converters
+: 
 :END:
-
-
-
 
 
 * Why do we love the market?
 
+Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his "invisible hand". Others basically distrust other organizing institutions like a government. They will point to the fall of communism in the former soviet union.
 
-Let's consider an economy with ~number_of_agents~ agents who have a valuation for the good that we consider. 
+To understand the advantages of the market, let us consider a very
+simple economy. We focus on one type of product and there is an
+exogenous endowment of this product (supply) equal to
+~number_of_goods~. Further there are ~number_of_agents~ agents who
+have a valuation for this good which is randomly drawn from a normal
+distribution. An agent can at max. consume one unit of the product and her utility is then given by her valuation. The value of consuming zero units and the additional value of consuming more than one unit equal 0.
 
+The vector ~valuations~ contains for each agent her valuation and we sort this vector such that the first agent has the highest valuation.
 
 #+BEGIN_SRC ipython
 number_of_agents = 1000
 number_of_goods = 100
 
 valuations = sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse = True)
-
-
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[24]:
+# Out[16]:
 :END:
 
-What is the economic name for the following:
+**Question** What is the economic name for the following expression? To answer this question, you need to understand both how indexing works in python and which economic concept is captured by this expression.
 
 #+BEGIN_SRC ipython
-valuations[number_of_goods]
+print("{0:.2f}".format(valuations[number_of_goods]))
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[25]:
-# text/plain
-: 125.06881296917715
+# Out[21]:
+# output
+: 123.48
+: 
 :END:
 
-#+BEGIN_SRC ipython
+Suppose that we have an omniscient social planner who knows the valuation of every agent in the economy. This planner aims to maximize the (unweighted) sum of agents' utilities.
+
+**Question** Calculate the total welfare that this planner can achieve. Denote this value ~max_welfare~.
+
+#+BEGIN_SRC ipython :no export
+max_welfare = np.sum(valuations[:number_of_goods])
+print("{0:.2f}".format(max_welfare))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[23]:
+# output
+: 13228.83
+: 
+:END:
+
+** market outcome
+
+Now we compare the maximum welfare that a planner can achieve with the market outcome.
+
+**Question** Define a function ~demand(p,valuations)~ which has as arguments a price $p$ and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price $p$.
+
+#+BEGIN_SRC ipython :no export
 def demand(p,valuations):
     return sum(valuations>p)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[26]:
+# Out[31]:
 :END:
 
-#+BEGIN_SRC ipython
+**Question** Plot supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
+
+#+BEGIN_SRC ipython :no export
 range_p = np.arange(60,150)
 
 plt.plot([demand(p,valuations) for p in range_p],range_p, label = "demand")
@@ -85,14 +117,15 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[29]:
-# image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-coCFP6.png]]
-
+# Out[32]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-icv7Cj.png]]
 :END:
 
+In order to calculate the equilibrium price, we define a function ~excess_demand~. 
 
 #+BEGIN_SRC ipython
 def excess_demand(p,valuations,number_of_goods):
@@ -101,19 +134,25 @@ def excess_demand(p,valuations,number_of_goods):
 
 #+RESULTS:
 :RESULTS:
-# Out[30]:
+# Out[33]:
 :END:
 
 #+BEGIN_SRC ipython
-optimize.fsolve(lambda x: excess_demand(x,valuations,number_of_goods),120)
+price = optimize.fsolve(lambda x: excess_demand(x,valuations,number_of_goods),120)
+print(price)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
 # Out[34]:
-# text/plain
-: array([125.10838145])
+# output
+: [123.48580396]
+: 
 :END:
+
+
+1. calculate welfare
+2. compare to max. welfare from planner
 
 
 Now we give ~number_of_goods~ agents one unit of the good. They become suppliers.
@@ -122,14 +161,166 @@ Now we give ~number_of_goods~ agents one unit of the good. They become suppliers
 
 
 
-** Why do others not love the market?
+** why do others not love the market?
+
+*** income distribution
+
+define vector income; you can only buy at price $p$ if valuation and income exceed $p$
+
+#+BEGIN_SRC ipython
+incomes = pm.Normal.dist(100,20).random(size=number_of_agents)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[26]:
+:END:
 
 
 
+#+BEGIN_SRC ipython
+def afford(p,incomes):
+    return incomes>p
+
+def wtp(p,valuations):
+    return valuations>p
+
+def demand_2(p,valuations,incomes):
+    return np.sum(afford(p,incomes)*wtp(p,valuations))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[27]:
+:END:
+
+
+#+BEGIN_SRC ipython
+def excess_demand_2(p,valuations,incomes,number_of_goods):
+    return demand_2(p,valuations,incomes)-number_of_goods
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[28]:
+:END:
+
+#+BEGIN_SRC ipython
+price_2 = optimize.fsolve(lambda x: excess_demand_2(x,valuations,incomes,number_of_goods),120)
+print(price_2)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[35]:
+# output
+: [109.42355133]
+: 
+:END:
+
+#+BEGIN_SRC ipython
+welfare_2 = np.sum(afford(price_2,incomes)*wtp(price_2,valuations)*valuations)
+print(welfare_2)
+print(max_welfare)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[39]:
+# output
+: 11891.938233742447
+: 13228.830798358596
+: 
+:END:
+
+
+**Question** Show that as income inequality increases, the welfare generated by the market tends to fall.
+
+
+*** market power
+
+
+*** external effects
+
+
+* Asymmetric information
+
+** adverse selection
+
+** moral hazard
 
 
 * Financial crisis
 
+
+#+BEGIN_SRC ipython
+def profit(x):
+    return np.mean(np.maximum(x,0))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[3]:
+:END:
+
+
+
+
+
+#+BEGIN_SRC ipython  
+vector_returns = pm.Normal.dist(-10,100).random(size=1000)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[4]:
+:END:
+
+
+#+BEGIN_SRC ipython  
+np.mean(vector_returns)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[5]:
+# text/plain
+: -7.579427962699954
+:END:
+
+
+#+BEGIN_SRC ipython  
+profit(vector_returns)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[6]:
+# text/plain
+: 35.28327597418695
+:END:
+
+
+Explain what the python does in the following code cell:
+
+#+BEGIN_SRC ipython
+v_std = np.arange(0,200,1)
+v_returns = [pm.Normal.dist(-10,std).random(size=1000) for std in v_std]
+plt.scatter([np.std(vx) for vx in v_returns],[profit(vx) for vx in v_returns])
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[15]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-02bjjB.png]]
+:END:
+
+Explain the economic intuition of the graph above.
 
 
 ** Why these bonus contracts?
