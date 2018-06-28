@@ -15,6 +15,7 @@ import pymc3 as pm
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats, optimize
+import random
 
 plt.style.use('seaborn')
 %matplotlib inline
@@ -52,7 +53,7 @@ valuations = sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse
 
 #+RESULTS:
 :RESULTS:
-# Out[16]:
+# Out[11]:
 :END:
 
 **Question** What is the economic name for the following expression? To answer this question, you need to understand both how indexing works in python and which economic concept is captured by this expression.
@@ -63,9 +64,9 @@ print("{0:.2f}".format(valuations[number_of_goods]))
 
 #+RESULTS:
 :RESULTS:
-# Out[21]:
+# Out[12]:
 # output
-: 123.48
+: 126.71
 : 
 :END:
 
@@ -80,9 +81,9 @@ print("{0:.2f}".format(max_welfare))
 
 #+RESULTS:
 :RESULTS:
-# Out[23]:
+# Out[13]:
 # output
-: 13228.83
+: 13694.68
 : 
 :END:
 
@@ -99,7 +100,7 @@ def demand(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[31]:
+# Out[19]:
 :END:
 
 **Question** Plot supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
@@ -117,12 +118,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[32]:
+# Out[20]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-icv7Cj.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-sOGgSN.png]]
 :END:
 
 In order to calculate the equilibrium price, we define a function ~excess_demand~. 
@@ -134,7 +135,7 @@ def excess_demand(p,valuations,number_of_goods):
 
 #+RESULTS:
 :RESULTS:
-# Out[33]:
+# Out[21]:
 :END:
 
 #+BEGIN_SRC ipython
@@ -144,9 +145,9 @@ print(price)
 
 #+RESULTS:
 :RESULTS:
-# Out[34]:
+# Out[22]:
 # output
-: [123.48580396]
+: [126.78973182]
 : 
 :END:
 
@@ -157,7 +158,69 @@ print(price)
 
 Now we give ~number_of_goods~ agents one unit of the good. They become suppliers.
 
+#+BEGIN_SRC ipython
+random.shuffle(valuations)
+valuations_supply = valuations[:number_of_goods]
+valuations_demand = valuations[number_of_goods:]
+#+END_SRC
 
+#+RESULTS:
+:RESULTS:
+# Out[26]:
+:END:
+
+
+#+BEGIN_SRC ipython :no export
+def supply(p,valuations):
+    return sum(valuations<p)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[29]:
+:END:
+
+#+BEGIN_SRC ipython :no export
+range_p = np.arange(60,150)
+
+plt.plot([demand(p,valuations_demand) for p in range_p],range_p, label = "demand")
+plt.plot([supply(p,valuations_supply) for p in range_p],range_p, label="supply")
+plt.legend()
+plt.xlabel("$Q$")
+plt.ylabel("$P$")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[31]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-fq8oPh.png]]
+:END:
+
+
+#+BEGIN_SRC ipython
+def demand_minus_supply(p,valuations_demand,valuations_supply):
+    return demand(p,valuations_demand)-supply(p,valuations_supply)
+
+optimize.fsolve(lambda x: demand_minus_supply(x,valuations_demand,valuations_supply),120)
+
+
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[30]:
+# text/plain
+: array([126.78973182])
+:END:
+
+
++ calculate welfare
 
 
 
@@ -239,13 +302,163 @@ print(max_welfare)
 
 *** market power
 
+Suppose that we now give all the products to 1 agent who then owns ~number_of_goods~ units of this good. To simplify, we assume that this agent values the good at 0.
+
+**Question** Suppose we use the function ~demand_minus_supply~ defined above to calculate the equilibrium price. Would the equilibrium price increase? Why (not)?
+
+
+Let's try to model this.
+
+#+BEGIN_SRC ipython
+def profit(p,valuations):
+    return p*demand(p,valuations)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[40]:
+:END:
+
+
+#+BEGIN_SRC ipython :exports no
+range_p = np.arange(0,140)
+
+plt.plot(range_p, [profit(p,valuations) for p in range_p], label = "profit")
+plt.legend()
+plt.xlabel("$P$")
+plt.ylabel("$\pi$")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[42]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-TfMhVF.png]]
+:END:
+
+Profit maximizing price of 80? That is below the equilibrium we calculated above. How is this possible?
+
+
+**Assignment**
+
+Calculate the profit maximizing price in this case.
+
+
+#+BEGIN_SRC ipython :exports no
+def profit(p,valuations):
+    return p*min(demand(p,valuations),number_of_goods)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[43]:
+:END:
+
+
+#+BEGIN_SRC ipython :exports no
+range_p = np.arange(120,140)
+
+plt.plot(range_p, [profit(p,valuations) for p in range_p], label = "profit")
+plt.legend()
+plt.xlabel("$P$")
+plt.ylabel("$\pi$")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[44]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-N1zMfh.png]]
+:END:
+
+
+
 
 *** external effects
+
+Monopolist can produce at cost $c*q$. But production leads to an external effect $\gamma*q$. 
+
+#+BEGIN_SRC ipython
+valuations = np.array(sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse = True))
+
+c = 30
+γ = 80
+def costs(q):
+    return c*q
+
+def externality(q):
+    return γ*q
+
+def profit_c(p,valuations):
+    return p*demand(p,valuations)-costs(demand(p,valuations))
+
+def welfare_e(p,valuations):
+    return np.sum(valuations[:demand(p,valuations)])-costs(demand(p,valuations))-externality(demand(p,valuations))
+
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[104]:
+:END:
+
+
+
+#+BEGIN_SRC ipython
+welfare_e(150,valuations)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[95]:
+# text/plain
+: array([-38.90125471, -42.32656699, -43.86471811, -46.33057487,
+:        -46.77034567, -46.97122833])
+:END:
+
+
+
+#+BEGIN_SRC ipython :exports no
+range_p = np.arange(60,150)
+
+plt.plot(range_p, [profit_c(p,valuations) for p in range_p], label = "profit")
+plt.plot(range_p, [welfare_e(p,valuations) for p in range_p], label = "welfare")
+plt.legend()
+plt.xlabel("$P$")
+plt.ylabel("$\pi$, welfare")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[108]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-CYBhRc.png]]
+:END:
+
+
+Welfare maximizing price is higher than profit maximizing price. Trade off: market power and externality
 
 
 * Asymmetric information
 
 ** adverse selection
+
+
+
+
 
 ** moral hazard
 
