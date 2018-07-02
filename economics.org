@@ -456,6 +456,97 @@ Welfare maximizing price is higher than profit maximizing price. Trade off: mark
 
 ** adverse selection
 
+#+BEGIN_SRC ipython
+income = 2
+cost = 1
+ρ = 0.5
+def u(x):
+    return x**ρ
+
+π = pm.Uniform.dist(0,1).random(size = 100)
+π.sort()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[18]:
+:END:
+
+
+#+BEGIN_SRC ipython
+π
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[19]:
+# text/plain
+: array([0.02613068, 0.03501484, 0.04387227, 0.07282616, 0.08209403,
+:        0.08459992, 0.0956844 , 0.0966134 , 0.10733789, 0.10835405,
+:        0.11081726, 0.11189932, 0.13223737, 0.14519167, 0.16329937,
+:        0.16689527, 0.17618135, 0.20935233, 0.21554677, 0.22096428,
+:        0.22933792, 0.23117787, 0.23263588, 0.23706161, 0.23780503,
+:        0.2793621 , 0.2861838 , 0.30118566, 0.30973485, 0.32070259,
+:        0.33127635, 0.33470864, 0.34332961, 0.35581112, 0.35883786,
+:        0.36621522, 0.37878151, 0.37955023, 0.38837508, 0.39022998,
+:        0.40108122, 0.43366079, 0.43827728, 0.4549867 , 0.45726711,
+:        0.47890139, 0.5147354 , 0.52214751, 0.54477481, 0.54707526,
+:        0.55041816, 0.55977991, 0.58408444, 0.5856474 , 0.60083386,
+:        0.60457908, 0.61199841, 0.6124388 , 0.64014848, 0.64826328,
+:        0.64965493, 0.65859258, 0.65914096, 0.69940976, 0.70989257,
+:        0.71413377, 0.71779132, 0.73914567, 0.75041427, 0.75719138,
+:        0.75954567, 0.76172703, 0.76259265, 0.78501252, 0.78657102,
+:        0.78669987, 0.78999253, 0.79108722, 0.81532074, 0.82037314,
+:        0.83020993, 0.83698443, 0.85745203, 0.85763788, 0.8587305 ,
+:        0.87323247, 0.88835103, 0.89382833, 0.89669496, 0.90050867,
+:        0.90138717, 0.90167945, 0.93469491, 0.94183928, 0.94495768,
+:        0.96137818, 0.97058739, 0.97176525, 0.97181414, 0.99080787])
+:END:
+
+
+continue here
+
+#+BEGIN_SRC ipython
+def insurance_supply(Q):
+    return np.mean(π[-Q])*cost
+
+def insurance_demand(σ):
+    return np.sum(?????)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[32]:
+:END:
+
+
+#+BEGIN_SRC ipython
+insurance_supply(0)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[29]:
+# text/plain
+: 0.026130675891307353
+:END:
+
+
+#+BEGIN_SRC ipython
+range_Q = np.arange(1,101,1)
+plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[34]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-4T0kBf.png]]
+:END:
 
 
 
@@ -540,3 +631,12 @@ Explain the economic intuition of the graph above.
 
 
 
+* Labour market: insiders vs outsiders
+
+Morten. Pissarides model
+
+#  ov-highlight-data: KCgxMTg0MyAxMTg1NiAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
+
+# Local Variables:
+# eval: (ov-highlight-load)
+# End:
