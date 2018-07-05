@@ -23,7 +23,7 @@ plt.style.use('seaborn')
 
 #+RESULTS:
 :RESULTS:
-# Out[1]:
+# Out[3]:
 # output
 : /Users/boone/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
 :   from ._conv import register_converters as _register_converters
@@ -379,7 +379,9 @@ plt.show()
 [[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-N1zMfh.png]]
 :END:
 
+**** solving a standard oligopoly market
 
+solve standard Cournot model; do merger simulation
 
 
 *** external effects
@@ -457,101 +459,142 @@ Welfare maximizing price is higher than profit maximizing price. Trade off: mark
 ** adverse selection
 
 #+BEGIN_SRC ipython
-income = 2
+income = 1.1
 cost = 1
-ρ = 0.5
+ρ = 0.1
 def u(x):
     return x**ρ
 
-π = pm.Uniform.dist(0,1).random(size = 100)
+π = pm.Uniform.dist(0.0,1.0).random(size = 100)
 π.sort()
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[18]:
+# Out[49]:
 :END:
-
-
-#+BEGIN_SRC ipython
-π
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[19]:
-# text/plain
-: array([0.02613068, 0.03501484, 0.04387227, 0.07282616, 0.08209403,
-:        0.08459992, 0.0956844 , 0.0966134 , 0.10733789, 0.10835405,
-:        0.11081726, 0.11189932, 0.13223737, 0.14519167, 0.16329937,
-:        0.16689527, 0.17618135, 0.20935233, 0.21554677, 0.22096428,
-:        0.22933792, 0.23117787, 0.23263588, 0.23706161, 0.23780503,
-:        0.2793621 , 0.2861838 , 0.30118566, 0.30973485, 0.32070259,
-:        0.33127635, 0.33470864, 0.34332961, 0.35581112, 0.35883786,
-:        0.36621522, 0.37878151, 0.37955023, 0.38837508, 0.39022998,
-:        0.40108122, 0.43366079, 0.43827728, 0.4549867 , 0.45726711,
-:        0.47890139, 0.5147354 , 0.52214751, 0.54477481, 0.54707526,
-:        0.55041816, 0.55977991, 0.58408444, 0.5856474 , 0.60083386,
-:        0.60457908, 0.61199841, 0.6124388 , 0.64014848, 0.64826328,
-:        0.64965493, 0.65859258, 0.65914096, 0.69940976, 0.70989257,
-:        0.71413377, 0.71779132, 0.73914567, 0.75041427, 0.75719138,
-:        0.75954567, 0.76172703, 0.76259265, 0.78501252, 0.78657102,
-:        0.78669987, 0.78999253, 0.79108722, 0.81532074, 0.82037314,
-:        0.83020993, 0.83698443, 0.85745203, 0.85763788, 0.8587305 ,
-:        0.87323247, 0.88835103, 0.89382833, 0.89669496, 0.90050867,
-:        0.90138717, 0.90167945, 0.93469491, 0.94183928, 0.94495768,
-:        0.96137818, 0.97058739, 0.97176525, 0.97181414, 0.99080787])
-:END:
-
-
-continue here
 
 #+BEGIN_SRC ipython
 def insurance_supply(Q):
-    return np.mean(π[-Q])*cost
+    return np.mean(π[-Q:])*cost
 
 def insurance_demand(σ):
-    return np.sum(?????)
+    return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[32]:
-:END:
-
-
-#+BEGIN_SRC ipython
-insurance_supply(0)
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[29]:
-# text/plain
-: 0.026130675891307353
+# Out[50]:
 :END:
 
 
 #+BEGIN_SRC ipython
 range_Q = np.arange(1,101,1)
+range_sigma = np.arange(0,1.01,0.01)
 plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
+plt.plot([insurance_demand(sigma) for sigma in range_sigma],range_sigma,label="insurance demand")
+plt.plot(range_Q,[π[-Q]*cost for Q in range_Q],label="marginal cost")
+plt.legend()
 plt.show()
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[34]:
+# Out[52]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-4T0kBf.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-kXHIqU.png]]
+:END:
+
+
+#+BEGIN_SRC ipython
+ρ = 0.2
+def u(x):
+    return x**ρ
+
+number_of_agents = 50
+
+π = pm.Beta.dist(8,2).random(size = number_of_agents)
+π.sort()
+
+def insurance_supply(Q):
+    return np.mean(π[-Q:])*cost
+
+def insurance_demand(σ):
+    return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
+range_Q = np.arange(1,number_of_agents+1,1)
+range_sigma = np.arange(0,1.01,0.01)
+plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
+plt.plot([insurance_demand(sigma) for sigma in range_sigma],range_sigma,label="insurance demand")
+plt.plot(range_Q,[π[-Q]*cost for Q in range_Q],label="marginal cost")
+plt.legend()
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[54]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-n6UNID.png]]
 :END:
 
 
 
 
-** moral hazard
+
+** moral hazard: optimal taxation 
+
+#+BEGIN_SRC ipython
+number_of_agents = 100
+effort_costs = pm.Lognormal.dist(mu=0.0,sd=0.5).random(size=number_of_agents)
+def effort(c,τ):
+    sol = optimize.minimize(lambda x: -(x*(1-τ)-c*x**2),1)
+    return sol.x
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[65]:
+:END:
+
+#+BEGIN_SRC ipython
+def Welfare(τ,ρ):
+    τ_0 = np.mean([τ*effort(c,τ) for c in effort_costs])
+    return (np.sum([((1-τ)*effort(c,τ)+τ_0)**ρ for c in effort_costs]))**(1/ρ)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[74]:
+:END:
+
+#+BEGIN_SRC ipython
+range_tax = np.arange(0,1.1,0.1)
+plt.plot(range_tax,[Welfare(τ,-5) for τ in range_tax])
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[86]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-g3Wrka.png]]
+:END:
+
+
+
+**Question** Use Rawls criterion
+
+
+
 
 
 * Financial crisis
@@ -635,8 +678,385 @@ Explain the economic intuition of the graph above.
 
 Morten. Pissarides model
 
-#  ov-highlight-data: KCgxMTg0MyAxMTg1NiAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
+
+
+
+
+* Regulation in health care markets
+
+
+
+
+Again, we use data from [[http://www.vektis.nl/index.php/vektis-open-data][Vektis]]. We import the data, which is a 'csv' file with ";" as separator between columns. We also import some libraries.
+
+Then we look at the columns (variables) in the data.
+
+#+BEGIN_SRC ipython
+df_2014 = pd.read_csv('data/Vektis Open Databestand Zorgverzekeringswet 2014 - postcode3.csv', sep = ';')
+
+cost_categories_under_deductible = ['KOSTEN_MEDISCH_SPECIALISTISCHE_ZORG', 'KOSTEN_MONDZORG', 'KOSTEN_FARMACIE', 'KOSTEN_HULPMIDDELEN', 'KOSTEN_PARAMEDISCHE_ZORG_FYSIOTHERAPIE', 'KOSTEN_PARAMEDISCHE_ZORG_OVERIG', 'KOSTEN_ZIEKENVERVOER_ZITTEND', 'KOSTEN_ZIEKENVERVOER_LIGGEND', 'KOSTEN_GRENSOVERSCHRIJDENDE_ZORG', 'KOSTEN_GERIATRISCHE_REVALIDATIEZORG', 'KOSTEN_OVERIG']
+
+def get_data_into_shape(df):
+    df['health_expenditure_under_deductible'] = df[cost_categories_under_deductible].sum(axis=1)
+    df = df.rename_axis({
+        'GESLACHT':'sex',
+        'LEEFTIJDSKLASSE':'age',
+        'GEMEENTENAAM':'MUNICIPALITY',
+        'AANTAL_BSN':'number_citizens',
+        'KOSTEN_MEDISCH_SPECIALISTISCHE_ZORG':'hospital_care',
+        'KOSTEN_FARMACIE':'pharmaceuticals',
+        'KOSTEN_TWEEDELIJNS_GGZ':'mental_care',
+        'KOSTEN_HUISARTS_INSCHRIJFTARIEF':'GP_capitation',
+        'KOSTEN_HUISARTS_CONSULT':'GP_fee_for_service',
+        'KOSTEN_HUISARTS_OVERIG':'GP_other',
+        'KOSTEN_MONDZORG':'dental care',
+        'KOSTEN_PARAMEDISCHE_ZORG_FYSIOTHERAPIE':'physiotherapy',
+        'KOSTEN_KRAAMZORG':'maternity_care',
+        'KOSTEN_VERLOSKUNDIGE_ZORG':'obstetrics'
+    }, axis='columns')
+    df.drop(['AANTAL_VERZEKERDEJAREN',
+             'KOSTEN_HULPMIDDELEN',
+             'KOSTEN_PARAMEDISCHE_ZORG_OVERIG',
+             'KOSTEN_ZIEKENVERVOER_ZITTEND',
+             'KOSTEN_ZIEKENVERVOER_LIGGEND',
+             'KOSTEN_GRENSOVERSCHRIJDENDE_ZORG',
+             'KOSTEN_GERIATRISCHE_REVALIDATIEZORG',
+             'KOSTEN_OVERIG',
+             'KOSTEN_GENERALISTISCHE_BASIS_GGZ',
+             'KOSTEN_EERSTELIJNS_ONDERSTEUNING'],inplace=True,axis=1)
+    df.drop(df.index[[0]], inplace=True)
+    df['sex'] = df['sex'].astype('category')
+    df['age'] = df['age'].astype('category')
+    df['costs_per_head']=df['health_expenditure_under_deductible']/df['number_citizens']
+    df['log_costs_per_head']=np.log(1+df['health_expenditure_under_deductible']/df['number_citizens'])
+    df = df[(df['age'] != '90+')]
+    df['age'] = df['age'].astype(int)
+    return df
+
+df_2014 = get_data_into_shape(df_2014)
+df_2014.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[4]:
+# output
+: /Users/boone/anaconda3/lib/python3.6/site-packages/IPython/core/interactiveshell.py:2785: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
+:   interactivity=interactivity, compiler=compiler, result=result)
+: /Users/boone/anaconda3/lib/python3.6/site-packages/ipykernel/__main__.py:22: FutureWarning: Using 'rename_axis' to alter labels is deprecated. Use '.rename' instead
+: 
+# text/plain
+:   sex  age  POSTCODE_3  number_citizens  hospital_care  pharmaceuticals  \
+: 1   M    0         0.0              366     1372209.26         31191.20   
+: 2   M    0       101.0              590     1682944.17         25898.73   
+: 3   M    0       102.0              295     1553933.53         29514.18   
+: 4   M    0       103.0              288      827427.31         19263.79   
+: 5   M    0       105.0              998     2965316.12         61610.42   
+: 
+:    KOSTEN_SPECIALISTISCHE_GGZ  GP_capitation  GP_fee_for_service  GP_other  \
+: 1                      285.98        5548.60             5540.05  11525.93   
+: 2                    20774.91        9816.63            10130.12  20532.03   
+: 3                     7970.01        5317.49             6576.70  17426.30   
+: 4                      941.40        5014.97             5708.41  14168.90   
+: 5                     4780.48       16842.06            19676.01  43794.06   
+: 
+:    dental care  physiotherapy  maternity_care  obstetrics  \
+: 1       681.02       12150.91             0.0         0.0   
+: 2         0.00       17777.00             0.0         0.0   
+: 3        21.29       20459.17             0.0         0.0   
+: 4         0.00        9098.71             0.0         0.0   
+: 5       166.98       42332.18             0.0         0.0   
+: 
+:    health_expenditure_under_deductible  costs_per_head  log_costs_per_head  
+: 1                           1425823.15     3895.691667            8.267883  
+: 2                           1753560.87     2972.137068            7.997373  
+: 3                           1617184.58     5481.981627            8.609404  
+: 4                            865867.07     3006.482882            8.008859  
+: 5                           3118357.71     3124.606924            8.047384  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>POSTCODE_3</th>
+      <th>number_citizens</th>
+      <th>hospital_care</th>
+      <th>pharmaceuticals</th>
+      <th>KOSTEN_SPECIALISTISCHE_GGZ</th>
+      <th>GP_capitation</th>
+      <th>GP_fee_for_service</th>
+      <th>GP_other</th>
+      <th>dental care</th>
+      <th>physiotherapy</th>
+      <th>maternity_care</th>
+      <th>obstetrics</th>
+      <th>health_expenditure_under_deductible</th>
+      <th>costs_per_head</th>
+      <th>log_costs_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>366</td>
+      <td>1372209.26</td>
+      <td>31191.20</td>
+      <td>285.98</td>
+      <td>5548.60</td>
+      <td>5540.05</td>
+      <td>11525.93</td>
+      <td>681.02</td>
+      <td>12150.91</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1425823.15</td>
+      <td>3895.691667</td>
+      <td>8.267883</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M</td>
+      <td>0</td>
+      <td>101.0</td>
+      <td>590</td>
+      <td>1682944.17</td>
+      <td>25898.73</td>
+      <td>20774.91</td>
+      <td>9816.63</td>
+      <td>10130.12</td>
+      <td>20532.03</td>
+      <td>0.00</td>
+      <td>17777.00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1753560.87</td>
+      <td>2972.137068</td>
+      <td>7.997373</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>0</td>
+      <td>102.0</td>
+      <td>295</td>
+      <td>1553933.53</td>
+      <td>29514.18</td>
+      <td>7970.01</td>
+      <td>5317.49</td>
+      <td>6576.70</td>
+      <td>17426.30</td>
+      <td>21.29</td>
+      <td>20459.17</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1617184.58</td>
+      <td>5481.981627</td>
+      <td>8.609404</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M</td>
+      <td>0</td>
+      <td>103.0</td>
+      <td>288</td>
+      <td>827427.31</td>
+      <td>19263.79</td>
+      <td>941.40</td>
+      <td>5014.97</td>
+      <td>5708.41</td>
+      <td>14168.90</td>
+      <td>0.00</td>
+      <td>9098.71</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>865867.07</td>
+      <td>3006.482882</td>
+      <td>8.008859</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M</td>
+      <td>0</td>
+      <td>105.0</td>
+      <td>998</td>
+      <td>2965316.12</td>
+      <td>61610.42</td>
+      <td>4780.48</td>
+      <td>16842.06</td>
+      <td>19676.01</td>
+      <td>43794.06</td>
+      <td>166.98</td>
+      <td>42332.18</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3118357.71</td>
+      <td>3124.606924</td>
+      <td>8.047384</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+
+
+
+#+BEGIN_SRC ipython
+costs_per_sex_age = df_2014.groupby(['sex','age'])['costs_per_head'].mean()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[5]:
+:END:
+
+
+** matplotlib
+
+Then we can plot this distribution of health care expenditure per head with age for males and females.
+
+#+BEGIN_SRC ipython
+import matplotlib.pyplot as plt
+plt.style.use('seaborn')
+fig = plt.figure()
+ax = costs_per_sex_age['M'].plot()
+ax = costs_per_sex_age['V'].plot()
+ax.set_xlabel('age')
+ax.set_ylabel('costs per head')
+ax.set_title('average costs per age and sex')
+ax.legend(['male','female'])
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[6]:
+
+
+# text/plain
+: <Figure size 576x396 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-TwMCQq.png]]
+:END:
+
+
+*** reversing the probability distributions
+
+Above we used ~pymc3~ to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from.
+
+#+BEGIN_SRC ipython
+df_2014.query('sex=="M" & age=="70"')['log_costs_per_head'].hist(bins=50)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[7]:
+
+
+# text/plain
+: <Figure size 576x396 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-7KO2im.png]]
+:END:
+
+
+We will assume that for each age and sex category ~costs_per-head~ are normally distributed.
+
+We focus on modelling male (log) costs
+
+
+#+BEGIN_SRC ipython :async
+
+log_costs_per_age_male = df_2014[df_2014['sex']=='M'].groupby(['age'])['log_costs_per_head'].mean()
+
+log_costs_per_head = df_2014[df_2014['sex']=='M'].log_costs_per_head.values
+age = df_2014[df_2014['sex']=='M'].age.values
+
+
+with pm.Model() as model:
+    
+    μ = pm.Normal('μ', 8, 3, shape=len(set(age)))
+    σ = pm.HalfCauchy('σ', 4, shape=len(set(age)))
+    z = pm.Normal('z', μ[age], σ[age], observed=log_costs_per_head)
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+1 - a1d0f4fa-c439-4a6f-870f-f917348861fb <output>
+:END:
+
+
+#+BEGIN_SRC ipython :async
+with model:
+    trace = pm.sample(4000,step = pm.Metropolis(),start = pm.find_MAP())
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+2 - 2ca52af1-6b20-417c-a986-93794442b0b4 <output>
+:END:
+
+
+#+BEGIN_SRC ipython
+summary = pm.summary(trace, varnames=['μ'])
+
+pm.plot_posterior(trace, varnames=['μ'],ref_val = log_costs_per_age_male.values)
+
+#+END_SRC
+
+
+#+BEGIN_SRC ipython
+plt.plot(summary['mean'].values,label='calculated means')
+plt.plot(log_costs_per_age_male,'o',label='observed means')
+plt.legend()
+#+END_SRC
+
+
+
+compare average at 17 and 19 and redo this for another year...
+
+
+
+
+** using python for empirical research
+
+
+
+*** API's to get data
+
+
+
+
+
+
+#  ov-highlight-data: KCgxMTg0MyAxMTg1NiAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
 
 # Local Variables:
 # eval: (ov-highlight-load)
 # End:
+
