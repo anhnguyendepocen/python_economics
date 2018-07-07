@@ -6,7 +6,10 @@
 
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is mainly based on cite:tirole_2017.
 
+
 * Python packages that we will be using
+
+We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either ~pip install~ or ~conda install~.
 
 #+BEGIN_SRC ipython
 import pandas as pd
@@ -16,6 +19,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats, optimize
 import random
+import wbdata as wb
 
 plt.style.use('seaborn')
 %matplotlib inline
@@ -23,24 +27,24 @@ plt.style.use('seaborn')
 
 #+RESULTS:
 :RESULTS:
-# Out[3]:
-# output
-: /Users/boone/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-:   from ._conv import register_converters as _register_converters
-: 
+# Out[45]:
 :END:
 
 
 * Why do we love the market?
 
-Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his "invisible hand". Others basically distrust other organizing institutions like a government. They will point to the fall of communism in the former soviet union.
+Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his [[https://en.wikipedia.org/wiki/Invisible_hand]["invisible hand"]]. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the [[https://en.wikipedia.org/wiki/Revolutions_of_1989][former Soviet Union]].
 
-To understand the advantages of the market, let us consider a very
-simple economy. We focus on one type of product and there is an
-exogenous endowment of this product (supply) equal to
-~number_of_goods~. Further there are ~number_of_agents~ agents who
-have a valuation for this good which is randomly drawn from a normal
-distribution. An agent can at max. consume one unit of the product and her utility is then given by her valuation. The value of consuming zero units and the additional value of consuming more than one unit equal 0.
+Although you, as an economist, have seen many market models already,
+it may be illustrative to go back to basics. To understand the
+advantages of the market, let us consider a very simple economy. We
+focus on one type of product and there is an exogenous endowment of
+this product (supply) equal to ~number_of_goods~. Further, in this
+economy there are ~number_of_agents~ agents who have a valuation for
+this good which is randomly drawn from a normal distribution. An agent
+can at max. consume one unit of the product and her utility is then
+given by her valuation. The value of consuming zero units and the
+additional value of consuming more than one unit both equal 0.
 
 The vector ~valuations~ contains for each agent her valuation and we sort this vector such that the first agent has the highest valuation.
 
@@ -53,8 +57,11 @@ valuations = sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse
 
 #+RESULTS:
 :RESULTS:
-# Out[11]:
+# Out[79]:
 :END:
+
+Note that we are using [[http://docs.pymc.io/notebooks/getting_started][pymc3]] here to generate random numbers from a distribution. There are also other python libraries which can do this, e.g [[https://scipy.org/][scipy]]. We use pymc3 as we will use it later for estimation as well.
+
 
 **Question** What is the economic name for the following expression? To answer this question, you need to understand both how indexing works in python and which economic concept is captured by this expression.
 
@@ -64,9 +71,9 @@ print("{0:.2f}".format(valuations[number_of_goods]))
 
 #+RESULTS:
 :RESULTS:
-# Out[12]:
+# Out[80]:
 # output
-: 126.71
+: 125.15
 : 
 :END:
 
@@ -81,17 +88,20 @@ print("{0:.2f}".format(max_welfare))
 
 #+RESULTS:
 :RESULTS:
-# Out[13]:
+# Out[81]:
 # output
-: 13694.68
+: 13407.45
 : 
 :END:
+
+Hence, this is the best that we can do. It gives us an upperbound on the welfare that can be achieved. Having an omniscient social planner seems unrealistic, but perhaps there is an institution that can achieve this outcome without omniscient intervention. You guessed it...
+
 
 ** market outcome
 
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
 
-**Question** Define a function ~demand(p,valuations)~ which has as arguments a price $p$ and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price $p$.
+**Question** Define a function ~demand(p,valuations)~ which has as arguments a price $p$ and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price $p$. Since each agent who buys, buys exactly one unit in our set up, this function returns demand at each price.
 
 #+BEGIN_SRC ipython :no export
 def demand(p,valuations):
@@ -100,10 +110,10 @@ def demand(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[19]:
+# Out[82]:
 :END:
 
-**Question** Plot supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
+**Question** Using ~matplotlib~ plot (fixed) supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
 
 #+BEGIN_SRC ipython :no export
 range_p = np.arange(60,150)
@@ -118,15 +128,15 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[20]:
+# Out[83]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-sOGgSN.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-ag5CcX.png]]
 :END:
 
-In order to calculate the equilibrium price, we define a function ~excess_demand~. 
+In order to calculate the equilibrium price, we define a function ~excess_demand~. We will then look for the price where ~excess_demand~ equals 0; this is the equilibrium price.
 
 #+BEGIN_SRC ipython
 def excess_demand(p,valuations,number_of_goods):
@@ -135,8 +145,10 @@ def excess_demand(p,valuations,number_of_goods):
 
 #+RESULTS:
 :RESULTS:
-# Out[21]:
+# Out[84]:
 :END:
+
+In order to find the equilibrium price, we use from ~scipy.optimize~ the function [[https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html][fsolve]]. To illustrate, there are also people at [[https://stackoverflow.com/questions/8739227/how-to-solve-a-pair-of-nonlinear-equations-using-python][stackoverflow]] discussing this.
 
 #+BEGIN_SRC ipython
 price = optimize.fsolve(lambda x: excess_demand(x,valuations,number_of_goods),120)
@@ -145,18 +157,47 @@ print(price)
 
 #+RESULTS:
 :RESULTS:
-# Out[22]:
+# Out[85]:
 # output
-: [126.78973182]
+: [125.18448497]
 : 
 :END:
 
+So, now we know the equilibrium price
 
-1. calculate welfare
-2. compare to max. welfare from planner
+**Exercise** Calculate total welfare at this equilibrium price.
 
 
-Now we give ~number_of_goods~ agents one unit of the good. They become suppliers.
+#+BEGIN_SRC ipython :no export
+np.sum(valuations[:demand(price,valuations)])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[88]:
+# text/plain
+: 13407.45396157873
+:END:
+
+
+**Exercise** How does this welfare compare to the maximum welfare that the omniscient social planner can achieve? Recall that this level is:
+
+#+BEGIN_SRC ipython
+max_welfare
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[86]:
+# text/plain
+: 13407.45396157873
+:END:
+
+*** elastic demand and supply
+
+Up till now we assumed that supply was inelastic: there was a given endowment and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
+
+In particular, we give ~number_of_goods~ agents one unit of the good. They become suppliers.
 
 #+BEGIN_SRC ipython
 random.shuffle(valuations)
@@ -166,9 +207,11 @@ valuations_demand = valuations[number_of_goods:]
 
 #+RESULTS:
 :RESULTS:
-# Out[26]:
+# Out[89]:
 :END:
 
+
+**Exercise** Define a function ~supply~ which depends on the price and the valuations of the suppliers.
 
 #+BEGIN_SRC ipython :no export
 def supply(p,valuations):
@@ -177,8 +220,10 @@ def supply(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[29]:
+# Out[90]:
 :END:
+
+**Exercise** Use ~matplotlib~ to plot demand and supply in a single figure. 
 
 #+BEGIN_SRC ipython :no export
 range_p = np.arange(60,150)
@@ -193,16 +238,23 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[31]:
+# Out[91]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-fq8oPh.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-x44Dlu.png]]
 :END:
 
 
-#+BEGIN_SRC ipython
+**Exercise** Define the function ~demand_minus_supply~ which looks
+like ~excess_demand~ above but now with elastic supply. The function
+depends on the price, the valuations of people demanding the good and
+the valuations of people supplying it.
+
+Then use ~fsolve~ to find the equilibrium price.
+
+#+BEGIN_SRC ipython :no export
 def demand_minus_supply(p,valuations_demand,valuations_supply):
     return demand(p,valuations_demand)-supply(p,valuations_supply)
 
@@ -214,21 +266,36 @@ optimize.fsolve(lambda x: demand_minus_supply(x,valuations_demand,valuations_sup
 
 #+RESULTS:
 :RESULTS:
-# Out[30]:
+# Out[92]:
 # text/plain
-: array([126.78973182])
+: array([125.18448497])
 :END:
 
+**Exercise** How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
 
-+ calculate welfare
+#+BEGIN_SRC ipython :no export
+price
+#+END_SRC
 
+#+RESULTS:
+:RESULTS:
+# Out[93]:
+# text/plain
+: array([125.18448497])
+:END:
 
 
 ** why do others not love the market?
 
+Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
+
 *** income distribution
 
-define vector income; you can only buy at price $p$ if valuation and income exceed $p$
+In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
+
+Now in addition to the valuations introduced above (the utility an agent gets from consuming the good), we need an income distribution. The former determines the willingness to pay (wtp) for an agent, the latter the price an agent can pay. A consumer is willing to buy the product at a price $p$ if both her wtp and her income exceed $p$.
+
+First, we randomly draw an income for each agent in the economy.
 
 #+BEGIN_SRC ipython
 incomes = pm.Normal.dist(100,20).random(size=number_of_agents)
@@ -236,10 +303,10 @@ incomes = pm.Normal.dist(100,20).random(size=number_of_agents)
 
 #+RESULTS:
 :RESULTS:
-# Out[26]:
+# Out[94]:
 :END:
 
-
+Next, we need to redefine demand, now denoted ~demand_2~ which takes into account both whether an agent values the good more than $p$ and whether she can afford $p$.
 
 #+BEGIN_SRC ipython
 def afford(p,incomes):
@@ -254,34 +321,55 @@ def demand_2(p,valuations,incomes):
 
 #+RESULTS:
 :RESULTS:
-# Out[27]:
+# Out[95]:
 :END:
 
 
-#+BEGIN_SRC ipython
+**Exercise** Define the function ~excess_demand_2~ which depends on $p$, agents' valuations, incomes and number of goods (which we assume to be inelastically supplied again).
+
+#+BEGIN_SRC ipython :no export
 def excess_demand_2(p,valuations,incomes,number_of_goods):
     return demand_2(p,valuations,incomes)-number_of_goods
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[28]:
+# Out[96]:
 :END:
 
-#+BEGIN_SRC ipython
+**Exercise** Use ~fsolve~ to determine the equilibrium price in this case. Is this price higher or lower than above? Why?
+
+    :ANSWER:
+      price is always lower because income constraint binds; agents always pay less, never more
+    :END:
+
+#+BEGIN_SRC ipython :no export
 price_2 = optimize.fsolve(lambda x: excess_demand_2(x,valuations,incomes,number_of_goods),120)
 print(price_2)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[35]:
+# Out[97]:
 # output
-: [109.42355133]
+: [109.24260459]
 : 
 :END:
 
-#+BEGIN_SRC ipython
+#+BEGIN_SRC ipython :no export
+price
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[98]:
+# text/plain
+: array([125.18448497])
+:END:
+
+**Exercise** Calculate welfare in the market equilibrium. How does it compare to ~max_welfare~?
+
+#+BEGIN_SRC ipython :no export
 welfare_2 = np.sum(afford(price_2,incomes)*wtp(price_2,valuations)*valuations)
 print(welfare_2)
 print(max_welfare)
@@ -297,17 +385,50 @@ print(max_welfare)
 :END:
 
 
-**Question** Show that as income inequality increases, the welfare generated by the market tends to fall.
+**Question** Model an economy where an increase in income inequality reduces welfare.
+
+:ANSWER:
+With 100 goods and 1000 agents, only few agents buy the good. By increasing the variance, some high value agents may actually get a higher income due to increased inequality. This can increase welfare. If we have 100 goods and 150 agents, the last agent to buy has income below the mean (100). Increasing inequality will tend to reduce this agent's income. This reduces the equilibrium price and hence welfare.
+:END:
+
+#+BEGIN_SRC ipython :no export
+number_of_agents_2 = 150
+valuations_2 = sorted(pm.Normal.dist(100,20).random(size=number_of_agents_2),reverse = True)
+
+income_std = 20
+incomes_20 = pm.Normal.dist(100,income_std).random(size=number_of_agents_2)
+price_20 = optimize.fsolve(lambda x: excess_demand_2(x,valuations_2,incomes_20,number_of_goods),80)
+print(np.sum(afford(price_20,incomes_20)*wtp(price_20,valuations_2)*valuations_2))
+
+income_std = 40
+incomes_40 = pm.Normal.dist(100,income_std).random(size=number_of_agents_2)
+price_40 = optimize.fsolve(lambda x: excess_demand_2(x,valuations_2,incomes_40,number_of_goods),80)
+print(np.sum(afford(price_40,incomes_40)*wtp(price_40,valuations_2)*valuations_2))
+
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[138]:
+# output
+: 10664.02383305476
+: 10287.32738229688
+: 
+:END:
+
 
 
 *** market power
 
+**Warning** We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
+
 Suppose that we now give all the products to 1 agent who then owns ~number_of_goods~ units of this good. To simplify, we assume that this agent values the good at 0.
 
-**Question** Suppose we use the function ~demand_minus_supply~ defined above to calculate the equilibrium price. Would the equilibrium price increase? Why (not)?
+**Question** Suppose we use the function ~demand_minus_supply~ defined above to calculate the equilibrium price. Would the equilibrium price increase due to market power? Why (not)?
 
 
-Let's try to model this.
+Perhaps a monopolist would not use an auction to sell all the goods. Let's calculate the profits of the monopolist as a function of the price and the valuations of the agents.
 
 #+BEGIN_SRC ipython
 def profit(p,valuations):
@@ -316,7 +437,7 @@ def profit(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[40]:
+# Out[140]:
 :END:
 
 
@@ -332,15 +453,31 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[42]:
+# Out[142]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-TfMhVF.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-HqyjxJ.png]]
 :END:
 
-Profit maximizing price of 80? That is below the equilibrium we calculated above. How is this possible?
+It looks like the profit maximizing price is around 80. Recall the equilibrium price under perfect competition above:
+
+
+#+BEGIN_SRC ipython
+price
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[143]:
+# text/plain
+: array([125.18448497])
+:END:
+
+
+**Exercise** Since when does a monopolist charge a lower price than a perfectly competitive market?
+
 
 
 **Assignment**
@@ -355,7 +492,7 @@ def profit(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[43]:
+# Out[150]:
 :END:
 
 
@@ -371,17 +508,279 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[44]:
+# Out[151]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-N1zMfh.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-Y6knzx.png]]
 :END:
+
+
+:ANSWER:
+Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing $p$) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as $p>110$) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get $(p-120)$ instead of $p$ times quantity.
+:END:
+
+
 
 **** solving a standard oligopoly market
 
-solve standard Cournot model; do merger simulation
+In this section, we model a more standard oligopoly market with
+Cournot competition. We start with three firms and then calculate what
+happens if two firms merge such that only two firms are left in the
+industry. Hence, we first calculate the equilibrium with three firms,
+denoted by 1, 2 and 3. Then firms 2 and 3 merge so that we are left with 2 firms; denoted by
+1 and 2.
+
+We are interested in the effects of the merger on the equilibrium price.
+
+We assume that before the merger each firm has constant marginal costs
+equal to 0.3. We assume a simple linear (inverse) demand curve of the
+form $p=1-Q$ where $p$ denotes price and $Q$ total output on the market.
+Total output equals the sum of each firm's output: $Q= q_1 + q_2+q_3$.
+
+The function ~reaction~ gives the optimal reaction of a firm to the total output ~Q_other~ from its competitors. In this function, we use the routine [[https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fminbound.html][fminbound]]. Python does not have maximization routines, hence we minimize "minus profits" (which is the same from a mathematical point of view). The parameters ~0,1~ in this routine give the bounds over which we optimize. Since demand is of the form $p(Q)=1-Q$, we know that no firm will choose $q>1$; further we also know that $q \geq 0$.
+
+The fixed point makes sure that for each of the three firms, their output level is equal to its optimal reaction to the output levels of its competitors. If each firm plays its optimal response, given the actions of the other players, we have a Nash equilibrium.
+
+#+BEGIN_SRC ipython
+c0 = 0.3
+vector_c = [c0]*3
+
+def p(Q):
+    return 1 - Q
+
+def costs(q,c):
+    return c*q
+
+def profits(q,Q_other,c):
+    return p(q+Q_other)*q-costs(q,c)
+
+def reaction(Q_other,c):
+    q1 =  optimize.fminbound(lambda x: -profits(x,Q_other,c),0,1,full_output=1)
+    return q1[0]
+
+def fixed_point_three_firms(vector_q,vector_c):
+    return [vector_q[0]-reaction(vector_q[1]+vector_q[2],vector_c[0]),
+            vector_q[1]-reaction(vector_q[0]+vector_q[2],vector_c[1]),
+            vector_q[2]-reaction(vector_q[0]+vector_q[1],vector_c[2])]
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[152]:
+:END:
+
+We calculate the equilibrium output level, price and the Herfindahl index. The Herhindahl index is defined as the sum of squared market shares:
+
+\begin{equation}
+\label{eq:1}
+H = \sum_j \left( \frac{q_j}{\sum_i q_i} \right)^{2}
+\end{equation}
+
+If we have $n$ symmtric firms, we have $H = 1/n$. Hence, more competition in the form of more firms in the market leads to a lower Herfindahl index.
+
+#+BEGIN_SRC ipython
+initial_guess_3 = [0,0,0]
+
+Q0 = np.sum(optimize.fsolve(lambda q: fixed_point_three_firms(q,vector_c), initial_guess_3))
+P0 = p(Q0)
+H0 = 3*(1.0/3.0)**2
+
+print("Before the merger")
+print("=================")
+print("total output: {:.3f}".format(Q0))
+print("equil. price: {:.3f}".format(P0))
+print("Herfn. index: {:.3f}".format(H0))
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[153]:
+# output
+: Before the merger
+: =================
+: total output: 0.525
+: equil. price: 0.475
+: Herfn. index: 0.333
+: 
+:END:
+
+
+**Exercise** Define a function ~fixed_point_two_firms~ with the same
+structure as the function ~fixed_point_three_firms~ above, except that
+it derives the equilibrium output levels for a duopoly (two firms).
+Test this function by showing that each of the two firms produces
+0.3333 in case both firms have zero costs.
+
+#+BEGIN_SRC ipython :no export
+def fixed_point_two_firms(vector_q,vector_c):
+    return [vector_q[0]-reaction(vector_q[1],vector_c[0]),
+            vector_q[1]-reaction(vector_q[0],vector_c[1])]
+
+initial_guess = [0,0]
+
+optimize.fsolve(lambda q: fixed_point_two_firms(q,[0,0]), initial_guess)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[154]:
+# text/plain
+: array([0.33333333, 0.33333333])
+:END:
+
+The Dutch competition authority, ACM, is asked to evaluate the effects
+of a merger between firms 2 and 3. Firms 2 and 3 claim that by merging
+they can reduce their constant marginal costs. But it is not clear by
+how much they will reduce their costs.
+
+The ACM assumes that the marginal cost level of the merged firm is
+uniformly distributed between 0 and the current marginal cost level
+~c0~. The merger will not affect the marginal cost level of firm 1 who
+does not merge. Firm 1's cost level remains ~c0~.
+
+The next cell generates a vector of cost levels for the merged firm,
+denoted ~c_after_merger~. Then it calculates the equilibrium output
+levels for (the non-merging) firm 1 and (the merged) firm 2.
+
+#+BEGIN_SRC ipython
+c_after_merger = pm.Uniform.dist(0,c0).random(size = 100)
+
+initial_guess = [0.2,0.2]
+
+q1_after_merger = [optimize.fsolve(lambda q: fixed_point_two_firms(q,[c0,c]), initial_guess)[0] for c in c_after_merger]
+q2_after_merger = [optimize.fsolve(lambda q: fixed_point_two_firms(q,[c0,c]), initial_guess)[1] for c in c_after_merger]
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[157]:
+:END:
+
+**Exercise** Create a dataframe called ~df_after_merger~ with
+three columns: ~c_merged_firm~, ~output_non_merging_firm~,
+~output_merged_firm~ containing resp. the cost level of the merged firm,
+the output level of firm 1 and the output level of firm 2.
+
+#+BEGIN_SRC ipython :no export
+df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger, 
+                                'output_non_merging_firm': q1_after_merger,
+                                'output_merged_firm': q2_after_merger})
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[158]:
+:END:
+
+**Exercise** Add three columns to the dataframe with resp. total
+equilibrium output on the market, ~Q~, equilibrium price, ~P~ and the
+Herfindahl index, ~H~.
+
+#+BEGIN_SRC ipython :no export
+    df_after_merger['Q'] = df_after_merger.output_non_merging_firm + df_after_merger.output_merged_firm
+    df_after_merger['P'] = p(df_after_merger.Q)
+    df_after_merger['H'] = (df_after_merger.output_non_merging_firm/df_after_merger.Q)**2+(df_after_merger.output_merged_firm/df_after_merger.Q)**2
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[159]:
+:END:
+
+???continue here???
+
+**** e) [0.5 points] Make a histogram of the equilibrium price =P= after
+the merger. Also indicate in the histogram the equilibrium price before
+the merger =P0=. Label the horizontal axis with $P$.
+
+[hint: you may want to use matplotlib's =hist=, =vlines= and =legend= to
+make this graph (e.g use google to find these functions); but feel free
+to use something else]
+
+#+BEGIN_SRC ipython
+plt.hist(df_after_merger.P, bins = 30, normed = 1, label = 'after merger')
+plt.vlines(P0,0,25, color = 'red', label = 'before merger')
+plt.legend()
+plt.xlabel('$P$')
+plt.show()
+#+END_SRC
+
+#+CAPTION: png
+[[file:output_18_0.png]]
+
+**** f) [0.5 points] Explain why sometimes the equilibrium price after
+the merger exceeds the equilibrium price before the merger and sometimes
+it is lower than the pre-merger price. [hint: there is a trade off
+between two effects, depending on which effect dominates, equilibrium
+price increases or decreases after the merger]
+     :PROPERTIES:
+     :CUSTOM_ID: f-0.5-points-explain-why-sometimes-the-equilibrium-price-after-the-merger-exceeds-the-equilibrium-price-before-the-merger-and-sometimes-it-is-lower-than-the-pre-merger-price.-hint-there-is-a-trade-off-between-two-effects-depending-on-which-effect-dominates-equilibrium-price-increases-or-decreases-after-the-merger
+     :END:
+
+There is a trade off between market power (there are fewer firms after
+the merger than before) and efficiency (costs of the merged firm are
+lower after the merger). The market power effect tends to increase the
+equil price. The lower costs tend to reduce the equil. price. For a big
+enough cost reduction, the latter effect dominates and the equil. price
+goes down. If costs hardly fall due to the merger, the market power
+effect dominates and the equil. price increases.
+
+**** g) [0.5 points] Make a graph with the Herfindahl index on the
+horizontal axis and the equilibrium price on the vertical axis. This is
+straightforward for $(H,P)$ after the merger as both values are in the
+dataframe. Add in another color, the pre-merger combination =(H0,P0)=
+that we calculated above.
+     :PROPERTIES:
+     :CUSTOM_ID: g-0.5-points-make-a-graph-with-the-herfindahl-index-on-the-horizontal-axis-and-the-equilibrium-price-on-the-vertical-axis.-this-is-straightforward-for-hp-after-the-merger-as-both-values-are-in-the-dataframe.-add-in-another-color-the-pre-merger-combination-h0p0-that-we-calculated-above.
+     :END:
+
+#+BEGIN_SRC python
+    plt.scatter(df_after_merger.H,df_after_merger.P,label='after merger')
+    plt.scatter(H0,P0,label='pre merger')
+    plt.legend()
+    plt.xlabel('$H$')
+    plt.ylabel('$P$')
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    Text(0,0.5,'$P$')
+#+END_EXAMPLE
+
+#+CAPTION: png
+[[file:output_22_1.png]]
+
+**** h) [0.5 points] Use the graph under g) to discuss the relation
+between the Herfindahl index and the equilibrium price. To illustrate,
+some people think that lower values of the Herfindahl index are
+associated with more competitive outcome. Would you agree with this?
+     :PROPERTIES:
+     :CUSTOM_ID: h-0.5-points-use-the-graph-under-g-to-discuss-the-relation-between-the-herfindahl-index-and-the-equilibrium-price.-to-illustrate-some-people-think-that-lower-values-of-the-herfindahl-index-are-associated-with-more-competitive-outcome.-would-you-agree-with-this
+     :END:
+
+The figure shows that the merger (reducing the number of firms from 3 to
+2) increases $H$. The lowest value of $H$ after the merger is reached
+for the symmetric outcome where both firms have the same cost level =c0=
+(the same as before the merger). In this case, the merger increases the
+equil. price (and hence reduces competition).
+
+As the merged firm gets lower costs than =c0=, the equil. price
+decreases, but the asymmetry in the market caused by this cost reduction
+further increases $H$.
+
+Only considering the post-merger points, higher $H$ is associated with
+lower $P$ and hence more competition.
+
+Comparing pre-merger with after-merger at the same cost level =c0=,
+higher $H$ is associated with higher $P$ and hence less competition
+(this is the "standard interpretation").
+
+
+
+
+
 
 
 *** external effects
@@ -674,22 +1073,13 @@ Explain the economic intuition of the graph above.
 
 
 
-* Labour market: insiders vs outsiders
-
-Morten. Pissarides model
-
-
-
 
 
 * Regulation in health care markets
 
+Effect of an increase in deductible; we compare the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro) 
 
-
-
-Again, we use data from [[http://www.vektis.nl/index.php/vektis-open-data][Vektis]]. We import the data, which is a 'csv' file with ";" as separator between columns. We also import some libraries.
-
-Then we look at the columns (variables) in the data.
+We use data from [[http://www.vektis.nl/index.php/vektis-open-data][Vektis]]. Download from this website the 'csv' files for 2011 and 2014. For the code below, we downloaded these csv-files in the sub-directory data (i.e. sub-directory of the directory in which this notebook resides). When you open the csv files, you can see that it uses ";" as separator between columns.
 
 #+BEGIN_SRC ipython
 df_2014 = pd.read_csv('data/Vektis Open Databestand Zorgverzekeringswet 2014 - postcode3.csv', sep = ';')
@@ -739,7 +1129,7 @@ df_2014.head()
 
 #+RESULTS:
 :RESULTS:
-# Out[4]:
+# Out[3]:
 # output
 : /Users/boone/anaconda3/lib/python3.6/site-packages/IPython/core/interactiveshell.py:2785: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
 :   interactivity=interactivity, compiler=compiler, result=result)
@@ -921,15 +1311,13 @@ df_2014.head()
 :END:
 
 
-
-
 #+BEGIN_SRC ipython
 costs_per_sex_age = df_2014.groupby(['sex','age'])['costs_per_head'].mean()
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[5]:
+# Out[22]:
 :END:
 
 
@@ -952,49 +1340,48 @@ ax.legend(['male','female'])
 
 #+RESULTS:
 :RESULTS:
-# Out[6]:
+# Out[23]:
 
 
 # text/plain
 : <Figure size 576x396 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-TwMCQq.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-cau0YF.png]]
 :END:
 
 
-*** reversing the probability distributions
+** reversing the probability distributions
 
 Above we used ~pymc3~ to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from.
 
 #+BEGIN_SRC ipython
-df_2014.query('sex=="M" & age=="70"')['log_costs_per_head'].hist(bins=50)
+df_2014.query('sex=="M" & age=="30"')['log_costs_per_head'].hist(bins=50)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[7]:
+# Out[6]:
 
 
 # text/plain
-: <Figure size 576x396 with 1 Axes>
+: <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-7KO2im.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-jBtIvk.png]]
 :END:
 
 
 We will assume that for each age and sex category ~costs_per-head~ are normally distributed.
 
-We focus on modelling male (log) costs
-
+We focus on modelling female (log) costs
 
 #+BEGIN_SRC ipython :async
 
-log_costs_per_age_male = df_2014[df_2014['sex']=='M'].groupby(['age'])['log_costs_per_head'].mean()
+log_costs_per_age_female = df_2014[df_2014['sex']=='V'].groupby(['age'])['log_costs_per_head'].mean()
 
-log_costs_per_head = df_2014[df_2014['sex']=='M'].log_costs_per_head.values
-age = df_2014[df_2014['sex']=='M'].age.values
+log_costs_per_head = df_2014[df_2014['sex']=='V'].log_costs_per_head.values
+age = df_2014[df_2014['sex']=='V'].age.values
 
 
 with pm.Model() as model:
@@ -1007,7 +1394,7 @@ with pm.Model() as model:
 
 #+RESULTS:
 :RESULTS:
-1 - a1d0f4fa-c439-4a6f-870f-f917348861fb <output>
+# Out[24]:
 :END:
 
 
@@ -1018,28 +1405,584 @@ with model:
 
 #+RESULTS:
 :RESULTS:
-2 - 2ca52af1-6b20-417c-a986-93794442b0b4 <output>
+# Out[25]:
+# output
+:   0%|          | 0/5000 [00:00<?, ?it/s]logp = -1.5911e+05, ||grad|| = 6,672.7:   0%|          | 0/5000 [00:00<?, ?it/s]logp = -43,838, ||grad|| = 4,393.6:   0%|          | 10/5000 [00:00<00:21, 234.57it/s]logp = -33,639, ||grad|| = 18.977:   0%|          | 20/5000 [00:00<00:19, 250.28it/s] logp = -33,639, ||grad|| = 18.977:   1%|          | 27/5000 [00:00<00:18, 261.90it/s]logp = -33,639, ||grad|| = 18.977: 100%|██████████| 28/28 [00:00<00:00, 268.45it/s]  
+: Multiprocess sampling (4 chains in 4 jobs)
+: CompoundStep
+: >Metropolis: [σ_log__]
+: >Metropolis: [μ]
+:   0%|          | 0/4500 [00:00<?, ?it/s]  0%|          | 15/4500 [00:00<00:30, 144.96it/s]  1%|          | 40/4500 [00:00<00:22, 194.96it/s]  1%|▏         | 63/4500 [00:00<00:21, 205.23it/s]  2%|▏         | 86/4500 [00:00<00:21, 209.84it/s]  2%|▏         | 108/4500 [00:00<00:20, 210.39it/s]  3%|▎         | 131/4500 [00:00<00:20, 213.42it/s]  3%|▎         | 154/4500 [00:00<00:20, 214.93it/s]  4%|▍         | 176/4500 [00:00<00:20, 214.68it/s]  4%|▍         | 198/4500 [00:00<00:20, 214.94it/s]  5%|▍         | 219/4500 [00:01<00:20, 214.03it/s]  5%|▌         | 242/4500 [00:01<00:19, 214.71it/s]  6%|▌         | 264/4500 [00:01<00:19, 215.02it/s]  6%|▋         | 286/4500 [00:01<00:19, 214.54it/s]  7%|▋         | 308/4500 [00:01<00:19, 213.65it/s]  7%|▋         | 331/4500 [00:01<00:19, 214.16it/s]  8%|▊         | 354/4500 [00:01<00:19, 214.67it/s]  8%|▊         | 376/4500 [00:01<00:19, 214.92it/s]  9%|▉         | 398/4500 [00:01<00:19, 214.50it/s]  9%|▉         | 420/4500 [00:01<00:19, 213.76it/s] 10%|▉         | 442/4500 [00:02<00:19, 213.24it/s] 10%|█         | 464/4500 [00:02<00:18, 213.26it/s] 11%|█         | 487/4500 [00:02<00:18, 213.66it/s] 11%|█▏        | 509/4500 [00:02<00:18, 213.57it/s] 12%|█▏        | 531/4500 [00:02<00:18, 213.47it/s] 12%|█▏        | 553/4500 [00:02<00:18, 213.35it/s] 13%|█▎        | 575/4500 [00:02<00:18, 213.27it/s] 13%|█▎        | 597/4500 [00:02<00:18, 213.28it/s] 14%|█▍        | 619/4500 [00:02<00:18, 213.45it/s] 14%|█▍        | 641/4500 [00:03<00:18, 212.58it/s] 15%|█▍        | 664/4500 [00:03<00:18, 212.92it/s] 15%|█▌        | 687/4500 [00:03<00:17, 213.25it/s] 16%|█▌        | 709/4500 [00:03<00:17, 213.39it/s] 16%|█▌        | 731/4500 [00:03<00:17, 213.12it/s] 17%|█▋        | 753/4500 [00:03<00:17, 213.12it/s] 17%|█▋        | 775/4500 [00:03<00:17, 213.14it/s] 18%|█▊        | 798/4500 [00:03<00:17, 213.45it/s] 18%|█▊        | 820/4500 [00:03<00:17, 213.56it/s] 19%|█▊        | 842/4500 [00:03<00:17, 212.91it/s] 19%|█▉        | 863/4500 [00:04<00:17, 212.82it/s] 20%|█▉        | 884/4500 [00:04<00:17, 212.41it/s] 20%|██        | 906/4500 [00:04<00:16, 212.49it/s] 21%|██        | 928/4500 [00:04<00:16, 212.62it/s] 21%|██        | 951/4500 [00:04<00:16, 212.86it/s] 22%|██▏       | 973/4500 [00:04<00:16, 212.96it/s] 22%|██▏       | 995/4500 [00:04<00:16, 213.10it/s] 23%|██▎       | 1017/4500 [00:04<00:16, 213.19it/s] 23%|██▎       | 1039/4500 [00:04<00:16, 212.99it/s] 24%|██▎       | 1061/4500 [00:04<00:16, 212.91it/s] 24%|██▍       | 1083/4500 [00:05<00:16, 212.67it/s] 25%|██▍       | 1104/4500 [00:05<00:16, 212.20it/s] 25%|██▌       | 1125/4500 [00:05<00:15, 211.99it/s] 25%|██▌       | 1146/4500 [00:05<00:15, 211.81it/s] 26%|██▌       | 1167/4500 [00:05<00:15, 211.67it/s] 26%|██▋       | 1189/4500 [00:05<00:15, 211.75it/s] 27%|██▋       | 1211/4500 [00:05<00:15, 211.80it/s] 27%|██▋       | 1234/4500 [00:05<00:15, 211.99it/s] 28%|██▊       | 1256/4500 [00:05<00:15, 212.05it/s] 28%|██▊       | 1278/4500 [00:06<00:15, 211.67it/s] 29%|██▉       | 1299/4500 [00:06<00:15, 211.63it/s] 29%|██▉       | 1321/4500 [00:06<00:15, 211.71it/s] 30%|██▉       | 1343/4500 [00:06<00:14, 211.79it/s] 30%|███       | 1365/4500 [00:06<00:14, 211.80it/s] 31%|███       | 1387/4500 [00:06<00:14, 211.80it/s] 31%|███▏      | 1410/4500 [00:06<00:14, 211.95it/s] 32%|███▏      | 1432/4500 [00:06<00:14, 212.02it/s] 32%|███▏      | 1454/4500 [00:06<00:14, 212.02it/s] 33%|███▎      | 1476/4500 [00:06<00:14, 211.90it/s] 33%|███▎      | 1498/4500 [00:07<00:14, 211.73it/s] 34%|███▍      | 1519/4500 [00:07<00:14, 211.25it/s] 34%|███▍      | 1540/4500 [00:07<00:14, 210.47it/s] 35%|███▍      | 1560/4500 [00:07<00:13, 210.24it/s] 35%|███▌      | 1581/4500 [00:07<00:13, 210.18it/s] 36%|███▌      | 1603/4500 [00:07<00:13, 210.26it/s] 36%|███▌      | 1626/4500 [00:07<00:13, 210.41it/s] 37%|███▋      | 1648/4500 [00:07<00:13, 210.52it/s] 37%|███▋      | 1670/4500 [00:07<00:13, 210.38it/s] 38%|███▊      | 1691/4500 [00:08<00:13, 210.32it/s] 38%|███▊      | 1713/4500 [00:08<00:13, 210.36it/s] 39%|███▊      | 1736/4500 [00:08<00:13, 210.50it/s] 39%|███▉      | 1759/4500 [00:08<00:13, 210.67it/s] 40%|███▉      | 1781/4500 [00:08<00:12, 210.71it/s] 40%|████      | 1803/4500 [00:08<00:12, 210.78it/s] 41%|████      | 1825/4500 [00:08<00:12, 210.76it/s] 41%|████      | 1847/4500 [00:08<00:12, 210.80it/s] 42%|████▏     | 1870/4500 [00:08<00:12, 210.94it/s] 42%|████▏     | 1892/4500 [00:08<00:12, 210.82it/s] 43%|████▎     | 1914/4500 [00:09<00:12, 210.87it/s] 43%|████▎     | 1937/4500 [00:09<00:12, 210.99it/s] 44%|████▎     | 1959/4500 [00:09<00:12, 210.98it/s] 44%|████▍     | 1981/4500 [00:09<00:11, 210.92it/s] 45%|████▍     | 2003/4500 [00:09<00:11, 210.97it/s] 45%|████▌     | 2025/4500 [00:09<00:11, 211.04it/s] 45%|████▌     | 2047/4500 [00:09<00:11, 211.12it/s] 46%|████▌     | 2070/4500 [00:09<00:11, 211.26it/s] 46%|████▋     | 2092/4500 [00:09<00:11, 211.31it/s] 47%|████▋     | 2114/4500 [00:10<00:11, 211.14it/s] 47%|████▋     | 2137/4500 [00:10<00:11, 211.25it/s] 48%|████▊     | 2159/4500 [00:10<00:11, 211.14it/s] 48%|████▊     | 2181/4500 [00:10<00:10, 211.22it/s] 49%|████▉     | 2203/4500 [00:10<00:10, 211.29it/s] 49%|████▉     | 2225/4500 [00:10<00:10, 211.36it/s] 50%|████▉     | 2248/4500 [00:10<00:10, 211.50it/s] 50%|█████     | 2270/4500 [00:10<00:10, 211.56it/s] 51%|█████     | 2293/4500 [00:10<00:10, 211.69it/s] 51%|█████▏    | 2316/4500 [00:10<00:10, 211.61it/s] 52%|█████▏    | 2338/4500 [00:11<00:10, 211.61it/s] 52%|█████▏    | 2360/4500 [00:11<00:10, 211.65it/s] 53%|█████▎    | 2382/4500 [00:11<00:10, 211.65it/s] 53%|█████▎    | 2404/4500 [00:11<00:09, 211.61it/s] 54%|█████▍    | 2426/4500 [00:11<00:09, 211.58it/s] 54%|█████▍    | 2448/4500 [00:11<00:09, 211.65it/s] 55%|█████▍    | 2470/4500 [00:11<00:09, 211.69it/s] 55%|█████▌    | 2492/4500 [00:11<00:09, 211.74it/s] 56%|█████▌    | 2514/4500 [00:11<00:09, 211.77it/s] 56%|█████▋    | 2536/4500 [00:11<00:09, 211.72it/s] 57%|█████▋    | 2558/4500 [00:12<00:09, 211.68it/s] 57%|█████▋    | 2581/4500 [00:12<00:09, 211.76it/s] 58%|█████▊    | 2603/4500 [00:12<00:08, 211.75it/s] 58%|█████▊    | 2625/4500 [00:12<00:08, 211.77it/s] 59%|█████▉    | 2647/4500 [00:12<00:08, 211.82it/s] 59%|█████▉    | 2670/4500 [00:12<00:08, 211.91it/s] 60%|█████▉    | 2692/4500 [00:12<00:08, 211.94it/s] 60%|██████    | 2714/4500 [00:12<00:08, 211.98it/s] 61%|██████    | 2736/4500 [00:12<00:08, 211.98it/s] 61%|██████▏   | 2758/4500 [00:13<00:08, 211.90it/s] 62%|██████▏   | 2780/4500 [00:13<00:08, 211.88it/s] 62%|██████▏   | 2802/4500 [00:13<00:08, 211.90it/s] 63%|██████▎   | 2824/4500 [00:13<00:07, 211.87it/s] 63%|██████▎   | 2846/4500 [00:13<00:07, 211.89it/s] 64%|██████▎   | 2868/4500 [00:13<00:07, 211.91it/s] 64%|██████▍   | 2890/4500 [00:13<00:07, 211.93it/s] 65%|██████▍   | 2912/4500 [00:13<00:07, 211.96it/s] 65%|██████▌   | 2934/4500 [00:13<00:07, 211.98it/s] 66%|██████▌   | 2956/4500 [00:13<00:07, 211.77it/s] 66%|██████▌   | 2977/4500 [00:14<00:07, 211.73it/s] 67%|██████▋   | 2999/4500 [00:14<00:07, 211.77it/s] 67%|██████▋   | 3021/4500 [00:14<00:06, 211.81it/s] 68%|██████▊   | 3043/4500 [00:14<00:06, 211.85it/s] 68%|██████▊   | 3065/4500 [00:14<00:06, 211.71it/s] 69%|██████▊   | 3087/4500 [00:14<00:06, 211.77it/s] 69%|██████▉   | 3109/4500 [00:14<00:06, 211.82it/s] 70%|██████▉   | 3131/4500 [00:14<00:06, 211.85it/s] 70%|███████   | 3153/4500 [00:14<00:06, 211.91it/s] 71%|███████   | 3175/4500 [00:14<00:06, 211.80it/s] 71%|███████   | 3197/4500 [00:15<00:06, 211.75it/s] 72%|███████▏  | 3218/4500 [00:15<00:06, 211.72it/s] 72%|███████▏  | 3239/4500 [00:15<00:05, 211.71it/s] 72%|███████▏  | 3261/4500 [00:15<00:05, 211.73it/s] 73%|███████▎  | 3283/4500 [00:15<00:05, 211.77it/s] 73%|███████▎  | 3305/4500 [00:15<00:05, 211.80it/s] 74%|███████▍  | 3327/4500 [00:15<00:05, 211.84it/s] 74%|███████▍  | 3350/4500 [00:15<00:05, 211.91it/s] 75%|███████▍  | 3372/4500 [00:15<00:05, 211.87it/s] 75%|███████▌  | 3394/4500 [00:16<00:05, 211.64it/s] 76%|███████▌  | 3416/4500 [00:16<00:05, 211.66it/s] 76%|███████▋  | 3438/4500 [00:16<00:05, 211.66it/s] 77%|███████▋  | 3460/4500 [00:16<00:04, 211.69it/s] 77%|███████▋  | 3482/4500 [00:16<00:04, 211.74it/s] 78%|███████▊  | 3505/4500 [00:16<00:04, 211.83it/s] 78%|███████▊  | 3528/4500 [00:16<00:04, 211.89it/s] 79%|███████▉  | 3550/4500 [00:16<00:04, 211.92it/s] 79%|███████▉  | 3572/4500 [00:16<00:04, 211.94it/s] 80%|███████▉  | 3594/4500 [00:16<00:04, 211.80it/s] 80%|████████  | 3615/4500 [00:17<00:04, 211.77it/s] 81%|████████  | 3636/4500 [00:17<00:04, 211.73it/s] 81%|████████▏ | 3658/4500 [00:17<00:03, 211.76it/s] 82%|████████▏ | 3680/4500 [00:17<00:03, 211.65it/s] 82%|████████▏ | 3701/4500 [00:17<00:03, 211.55it/s] 83%|████████▎ | 3722/4500 [00:17<00:03, 211.36it/s] 83%|████████▎ | 3744/4500 [00:17<00:03, 211.38it/s] 84%|████████▎ | 3766/4500 [00:17<00:03, 211.38it/s] 84%|████████▍ | 3789/4500 [00:17<00:03, 211.45it/s] 85%|████████▍ | 3811/4500 [00:18<00:03, 211.35it/s] 85%|████████▌ | 3833/4500 [00:18<00:03, 211.39it/s] 86%|████████▌ | 3855/4500 [00:18<00:03, 211.43it/s] 86%|████████▌ | 3877/4500 [00:18<00:02, 211.45it/s] 87%|████████▋ | 3899/4500 [00:18<00:02, 211.40it/s] 87%|████████▋ | 3921/4500 [00:18<00:02, 211.41it/s] 88%|████████▊ | 3943/4500 [00:18<00:02, 211.42it/s] 88%|████████▊ | 3965/4500 [00:18<00:02, 211.44it/s] 89%|████████▊ | 3987/4500 [00:18<00:02, 211.48it/s] 89%|████████▉ | 4009/4500 [00:18<00:02, 211.43it/s] 90%|████████▉ | 4031/4500 [00:19<00:02, 211.40it/s] 90%|█████████ | 4052/4500 [00:19<00:02, 211.31it/s] 91%|█████████ | 4073/4500 [00:19<00:02, 211.27it/s] 91%|█████████ | 4095/4500 [00:19<00:01, 211.30it/s] 92%|█████████▏| 4118/4500 [00:19<00:01, 211.36it/s] 92%|█████████▏| 4140/4500 [00:19<00:01, 211.38it/s] 92%|█████████▏| 4162/4500 [00:19<00:01, 211.41it/s] 93%|█████████▎| 4185/4500 [00:19<00:01, 211.47it/s] 93%|█████████▎| 4207/4500 [00:19<00:01, 211.49it/s] 94%|█████████▍| 4229/4500 [00:20<00:01, 211.37it/s] 94%|█████████▍| 4251/4500 [00:20<00:01, 211.41it/s] 95%|█████████▍| 4274/4500 [00:20<00:01, 211.46it/s] 95%|█████████▌| 4296/4500 [00:20<00:00, 211.45it/s] 96%|█████████▌| 4318/4500 [00:20<00:00, 211.46it/s] 96%|█████████▋| 4340/4500 [00:20<00:00, 211.32it/s] 97%|█████████▋| 4361/4500 [00:20<00:00, 211.18it/s] 97%|█████████▋| 4381/4500 [00:20<00:00, 211.11it/s] 98%|█████████▊| 4401/4500 [00:20<00:00, 210.92it/s] 98%|█████████▊| 4421/4500 [00:20<00:00, 210.62it/s] 99%|█████████▊| 4440/4500 [00:21<00:00, 210.51it/s] 99%|█████████▉| 4460/4500 [00:21<00:00, 210.44it/s]100%|█████████▉| 4481/4500 [00:21<00:00, 210.42it/s]100%|██████████| 4500/4500 [00:21<00:00, 210.27it/s]
+: The gelman-rubin statistic is larger than 1.4 for some parameters. The sampler did not converge.
+: The estimated number of effective samples is smaller than 200 for some parameters.
+: 
 :END:
 
 
 #+BEGIN_SRC ipython
 summary = pm.summary(trace, varnames=['μ'])
 
-pm.plot_posterior(trace, varnames=['μ'],ref_val = log_costs_per_age_male.values)
+pm.plot_posterior(trace, varnames=['μ'],ref_val = log_costs_per_age_female.values)
 
 #+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[26]:
+# text/plain
+: array([<matplotlib.axes._subplots.AxesSubplot object at 0x1c218e08d0>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c222f1828>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bb40d30>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bb45438>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c36097438>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c352e5cf8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c352fb400>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c37f50ac8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35b431d0>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35b2e898>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35361f60>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c352c4668>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bd45d30>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bd72438>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35d9edd8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c37f16208>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c37efa908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c1e2283c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c1e24ce48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c1e279908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c1e83a3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20da0e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20dcd908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20dfb3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20e1fe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20e4d908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20e7b3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20e9de48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c20eca908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2121d3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2123fe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2126c908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2129b3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c212bfe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c21378908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c281ff3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28224e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2841b908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c284483c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2846ee48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2862f908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c287263c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2874de48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c2877a908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c287a83c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c287cde48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c287f9908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c288b03c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c289ebe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28a19908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28c793c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28f94e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28fc3908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c28ff03c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c34affe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c34b2a908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c34b5b3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c34c0be48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c34c39908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c353903c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c353b5e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c353e6908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c354133c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35438e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35467908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c354983c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c354bfe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c354ed908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3551d3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35542e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c35607908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c356373c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3565de48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c38363908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c383933c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c383b8e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3aa908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3d73c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3ffe48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3b558908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3b8df3c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3b903e48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3b932908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf193c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf3de48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf6e908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3c0253c8>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3c04ae48>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3c455908>,
+:        <matplotlib.axes._subplots.AxesSubplot object at 0x1c3da8f3c8>],
+:       dtype=object)
+
+# text/plain
+: <Figure size 864x8100 with 90 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-MfZafc.png]]
+:END:
 
 
 #+BEGIN_SRC ipython
 plt.plot(summary['mean'].values,label='calculated means')
-plt.plot(log_costs_per_age_male,'o',label='observed means')
+plt.plot(log_costs_per_age_female,'o',label='observed means')
 plt.legend()
 #+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[27]:
+
+
+# text/plain
+: <Figure size 576x396 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-XRlNtD.png]]
+:END:
+
+
+#+BEGIN_SRC ipython
+summary['mean']['μ__17']
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[33]:
+# text/plain
+: 6.701193635863198
+:END:
+
+#+BEGIN_SRC ipython
+summary['mean']['μ__19']
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[34]:
+# text/plain
+: 6.408512997449338
+:END:
+
+
+
 
 
 
 compare average at 17 and 19 and redo this for another year...
 
+Adjusted function below slightly as some columns are missing in the 2011 dataset compared to 2014.
+
+#+BEGIN_SRC ipython
+df_2011 = pd.read_csv('data/Vektis Open Databestand Zorgverzekeringswet 2011 - postcode3.csv', sep = ';')
+
+cost_categories_under_deductible = ['KOSTEN_MEDISCH_SPECIALISTISCHE_ZORG', 'KOSTEN_MONDZORG', 'KOSTEN_FARMACIE', 'KOSTEN_HULPMIDDELEN', 'KOSTEN_PARAMEDISCHE_ZORG_FYSIOTHERAPIE', 'KOSTEN_PARAMEDISCHE_ZORG_OVERIG', 'KOSTEN_ZIEKENVERVOER_ZITTEND', 'KOSTEN_ZIEKENVERVOER_LIGGEND', 'KOSTEN_GRENSOVERSCHRIJDENDE_ZORG', 'KOSTEN_OVERIG']
+
+def get_data_into_shape(df):
+    df['health_expenditure_under_deductible'] = df[cost_categories_under_deductible].sum(axis=1)
+    df = df.rename_axis({
+        'GESLACHT':'sex',
+        'LEEFTIJDSKLASSE':'age',
+        'GEMEENTENAAM':'MUNICIPALITY',
+        'AANTAL_BSN':'number_citizens',
+        'KOSTEN_MEDISCH_SPECIALISTISCHE_ZORG':'hospital_care',
+        'KOSTEN_FARMACIE':'pharmaceuticals',
+        'KOSTEN_TWEEDELIJNS_GGZ':'mental_care',
+        'KOSTEN_HUISARTS_INSCHRIJFTARIEF':'GP_capitation',
+        'KOSTEN_HUISARTS_CONSULT':'GP_fee_for_service',
+        'KOSTEN_HUISARTS_OVERIG':'GP_other',
+        'KOSTEN_MONDZORG':'dental care',
+        'KOSTEN_PARAMEDISCHE_ZORG_FYSIOTHERAPIE':'physiotherapy',
+        'KOSTEN_KRAAMZORG':'maternity_care',
+        'KOSTEN_VERLOSKUNDIGE_ZORG':'obstetrics'
+    }, axis='columns')
+    df.drop(['AANTAL_VERZEKERDEJAREN',
+             'KOSTEN_HULPMIDDELEN',
+             'KOSTEN_PARAMEDISCHE_ZORG_OVERIG',
+             'KOSTEN_ZIEKENVERVOER_ZITTEND',
+             'KOSTEN_ZIEKENVERVOER_LIGGEND',
+             'KOSTEN_GRENSOVERSCHRIJDENDE_ZORG',
+             'KOSTEN_OVERIG',
+             'KOSTEN_EERSTELIJNS_ONDERSTEUNING'],inplace=True,axis=1)
+    df.drop(df.index[[0]], inplace=True)
+    df['sex'] = df['sex'].astype('category')
+    df['age'] = df['age'].astype('category')
+    df['costs_per_head']=df['health_expenditure_under_deductible']/df['number_citizens']
+    df['log_costs_per_head']=np.log(1+df['health_expenditure_under_deductible']/df['number_citizens'])
+    df = df[(df['age'] != '90+')]
+    df['age'] = df['age'].astype(int)
+    return df
+
+df_2011 = get_data_into_shape(df_2011)
+df_2011.head()
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[35]:
+# output
+: /Users/boone/anaconda3/lib/python3.6/site-packages/IPython/core/interactiveshell.py:2785: DtypeWarning: Columns (1) have mixed types. Specify dtype option on import or set low_memory=False.
+:   interactivity=interactivity, compiler=compiler, result=result)
+: /Users/boone/anaconda3/lib/python3.6/site-packages/ipykernel/__main__.py:22: FutureWarning: Using 'rename_axis' to alter labels is deprecated. Use '.rename' instead
+: 
+# text/plain
+:   sex  age  POSTCODE_3  number_citizens  hospital_care  pharmaceuticals  \
+: 1   M    0         0.0              399      673096.28         24352.91   
+: 2   M    0       101.0              608     1141314.40         17499.50   
+: 3   M    0       102.0              300      570651.81         15431.84   
+: 4   M    0       103.0              287     1459149.63         42044.17   
+: 5   M    0       105.0             1049     3036501.62         59187.46   
+: 
+:    mental_care  GP_capitation  GP_fee_for_service  GP_other  dental care  \
+: 1      6249.19        4878.50             5508.93   8312.85          0.0   
+: 2      6303.31       10469.99            12216.49  22939.00          0.0   
+: 3      6563.82        5346.37             6815.20  13641.15          0.0   
+: 4      6348.12        5039.63             6317.01  13070.23          0.0   
+: 5     41053.58       18076.34            21496.57  46877.41          0.0   
+: 
+:    physiotherapy  maternity_care  obstetrics  \
+: 1       10708.89             0.0         0.0   
+: 2       10272.41             0.0         0.0   
+: 3        4090.89             0.0         0.0   
+: 4        3732.10             0.0         0.0   
+: 5       14180.39             0.0         0.0   
+: 
+:    KOSTEN_EERSTELIJNS_PSYCHOLOGISCHE_ZORG  \
+: 1                                     0.0   
+: 2                                     0.0   
+: 3                                     0.0   
+: 4                                     0.0   
+: 5                                     0.0   
+: 
+:    health_expenditure_under_deductible  costs_per_head  log_costs_per_head  
+: 1                            774533.05     1941.185589            7.571569  
+: 2                           1196589.65     1968.075082            7.585319  
+: 3                            605038.59     2016.795300            7.609761  
+: 4                           1661669.25     5789.788328            8.664024  
+: 5                           3172935.43     3024.723956            8.014906  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>age</th>
+      <th>POSTCODE_3</th>
+      <th>number_citizens</th>
+      <th>hospital_care</th>
+      <th>pharmaceuticals</th>
+      <th>mental_care</th>
+      <th>GP_capitation</th>
+      <th>GP_fee_for_service</th>
+      <th>GP_other</th>
+      <th>dental care</th>
+      <th>physiotherapy</th>
+      <th>maternity_care</th>
+      <th>obstetrics</th>
+      <th>KOSTEN_EERSTELIJNS_PSYCHOLOGISCHE_ZORG</th>
+      <th>health_expenditure_under_deductible</th>
+      <th>costs_per_head</th>
+      <th>log_costs_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>399</td>
+      <td>673096.28</td>
+      <td>24352.91</td>
+      <td>6249.19</td>
+      <td>4878.50</td>
+      <td>5508.93</td>
+      <td>8312.85</td>
+      <td>0.0</td>
+      <td>10708.89</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>774533.05</td>
+      <td>1941.185589</td>
+      <td>7.571569</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>M</td>
+      <td>0</td>
+      <td>101.0</td>
+      <td>608</td>
+      <td>1141314.40</td>
+      <td>17499.50</td>
+      <td>6303.31</td>
+      <td>10469.99</td>
+      <td>12216.49</td>
+      <td>22939.00</td>
+      <td>0.0</td>
+      <td>10272.41</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1196589.65</td>
+      <td>1968.075082</td>
+      <td>7.585319</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>0</td>
+      <td>102.0</td>
+      <td>300</td>
+      <td>570651.81</td>
+      <td>15431.84</td>
+      <td>6563.82</td>
+      <td>5346.37</td>
+      <td>6815.20</td>
+      <td>13641.15</td>
+      <td>0.0</td>
+      <td>4090.89</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>605038.59</td>
+      <td>2016.795300</td>
+      <td>7.609761</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>M</td>
+      <td>0</td>
+      <td>103.0</td>
+      <td>287</td>
+      <td>1459149.63</td>
+      <td>42044.17</td>
+      <td>6348.12</td>
+      <td>5039.63</td>
+      <td>6317.01</td>
+      <td>13070.23</td>
+      <td>0.0</td>
+      <td>3732.10</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1661669.25</td>
+      <td>5789.788328</td>
+      <td>8.664024</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>M</td>
+      <td>0</td>
+      <td>105.0</td>
+      <td>1049</td>
+      <td>3036501.62</td>
+      <td>59187.46</td>
+      <td>41053.58</td>
+      <td>18076.34</td>
+      <td>21496.57</td>
+      <td>46877.41</td>
+      <td>0.0</td>
+      <td>14180.39</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3172935.43</td>
+      <td>3024.723956</td>
+      <td>8.014906</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+
+
+???delete????
+
+#+BEGIN_SRC ipython
+df_2011[df_2011['sex']=='V'].groupby(['age'])['costs_per_head'].mean()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[21]:
+# text/plain
+: age
+: 0     2319.162817
+: 1      789.701372
+: 2      519.638247
+: 3      531.079552
+: 4      523.951780
+: 5      561.863211
+: 6      594.751258
+: 7      560.116594
+: 8      528.866292
+: 9      516.259605
+: 10     528.715873
+: 11     541.900909
+: 12     557.955258
+: 13     585.595991
+: 14     645.655728
+: 15     683.892494
+: 16     774.230615
+: 17     826.967902
+: 18     798.428238
+: 19     704.724896
+: 20     741.023921
+: 21     763.235522
+: 22     792.369337
+: 23     838.041001
+: 24     947.225260
+: 25    1016.065861
+: 26    1111.348157
+: 27    1195.852406
+: 28    1312.559831
+: 29    1379.574599
+:          ...     
+: 60    2224.081305
+: 61    2232.370753
+: 62    2293.861715
+: 63    2438.486937
+: 64    2542.826753
+: 65    2623.297043
+: 66    2821.451192
+: 67    2899.043885
+: 68    3011.341197
+: 69    3130.130411
+: 70    3293.522082
+: 71    3385.305796
+: 72    3542.575447
+: 73    3664.890088
+: 74    3853.816196
+: 75    3898.750500
+: 76    4062.604276
+: 77    4218.190945
+: 78    4366.339671
+: 79    4425.921933
+: 80    4335.768236
+: 81    4530.436861
+: 82    4487.016618
+: 83    4572.725461
+: 84    4635.019260
+: 85    4506.862034
+: 86    4476.350871
+: 87    4433.144639
+: 88    4427.351553
+: 89    4302.677315
+: Name: costs_per_head, Length: 90, dtype: float64
+:END:
+
+
+
+#+BEGIN_SRC ipython :async
+
+log_costs_per_age_female = df_2011[df_2011['sex']=='V'].groupby(['age'])['log_costs_per_head'].mean()
+
+log_costs_per_head = df_2011[df_2011['sex']=='V'].log_costs_per_head.values
+age = df_2011[df_2011['sex']=='V'].age.values
+
+
+with pm.Model() as model_2011:
+    
+    μ = pm.Normal('μ', 8, 3, shape=len(set(age)))
+    σ = pm.HalfCauchy('σ', 4, shape=len(set(age)))
+    z = pm.Normal('z', μ[age], σ[age], observed=log_costs_per_head)
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[36]:
+:END:
+
+
+#+BEGIN_SRC ipython :async
+with model_2011:
+    trace_2011 = pm.sample(4000,step = pm.Metropolis(),start = pm.find_MAP())
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[37]:
+# output
+:   0%|          | 0/5000 [00:00<?, ?it/s]logp = -1.5898e+05, ||grad|| = 6,668.8:   0%|          | 0/5000 [00:00<?, ?it/s]logp = -38,605, ||grad|| = 4,877.8:   0%|          | 10/5000 [00:00<00:21, 229.78it/s]logp = -26,948, ||grad|| = 36.313:   0%|          | 20/5000 [00:00<00:20, 246.40it/s] logp = -26,948, ||grad|| = 36.313:   1%|          | 26/5000 [00:00<00:19, 258.66it/s]logp = -26,948, ||grad|| = 36.313: 100%|██████████| 30/30 [00:00<00:00, 263.75it/s]  
+: Multiprocess sampling (4 chains in 4 jobs)
+: CompoundStep
+: >Metropolis: [σ_log__]
+: >Metropolis: [μ]
+:   0%|          | 0/4500 [00:00<?, ?it/s]  0%|          | 18/4500 [00:00<00:25, 176.55it/s]  1%|          | 42/4500 [00:00<00:21, 206.46it/s]  1%|▏         | 61/4500 [00:00<00:22, 199.03it/s]  2%|▏         | 83/4500 [00:00<00:21, 204.05it/s]  2%|▏         | 105/4500 [00:00<00:21, 205.87it/s]  3%|▎         | 127/4500 [00:00<00:21, 207.22it/s]  3%|▎         | 147/4500 [00:00<00:21, 205.46it/s]  4%|▍         | 169/4500 [00:00<00:20, 206.93it/s]  4%|▍         | 191/4500 [00:00<00:20, 207.37it/s]  5%|▍         | 212/4500 [00:01<00:20, 205.76it/s]  5%|▌         | 232/4500 [00:01<00:20, 204.85it/s]  6%|▌         | 254/4500 [00:01<00:20, 205.58it/s]  6%|▌         | 277/4500 [00:01<00:20, 206.79it/s]  7%|▋         | 298/4500 [00:01<00:20, 204.61it/s]  7%|▋         | 321/4500 [00:01<00:20, 205.78it/s]  8%|▊         | 342/4500 [00:01<00:20, 205.81it/s]  8%|▊         | 364/4500 [00:01<00:20, 206.43it/s]  9%|▊         | 386/4500 [00:01<00:19, 207.15it/s]  9%|▉         | 408/4500 [00:01<00:19, 207.67it/s] 10%|▉         | 430/4500 [00:02<00:19, 207.58it/s] 10%|█         | 452/4500 [00:02<00:19, 207.74it/s] 11%|█         | 475/4500 [00:02<00:19, 208.40it/s] 11%|█         | 497/4500 [00:02<00:19, 207.90it/s] 12%|█▏        | 520/4500 [00:02<00:19, 208.46it/s] 12%|█▏        | 542/4500 [00:02<00:18, 208.81it/s] 13%|█▎        | 564/4500 [00:02<00:18, 208.38it/s] 13%|█▎        | 586/4500 [00:02<00:18, 208.70it/s] 14%|█▎        | 608/4500 [00:02<00:18, 209.04it/s] 14%|█▍        | 631/4500 [00:03<00:18, 209.32it/s] 15%|█▍        | 653/4500 [00:03<00:18, 209.36it/s] 15%|█▌        | 675/4500 [00:03<00:18, 209.50it/s] 15%|█▌        | 697/4500 [00:03<00:18, 209.78it/s] 16%|█▌        | 719/4500 [00:03<00:18, 210.04it/s] 16%|█▋        | 741/4500 [00:03<00:17, 210.08it/s] 17%|█▋        | 763/4500 [00:03<00:17, 210.09it/s] 17%|█▋        | 785/4500 [00:03<00:17, 210.06it/s] 18%|█▊        | 808/4500 [00:03<00:17, 210.42it/s] 18%|█▊        | 830/4500 [00:03<00:17, 210.60it/s] 19%|█▉        | 852/4500 [00:04<00:17, 209.99it/s] 19%|█▉        | 874/4500 [00:04<00:17, 210.06it/s] 20%|█▉        | 895/4500 [00:04<00:17, 210.04it/s] 20%|██        | 917/4500 [00:04<00:17, 210.14it/s] 21%|██        | 939/4500 [00:04<00:16, 210.15it/s] 21%|██▏       | 961/4500 [00:04<00:16, 209.88it/s] 22%|██▏       | 983/4500 [00:04<00:16, 210.03it/s] 22%|██▏       | 1005/4500 [00:04<00:16, 210.08it/s] 23%|██▎       | 1028/4500 [00:04<00:16, 210.36it/s] 23%|██▎       | 1050/4500 [00:04<00:16, 210.52it/s] 24%|██▍       | 1072/4500 [00:05<00:16, 209.69it/s] 24%|██▍       | 1094/4500 [00:05<00:16, 209.86it/s] 25%|██▍       | 1117/4500 [00:05<00:16, 210.13it/s] 25%|██▌       | 1139/4500 [00:05<00:15, 210.30it/s] 26%|██▌       | 1161/4500 [00:05<00:15, 210.46it/s] 26%|██▋       | 1183/4500 [00:05<00:15, 210.47it/s] 27%|██▋       | 1205/4500 [00:05<00:15, 210.63it/s] 27%|██▋       | 1227/4500 [00:05<00:15, 210.72it/s] 28%|██▊       | 1249/4500 [00:05<00:15, 210.68it/s] 28%|██▊       | 1271/4500 [00:06<00:15, 210.61it/s] 29%|██▉       | 1294/4500 [00:06<00:15, 210.82it/s] 29%|██▉       | 1317/4500 [00:06<00:15, 211.01it/s] 30%|██▉       | 1339/4500 [00:06<00:14, 211.09it/s] 30%|███       | 1361/4500 [00:06<00:14, 211.12it/s] 31%|███       | 1384/4500 [00:06<00:14, 211.31it/s] 31%|███       | 1406/4500 [00:06<00:14, 211.31it/s] 32%|███▏      | 1428/4500 [00:06<00:14, 211.37it/s] 32%|███▏      | 1450/4500 [00:06<00:14, 211.39it/s] 33%|███▎      | 1473/4500 [00:06<00:14, 211.58it/s] 33%|███▎      | 1495/4500 [00:07<00:14, 211.48it/s] 34%|███▎      | 1517/4500 [00:07<00:14, 211.28it/s] 34%|███▍      | 1539/4500 [00:07<00:14, 211.37it/s] 35%|███▍      | 1561/4500 [00:07<00:13, 211.24it/s] 35%|███▌      | 1582/4500 [00:07<00:13, 211.19it/s] 36%|███▌      | 1605/4500 [00:07<00:13, 211.33it/s] 36%|███▌      | 1627/4500 [00:07<00:13, 211.42it/s] 37%|███▋      | 1649/4500 [00:07<00:13, 211.35it/s] 37%|███▋      | 1671/4500 [00:07<00:13, 211.41it/s] 38%|███▊      | 1694/4500 [00:08<00:13, 211.43it/s] 38%|███▊      | 1716/4500 [00:08<00:13, 211.37it/s] 39%|███▊      | 1738/4500 [00:08<00:13, 211.43it/s] 39%|███▉      | 1760/4500 [00:08<00:12, 211.50it/s] 40%|███▉      | 1782/4500 [00:08<00:12, 211.48it/s] 40%|████      | 1804/4500 [00:08<00:12, 211.50it/s] 41%|████      | 1826/4500 [00:08<00:12, 211.53it/s] 41%|████      | 1848/4500 [00:08<00:12, 211.58it/s] 42%|████▏     | 1871/4500 [00:08<00:12, 211.70it/s] 42%|████▏     | 1893/4500 [00:08<00:12, 211.71it/s] 43%|████▎     | 1915/4500 [00:09<00:12, 211.41it/s] 43%|████▎     | 1938/4500 [00:09<00:12, 211.54it/s] 44%|████▎     | 1960/4500 [00:09<00:12, 211.56it/s] 44%|████▍     | 1982/4500 [00:09<00:11, 211.64it/s] 45%|████▍     | 2004/4500 [00:09<00:11, 211.64it/s] 45%|████▌     | 2026/4500 [00:09<00:11, 211.50it/s] 45%|████▌     | 2047/4500 [00:09<00:11, 211.14it/s] 46%|████▌     | 2069/4500 [00:09<00:11, 211.23it/s] 46%|████▋     | 2091/4500 [00:09<00:11, 211.22it/s] 47%|████▋     | 2113/4500 [00:10<00:11, 211.23it/s] 47%|████▋     | 2134/4500 [00:10<00:11, 210.92it/s] 48%|████▊     | 2156/4500 [00:10<00:11, 210.95it/s] 48%|████▊     | 2179/4500 [00:10<00:10, 211.08it/s] 49%|████▉     | 2201/4500 [00:10<00:10, 211.13it/s] 49%|████▉     | 2223/4500 [00:10<00:10, 211.14it/s] 50%|████▉     | 2245/4500 [00:10<00:10, 211.21it/s] 50%|█████     | 2267/4500 [00:10<00:10, 211.24it/s] 51%|█████     | 2289/4500 [00:10<00:10, 211.32it/s] 51%|█████▏    | 2311/4500 [00:10<00:10, 211.29it/s] 52%|█████▏    | 2333/4500 [00:11<00:10, 211.09it/s] 52%|█████▏    | 2355/4500 [00:11<00:10, 211.16it/s] 53%|█████▎    | 2377/4500 [00:11<00:10, 211.10it/s] 53%|█████▎    | 2398/4500 [00:11<00:09, 210.99it/s] 54%|█████▍    | 2419/4500 [00:11<00:09, 210.97it/s] 54%|█████▍    | 2441/4500 [00:11<00:09, 211.02it/s] 55%|█████▍    | 2463/4500 [00:11<00:09, 211.04it/s] 55%|█████▌    | 2486/4500 [00:11<00:09, 211.15it/s] 56%|█████▌    | 2508/4500 [00:11<00:09, 211.06it/s] 56%|█████▌    | 2531/4500 [00:11<00:09, 211.17it/s] 57%|█████▋    | 2553/4500 [00:12<00:09, 211.00it/s] 57%|█████▋    | 2575/4500 [00:12<00:09, 211.06it/s] 58%|█████▊    | 2597/4500 [00:12<00:09, 211.10it/s] 58%|█████▊    | 2619/4500 [00:12<00:08, 211.09it/s] 59%|█████▊    | 2641/4500 [00:12<00:08, 211.13it/s] 59%|█████▉    | 2663/4500 [00:12<00:08, 211.17it/s] 60%|█████▉    | 2685/4500 [00:12<00:08, 211.02it/s] 60%|██████    | 2707/4500 [00:12<00:08, 211.03it/s] 61%|██████    | 2730/4500 [00:12<00:08, 211.12it/s] 61%|██████    | 2752/4500 [00:13<00:08, 211.13it/s] 62%|██████▏   | 2774/4500 [00:13<00:08, 211.15it/s] 62%|██████▏   | 2796/4500 [00:13<00:08, 211.18it/s] 63%|██████▎   | 2819/4500 [00:13<00:07, 211.29it/s] 63%|██████▎   | 2842/4500 [00:13<00:07, 211.37it/s] 64%|██████▎   | 2864/4500 [00:13<00:07, 211.38it/s] 64%|██████▍   | 2886/4500 [00:13<00:07, 211.44it/s] 65%|██████▍   | 2908/4500 [00:13<00:07, 211.49it/s] 65%|██████▌   | 2931/4500 [00:13<00:07, 211.59it/s] 66%|██████▌   | 2954/4500 [00:13<00:07, 211.65it/s] 66%|██████▌   | 2976/4500 [00:14<00:07, 211.58it/s] 67%|██████▋   | 2998/4500 [00:14<00:07, 211.57it/s] 67%|██████▋   | 3021/4500 [00:14<00:06, 211.65it/s] 68%|██████▊   | 3043/4500 [00:14<00:06, 211.61it/s] 68%|██████▊   | 3065/4500 [00:14<00:06, 211.49it/s] 69%|██████▊   | 3087/4500 [00:14<00:06, 211.54it/s] 69%|██████▉   | 3109/4500 [00:14<00:06, 211.58it/s] 70%|██████▉   | 3131/4500 [00:14<00:06, 211.63it/s] 70%|███████   | 3153/4500 [00:14<00:06, 211.68it/s] 71%|███████   | 3175/4500 [00:14<00:06, 211.73it/s] 71%|███████   | 3197/4500 [00:15<00:06, 211.64it/s] 72%|███████▏  | 3219/4500 [00:15<00:06, 211.61it/s] 72%|███████▏  | 3241/4500 [00:15<00:05, 211.63it/s] 73%|███████▎  | 3263/4500 [00:15<00:05, 211.63it/s] 73%|███████▎  | 3286/4500 [00:15<00:05, 211.70it/s] 74%|███████▎  | 3308/4500 [00:15<00:05, 211.72it/s] 74%|███████▍  | 3331/4500 [00:15<00:05, 211.79it/s] 75%|███████▍  | 3353/4500 [00:15<00:05, 211.82it/s] 75%|███████▌  | 3375/4500 [00:15<00:05, 211.74it/s] 75%|███████▌  | 3397/4500 [00:16<00:05, 211.64it/s] 76%|███████▌  | 3418/4500 [00:16<00:05, 211.62it/s] 76%|███████▋  | 3441/4500 [00:16<00:05, 211.69it/s] 77%|███████▋  | 3463/4500 [00:16<00:04, 211.69it/s] 77%|███████▋  | 3485/4500 [00:16<00:04, 211.73it/s] 78%|███████▊  | 3507/4500 [00:16<00:04, 211.75it/s] 78%|███████▊  | 3529/4500 [00:16<00:04, 211.79it/s] 79%|███████▉  | 3552/4500 [00:16<00:04, 211.85it/s] 79%|███████▉  | 3574/4500 [00:16<00:04, 211.84it/s] 80%|███████▉  | 3596/4500 [00:16<00:04, 211.86it/s] 80%|████████  | 3618/4500 [00:17<00:04, 211.76it/s] 81%|████████  | 3640/4500 [00:17<00:04, 211.78it/s] 81%|████████▏ | 3662/4500 [00:17<00:03, 211.81it/s] 82%|████████▏ | 3684/4500 [00:17<00:03, 211.83it/s] 82%|████████▏ | 3706/4500 [00:17<00:03, 211.75it/s] 83%|████████▎ | 3728/4500 [00:17<00:03, 211.78it/s] 83%|████████▎ | 3750/4500 [00:17<00:03, 211.78it/s] 84%|████████▍ | 3772/4500 [00:17<00:03, 211.75it/s] 84%|████████▍ | 3794/4500 [00:17<00:03, 211.76it/s] 85%|████████▍ | 3816/4500 [00:18<00:03, 211.65it/s] 85%|████████▌ | 3837/4500 [00:18<00:03, 211.60it/s] 86%|████████▌ | 3859/4500 [00:18<00:03, 211.62it/s] 86%|████████▌ | 3881/4500 [00:18<00:02, 211.66it/s] 87%|████████▋ | 3904/4500 [00:18<00:02, 211.72it/s] 87%|████████▋ | 3926/4500 [00:18<00:02, 211.75it/s] 88%|████████▊ | 3948/4500 [00:18<00:02, 211.67it/s] 88%|████████▊ | 3970/4500 [00:18<00:02, 211.70it/s] 89%|████████▊ | 3993/4500 [00:18<00:02, 211.76it/s] 89%|████████▉ | 4016/4500 [00:18<00:02, 211.81it/s] 90%|████████▉ | 4038/4500 [00:19<00:02, 211.75it/s] 90%|█████████ | 4060/4500 [00:19<00:02, 211.76it/s] 91%|█████████ | 4082/4500 [00:19<00:01, 211.78it/s] 91%|█████████ | 4105/4500 [00:19<00:01, 211.84it/s] 92%|█████████▏| 4127/4500 [00:19<00:01, 211.86it/s] 92%|█████████▏| 4149/4500 [00:19<00:01, 211.89it/s] 93%|█████████▎| 4171/4500 [00:19<00:01, 211.91it/s] 93%|█████████▎| 4193/4500 [00:19<00:01, 211.79it/s] 94%|█████████▎| 4214/4500 [00:19<00:01, 211.61it/s] 94%|█████████▍| 4235/4500 [00:20<00:01, 211.56it/s] 95%|█████████▍| 4256/4500 [00:20<00:01, 211.52it/s] 95%|█████████▌| 4278/4500 [00:20<00:01, 211.55it/s] 96%|█████████▌| 4300/4500 [00:20<00:00, 211.55it/s] 96%|█████████▌| 4322/4500 [00:20<00:00, 211.59it/s] 97%|█████████▋| 4344/4500 [00:20<00:00, 211.62it/s] 97%|█████████▋| 4366/4500 [00:20<00:00, 211.64it/s] 98%|█████████▊| 4389/4500 [00:20<00:00, 211.69it/s] 98%|█████████▊| 4411/4500 [00:20<00:00, 211.70it/s] 99%|█████████▊| 4433/4500 [00:20<00:00, 211.65it/s] 99%|█████████▉| 4455/4500 [00:21<00:00, 211.57it/s] 99%|█████████▉| 4477/4500 [00:21<00:00, 211.59it/s]100%|█████████▉| 4499/4500 [00:21<00:00, 211.61it/s]100%|██████████| 4500/4500 [00:21<00:00, 211.59it/s]
+: The gelman-rubin statistic is larger than 1.2 for some parameters.
+: The estimated number of effective samples is smaller than 200 for some parameters.
+: 
+:END:
+
+#+BEGIN_SRC ipython
+summary_2011 = pm.summary(trace_2011, varnames=['μ'])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[39]:
+:END:
+
+In 2014 the difference in mean log expenditure equals: 0.29
+
+#+BEGIN_SRC ipython
+summary['mean']['μ__17']-summary['mean']['μ__19']
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[43]:
+# text/plain
+: 0.2926806384138594
+:END:
+
+
+In 2011, this difference is smaller: 0.20
+
+#+BEGIN_SRC ipython
+summary_2011['mean']['μ__17']-summary_2011['mean']['μ__19']
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[42]:
+# text/plain
+: 0.1950123746795569
+:END:
+
+Hence we find that regulation in terms of a deductible has an effect on health care expenditures.
+
+Analysis can be extended to become more convincing:
++ add more years
++ add year dummies to distinguish year effects (like changes in treatments covered by basic insurance) from changes in deductible.
 
 
 
@@ -1049,14 +1992,398 @@ compare average at 17 and 19 and redo this for another year...
 
 *** API's to get data
 
+look at inequality in gdp per head
+
+[[http://wbdata.readthedocs.io/en/latest/][this website]]
+
+
+
+#+BEGIN_SRC ipython
+wb.search_indicators("gdp per capita")
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[46]:
+# output
+: 6.0.GDPpc_constant      	GDP per capita, PPP (constant 2011 international $) 
+: FB.DPT.INSU.PC.ZS       	Deposit insurance coverage (% of GDP per capita)
+: NV.AGR.PCAP.KD.ZG       	Real agricultural GDP per capita growth rate (%)
+: NY.GDP.PCAP.PP.KD.ZG    	GDP per capita, PPP annual growth (%)
+: NY.GDP.PCAP.PP.KD.87    	GDP per capita, PPP (constant 1987 international $)
+: NY.GDP.PCAP.PP.KD       	GDP per capita, PPP (constant 2011 international $)
+: NY.GDP.PCAP.PP.CD       	GDP per capita, PPP (current international $)
+: NY.GDP.PCAP.KN          	GDP per capita (constant LCU)
+: NY.GDP.PCAP.KD.ZG       	GDP per capita growth (annual %)
+: NY.GDP.PCAP.KD          	GDP per capita (constant 2010 US$)
+: NY.GDP.PCAP.CN          	GDP per capita (current LCU)
+: NY.GDP.PCAP.CD          	GDP per capita (current US$)
+: SE.XPD.TERT.PC.ZS       	Government expenditure per student, tertiary (% of GDP per capita)
+: SE.XPD.SECO.PC.ZS       	Government expenditure per student, secondary (% of GDP per capita)
+: SE.XPD.PRIM.PC.ZS       	Government expenditure per student, primary (% of GDP per capita)
+: UIS.XUNIT.GDPCAP.4.FSGOV	Government expenditure per post-secondary non-tertiary student as % of GDP per capita (%)
+: UIS.XUNIT.GDPCAP.3.FSGOV	Government expenditure per upper secondary student as % of GDP per capita (%)
+: UIS.XUNIT.GDPCAP.2.FSGOV	Government expenditure per lower secondary student as % of GDP per capita (%)
+: 
+:END:
+
+
+#+BEGIN_SRC ipython
+indicators = {"NY.GDP.PCAP.PP.KD": "GDP_per_head"}
+df_wb = wb.get_dataframe(indicators, convert_date=True)
+df_wb.reset_index(inplace = True)
+df_wb.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[66]:
+# text/plain
+:       country       date  GDP_per_head
+: 0  Arab World 2017-01-01  15413.791998
+: 1  Arab World 2016-01-01  15500.530523
+: 2  Arab World 2015-01-01  15342.766482
+: 3  Arab World 2014-01-01  15199.008915
+: 4  Arab World 2013-01-01  15174.101703
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date</th>
+      <th>GDP_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Arab World</td>
+      <td>2017-01-01</td>
+      <td>15413.791998</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Arab World</td>
+      <td>2016-01-01</td>
+      <td>15500.530523</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Arab World</td>
+      <td>2015-01-01</td>
+      <td>15342.766482</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Arab World</td>
+      <td>2014-01-01</td>
+      <td>15199.008915</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Arab World</td>
+      <td>2013-01-01</td>
+      <td>15174.101703</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+
+#+BEGIN_SRC ipython
+df_wb.tail(10)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[67]:
+# text/plain
+:         country       date  GDP_per_head
+: 15302  Zimbabwe 1969-01-01           NaN
+: 15303  Zimbabwe 1968-01-01           NaN
+: 15304  Zimbabwe 1967-01-01           NaN
+: 15305  Zimbabwe 1966-01-01           NaN
+: 15306  Zimbabwe 1965-01-01           NaN
+: 15307  Zimbabwe 1964-01-01           NaN
+: 15308  Zimbabwe 1963-01-01           NaN
+: 15309  Zimbabwe 1962-01-01           NaN
+: 15310  Zimbabwe 1961-01-01           NaN
+: 15311  Zimbabwe 1960-01-01           NaN
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date</th>
+      <th>GDP_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15302</th>
+      <td>Zimbabwe</td>
+      <td>1969-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15303</th>
+      <td>Zimbabwe</td>
+      <td>1968-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15304</th>
+      <td>Zimbabwe</td>
+      <td>1967-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15305</th>
+      <td>Zimbabwe</td>
+      <td>1966-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15306</th>
+      <td>Zimbabwe</td>
+      <td>1965-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15307</th>
+      <td>Zimbabwe</td>
+      <td>1964-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15308</th>
+      <td>Zimbabwe</td>
+      <td>1963-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15309</th>
+      <td>Zimbabwe</td>
+      <td>1962-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15310</th>
+      <td>Zimbabwe</td>
+      <td>1961-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15311</th>
+      <td>Zimbabwe</td>
+      <td>1960-01-01</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+If you like the dataframe that you have downloaded from the web, you can save it.
+
+
+#+BEGIN_SRC ipython
+df_wb.to_csv('data/worldbank_data_gdp_per_capita.csv')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[78]:
+:END:
+
+
+#+BEGIN_SRC ipython
+df_1990=df_wb[df_wb['date']=='1990-01-01']
+df_2017=df_wb[df_wb['date']=='2017-01-01']
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[70]:
+:END:
+
+
+#+BEGIN_SRC ipython
+df_merged = pd.merge(df_1990, df_2017, on=['country'], suffixes=['_1990', '_2017'], how='inner')
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[71]:
+:END:
+
+#+BEGIN_SRC ipython
+df_merged.head()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[72]:
+# text/plain
+:                           country  date_1990  GDP_per_head_1990  date_2017  \
+: 0                      Arab World 1990-01-01       10450.208542 2017-01-01   
+: 1          Caribbean small states 1990-01-01        9387.693760 2017-01-01   
+: 2  Central Europe and the Baltics 1990-01-01       12257.927436 2017-01-01   
+: 3      Early-demographic dividend 1990-01-01        4243.600332 2017-01-01   
+: 4             East Asia & Pacific 1990-01-01        4964.741818 2017-01-01   
+: 
+:    GDP_per_head_2017  
+: 0       15413.791998  
+: 1       14356.372119  
+: 2       26499.126110  
+: 3        8857.519723  
+: 4       16525.394471  
+
+# text/html
+#+BEGIN_EXPORT html
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date_1990</th>
+      <th>GDP_per_head_1990</th>
+      <th>date_2017</th>
+      <th>GDP_per_head_2017</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Arab World</td>
+      <td>1990-01-01</td>
+      <td>10450.208542</td>
+      <td>2017-01-01</td>
+      <td>15413.791998</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Caribbean small states</td>
+      <td>1990-01-01</td>
+      <td>9387.693760</td>
+      <td>2017-01-01</td>
+      <td>14356.372119</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Central Europe and the Baltics</td>
+      <td>1990-01-01</td>
+      <td>12257.927436</td>
+      <td>2017-01-01</td>
+      <td>26499.126110</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Early-demographic dividend</td>
+      <td>1990-01-01</td>
+      <td>4243.600332</td>
+      <td>2017-01-01</td>
+      <td>8857.519723</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>East Asia &amp; Pacific</td>
+      <td>1990-01-01</td>
+      <td>4964.741818</td>
+      <td>2017-01-01</td>
+      <td>16525.394471</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+#+END_EXPORT
+:END:
+
+
+#+BEGIN_SRC ipython
+plt.scatter(df_merged['GDP_per_head_1990'],df_merged['GDP_per_head_2017'])
+plt.plot(np.arange(0,100000),np.arange(0,100000))
+plt.xlabel('gdp per head in 1990')
+plt.ylabel('gdp per head in 2017')
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[77]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-NUQsKV.png]]
+:END:
 
 
 
 
 
-#  ov-highlight-data: KCgxMTg0MyAxMTg1NiAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
+
+
+
+
+#  ov-highlight-data: KCgyODk2OSAyODk4MiAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
 
 # Local Variables:
 # eval: (ov-highlight-load)
 # End:
+
+
+
 
