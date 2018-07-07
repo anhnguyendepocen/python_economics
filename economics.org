@@ -1,6 +1,18 @@
 #+Title: Doing economics with python
 #+Author: Jan Boone
-
+#+LANGUAGE:  en
+#+INFOJS_OPT: view:showall toc:t ltoc:t mouse:underline path:http://orgmode.org/org-info.js
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/notebook.css" />
+#+LaTeX_CLASS: article
+#+LaTeX_HEADER: \usepackage{sectsty}
+#+LaTeX_HEADER: \sectionfont{\normalfont\scshape}
+#+LaTeX_HEADER: \subsectionfont{\normalfont\itshape}
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+OPTIONS: \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
+#+STARTUP: showall
+#+LaTeX: \maketitle
+#+OPTIONS: d:(not "ANSWER")
 
 * Introduction
 
@@ -27,7 +39,11 @@ plt.style.use('seaborn')
 
 #+RESULTS:
 :RESULTS:
-# Out[45]:
+# Out[1]:
+# output
+: /Users/boone/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+:   from ._conv import register_converters as _register_converters
+: 
 :END:
 
 
@@ -81,7 +97,7 @@ Suppose that we have an omniscient social planner who knows the valuation of eve
 
 **Question** Calculate the total welfare that this planner can achieve. Denote this value ~max_welfare~.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 max_welfare = np.sum(valuations[:number_of_goods])
 print("{0:.2f}".format(max_welfare))
 #+END_SRC
@@ -103,7 +119,7 @@ Now we compare the maximum welfare that a planner can achieve with the market ou
 
 **Question** Define a function ~demand(p,valuations)~ which has as arguments a price $p$ and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price $p$. Since each agent who buys, buys exactly one unit in our set up, this function returns demand at each price.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 def demand(p,valuations):
     return sum(valuations>p)
 #+END_SRC
@@ -115,7 +131,7 @@ def demand(p,valuations):
 
 **Question** Using ~matplotlib~ plot (fixed) supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 range_p = np.arange(60,150)
 
 plt.plot([demand(p,valuations) for p in range_p],range_p, label = "demand")
@@ -168,7 +184,7 @@ So, now we know the equilibrium price
 **Exercise** Calculate total welfare at this equilibrium price.
 
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 np.sum(valuations[:demand(price,valuations)])
 #+END_SRC
 
@@ -213,7 +229,7 @@ valuations_demand = valuations[number_of_goods:]
 
 **Exercise** Define a function ~supply~ which depends on the price and the valuations of the suppliers.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 def supply(p,valuations):
     return sum(valuations<p)
 #+END_SRC
@@ -225,7 +241,7 @@ def supply(p,valuations):
 
 **Exercise** Use ~matplotlib~ to plot demand and supply in a single figure. 
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 range_p = np.arange(60,150)
 
 plt.plot([demand(p,valuations_demand) for p in range_p],range_p, label = "demand")
@@ -254,7 +270,7 @@ the valuations of people supplying it.
 
 Then use ~fsolve~ to find the equilibrium price.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 def demand_minus_supply(p,valuations_demand,valuations_supply):
     return demand(p,valuations_demand)-supply(p,valuations_supply)
 
@@ -273,7 +289,7 @@ optimize.fsolve(lambda x: demand_minus_supply(x,valuations_demand,valuations_sup
 
 **Exercise** How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 price
 #+END_SRC
 
@@ -285,7 +301,7 @@ price
 :END:
 
 
-** why do others not love the market?
+* why do others not love the market?
 
 Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 
@@ -327,7 +343,7 @@ def demand_2(p,valuations,incomes):
 
 **Exercise** Define the function ~excess_demand_2~ which depends on $p$, agents' valuations, incomes and number of goods (which we assume to be inelastically supplied again).
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 def excess_demand_2(p,valuations,incomes,number_of_goods):
     return demand_2(p,valuations,incomes)-number_of_goods
 #+END_SRC
@@ -339,11 +355,11 @@ def excess_demand_2(p,valuations,incomes,number_of_goods):
 
 **Exercise** Use ~fsolve~ to determine the equilibrium price in this case. Is this price higher or lower than above? Why?
 
-    :ANSWER:
-      price is always lower because income constraint binds; agents always pay less, never more
-    :END:
+:ANSWER:
+  price is always lower because income constraint binds; agents always pay less, never more
+:END:
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 price_2 = optimize.fsolve(lambda x: excess_demand_2(x,valuations,incomes,number_of_goods),120)
 print(price_2)
 #+END_SRC
@@ -356,7 +372,7 @@ print(price_2)
 : 
 :END:
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 price
 #+END_SRC
 
@@ -369,7 +385,7 @@ price
 
 **Exercise** Calculate welfare in the market equilibrium. How does it compare to ~max_welfare~?
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 welfare_2 = np.sum(afford(price_2,incomes)*wtp(price_2,valuations)*valuations)
 print(welfare_2)
 print(max_welfare)
@@ -391,7 +407,7 @@ print(max_welfare)
 With 100 goods and 1000 agents, only few agents buy the good. By increasing the variance, some high value agents may actually get a higher income due to increased inequality. This can increase welfare. If we have 100 goods and 150 agents, the last agent to buy has income below the mean (100). Increasing inequality will tend to reduce this agent's income. This reduces the equilibrium price and hence welfare.
 :END:
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 number_of_agents_2 = 150
 valuations_2 = sorted(pm.Normal.dist(100,20).random(size=number_of_agents_2),reverse = True)
 
@@ -523,7 +539,7 @@ Is it possible that monop. price equals perf. compet. price? yes it is, if loss 
 
 
 
-**** solving a standard oligopoly market
+*** merger simulation
 
 In this section, we model a more standard oligopoly market with
 Cournot competition. We start with three firms and then calculate what
@@ -569,7 +585,7 @@ def fixed_point_three_firms(vector_q,vector_c):
 
 #+RESULTS:
 :RESULTS:
-# Out[152]:
+# Out[7]:
 :END:
 
 We calculate the equilibrium output level, price and the Herfindahl index. The Herhindahl index is defined as the sum of squared market shares:
@@ -597,7 +613,7 @@ print("Herfn. index: {:.3f}".format(H0))
 
 #+RESULTS:
 :RESULTS:
-# Out[153]:
+# Out[8]:
 # output
 : Before the merger
 : =================
@@ -612,9 +628,9 @@ print("Herfn. index: {:.3f}".format(H0))
 structure as the function ~fixed_point_three_firms~ above, except that
 it derives the equilibrium output levels for a duopoly (two firms).
 Test this function by showing that each of the two firms produces
-0.3333 in case both firms have zero costs.
+0.3333 in case both firms have zero costs; use ~fsolve~ as above.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 def fixed_point_two_firms(vector_q,vector_c):
     return [vector_q[0]-reaction(vector_q[1],vector_c[0]),
             vector_q[1]-reaction(vector_q[0],vector_c[1])]
@@ -626,7 +642,7 @@ optimize.fsolve(lambda q: fixed_point_two_firms(q,[0,0]), initial_guess)
 
 #+RESULTS:
 :RESULTS:
-# Out[154]:
+# Out[9]:
 # text/plain
 : array([0.33333333, 0.33333333])
 :END:
@@ -656,7 +672,7 @@ q2_after_merger = [optimize.fsolve(lambda q: fixed_point_two_firms(q,[c0,c]), in
 
 #+RESULTS:
 :RESULTS:
-# Out[157]:
+# Out[10]:
 :END:
 
 **Exercise** Create a dataframe called ~df_after_merger~ with
@@ -664,7 +680,7 @@ three columns: ~c_merged_firm~, ~output_non_merging_firm~,
 ~output_merged_firm~ containing resp. the cost level of the merged firm,
 the output level of firm 1 and the output level of firm 2.
 
-#+BEGIN_SRC ipython :no export
+#+BEGIN_SRC ipython :exports none
 df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger, 
                                 'output_non_merging_firm': q1_after_merger,
                                 'output_merged_firm': q2_after_merger})
@@ -672,123 +688,114 @@ df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger,
 
 #+RESULTS:
 :RESULTS:
-# Out[158]:
+# Out[11]:
 :END:
 
 **Exercise** Add three columns to the dataframe with resp. total
 equilibrium output on the market, ~Q~, equilibrium price, ~P~ and the
 Herfindahl index, ~H~.
 
-#+BEGIN_SRC ipython :no export
-    df_after_merger['Q'] = df_after_merger.output_non_merging_firm + df_after_merger.output_merged_firm
-    df_after_merger['P'] = p(df_after_merger.Q)
-    df_after_merger['H'] = (df_after_merger.output_non_merging_firm/df_after_merger.Q)**2+(df_after_merger.output_merged_firm/df_after_merger.Q)**2
+#+BEGIN_SRC ipython :exports none
+df_after_merger['Q'] = df_after_merger.output_non_merging_firm + df_after_merger.output_merged_firm
+df_after_merger['P'] = p(df_after_merger.Q)
+df_after_merger['H'] = (df_after_merger.output_non_merging_firm/df_after_merger.Q)**2+(df_after_merger.output_merged_firm/df_after_merger.Q)**2
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[159]:
+# Out[12]:
 :END:
 
-???continue here???
-
-**** e) [0.5 points] Make a histogram of the equilibrium price =P= after
+**Exercise** Make a histogram of the equilibrium price ~P~ after
 the merger. Also indicate in the histogram the equilibrium price before
-the merger =P0=. Label the horizontal axis with $P$.
+the merger ~P0~. Label the horizontal axis with $P$.
 
-[hint: you may want to use matplotlib's =hist=, =vlines= and =legend= to
+[hint: you may want to use matplotlib's ~hist~, ~vlines~ and ~legend~ to
 make this graph (e.g use google to find these functions); but feel free
 to use something else]
 
-#+BEGIN_SRC ipython
-plt.hist(df_after_merger.P, bins = 30, normed = 1, label = 'after merger')
+#+BEGIN_SRC ipython :exports none
+plt.hist(df_after_merger.P, bins = 30, density = 1, label = 'after merger')
 plt.vlines(P0,0,25, color = 'red', label = 'before merger')
 plt.legend()
 plt.xlabel('$P$')
 plt.show()
 #+END_SRC
 
-#+CAPTION: png
-[[file:output_18_0.png]]
+#+RESULTS:
+:RESULTS:
+# Out[14]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
 
-**** f) [0.5 points] Explain why sometimes the equilibrium price after
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-05b9xo.png]]
+:END:
+
+
+**Excersise** Explain why sometimes the equilibrium price after
 the merger exceeds the equilibrium price before the merger and sometimes
-it is lower than the pre-merger price. [hint: there is a trade off
-between two effects, depending on which effect dominates, equilibrium
-price increases or decreases after the merger]
-     :PROPERTIES:
-     :CUSTOM_ID: f-0.5-points-explain-why-sometimes-the-equilibrium-price-after-the-merger-exceeds-the-equilibrium-price-before-the-merger-and-sometimes-it-is-lower-than-the-pre-merger-price.-hint-there-is-a-trade-off-between-two-effects-depending-on-which-effect-dominates-equilibrium-price-increases-or-decreases-after-the-merger
-     :END:
+it is lower than the pre-merger price.
 
-There is a trade off between market power (there are fewer firms after
-the merger than before) and efficiency (costs of the merged firm are
-lower after the merger). The market power effect tends to increase the
-equil price. The lower costs tend to reduce the equil. price. For a big
-enough cost reduction, the latter effect dominates and the equil. price
-goes down. If costs hardly fall due to the merger, the market power
-effect dominates and the equil. price increases.
+What is calculated in the following cell?
 
-**** g) [0.5 points] Make a graph with the Herfindahl index on the
-horizontal axis and the equilibrium price on the vertical axis. This is
-straightforward for $(H,P)$ after the merger as both values are in the
-dataframe. Add in another color, the pre-merger combination =(H0,P0)=
-that we calculated above.
-     :PROPERTIES:
-     :CUSTOM_ID: g-0.5-points-make-a-graph-with-the-herfindahl-index-on-the-horizontal-axis-and-the-equilibrium-price-on-the-vertical-axis.-this-is-straightforward-for-hp-after-the-merger-as-both-values-are-in-the-dataframe.-add-in-another-color-the-pre-merger-combination-h0p0-that-we-calculated-above.
-     :END:
-
-#+BEGIN_SRC python
-    plt.scatter(df_after_merger.H,df_after_merger.P,label='after merger')
-    plt.scatter(H0,P0,label='pre merger')
-    plt.legend()
-    plt.xlabel('$H$')
-    plt.ylabel('$P$')
+#+BEGIN_SRC ipython
+np.sum(df_after_merger.P < P0)/len(df_after_merger.P)
 #+END_SRC
 
-#+BEGIN_EXAMPLE
-    Text(0,0.5,'$P$')
-#+END_EXAMPLE
+#+RESULTS:
+:RESULTS:
+# Out[20]:
+# text/plain
+: 0.5
+:END:
 
-#+CAPTION: png
-[[file:output_22_1.png]]
 
-**** h) [0.5 points] Use the graph under g) to discuss the relation
-between the Herfindahl index and the equilibrium price. To illustrate,
+**Exercise** Make a graph with the Herfindahl index on the
+horizontal axis and the equilibrium price on the vertical axis. This is
+straightforward for $(H,P)$ after the merger as both values are in the
+dataframe. Add in another color, the pre-merger combination ~(H0,P0)~
+that we calculated above.
+
+#+BEGIN_SRC ipython :exports none
+plt.scatter(df_after_merger.H,df_after_merger.P,label='after merger')
+plt.scatter(H0,P0,label='pre merger')
+plt.legend()
+plt.xlabel('$H$')
+plt.ylabel('$P$')
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[25]:
+# text/plain
+: Text(0,0.5,'$P$')
+
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-82xrfQ.png]]
+:END:
+
+
+**Exercise** What does the figure above illustrate about the relation
+between the Herfindahl index and the equilibrium price? To illustrate,
 some people think that lower values of the Herfindahl index are
 associated with more competitive outcome. Would you agree with this?
-     :PROPERTIES:
-     :CUSTOM_ID: h-0.5-points-use-the-graph-under-g-to-discuss-the-relation-between-the-herfindahl-index-and-the-equilibrium-price.-to-illustrate-some-people-think-that-lower-values-of-the-herfindahl-index-are-associated-with-more-competitive-outcome.-would-you-agree-with-this
-     :END:
-
-The figure shows that the merger (reducing the number of firms from 3 to
-2) increases $H$. The lowest value of $H$ after the merger is reached
-for the symmetric outcome where both firms have the same cost level =c0=
-(the same as before the merger). In this case, the merger increases the
-equil. price (and hence reduces competition).
-
-As the merged firm gets lower costs than =c0=, the equil. price
-decreases, but the asymmetry in the market caused by this cost reduction
-further increases $H$.
-
-Only considering the post-merger points, higher $H$ is associated with
-lower $P$ and hence more competition.
-
-Comparing pre-merger with after-merger at the same cost level =c0=,
-higher $H$ is associated with higher $P$ and hence less competition
-(this is the "standard interpretation").
-
-
-
-
-
-
 
 *** external effects
 
-Monopolist can produce at cost $c*q$. But production leads to an external effect $\gamma*q$. 
+A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost $c q$. But production leads to an external effect equal to $\gamma q$. Hence, the social cost of production equals $(c+\gamma)q$
+
+We can model this as follows. 
 
 #+BEGIN_SRC ipython
+number_of_agents = 1000
 valuations = np.array(sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse = True))
+
+def demand(p,valuations):
+    return sum(valuations>p)
 
 c = 30
 γ = 80
@@ -809,23 +816,10 @@ def welfare_e(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[104]:
+# Out[24]:
 :END:
 
-
-
-#+BEGIN_SRC ipython
-welfare_e(150,valuations)
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[95]:
-# text/plain
-: array([-38.90125471, -42.32656699, -43.86471811, -46.33057487,
-:        -46.77034567, -46.97122833])
-:END:
-
+**Exercise** Show graphically that the welfare maximizing price exceeds the profit maximizing price.
 
 
 #+BEGIN_SRC ipython :exports no
@@ -841,21 +835,30 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[108]:
+# Out[27]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-CYBhRc.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-tlUkGt.png]]
 :END:
 
 
-Welfare maximizing price is higher than profit maximizing price. Trade off: market power and externality
+**Exercise** What is the interpretation of this result? Which policy instrument can the government use here?
 
 
 * Asymmetric information
 
+One of the reasons why markets (or other institutions for that matter) work less well than a naive observer may hope is asymmetric information. We consider here both adverse selection and moral hazard. Adverse selection we analyze in the context of insurance and moral hazard in the context of taxation.
+
+
 ** adverse selection
+
+**Exercise** What is adverse selection?
+
+Consider an economy with ~number_of_agents~ agents. Each agent has an endowment/income equal to ~income~ and faces a potential loss of the size ~cost~. Agents differ in the probability $\pi$ of this loss. We randomly draw 100 values for $\pi$ assuming it is uniformly distributed on $[0,1]$.
+
+Further, agents have a utility function of the form $u(x)=x^{\rho}$.
 
 #+BEGIN_SRC ipython
 income = 1.1
@@ -864,65 +867,55 @@ cost = 1
 def u(x):
     return x**ρ
 
-π = pm.Uniform.dist(0.0,1.0).random(size = 100)
-π.sort()
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[49]:
-:END:
-
-#+BEGIN_SRC ipython
-def insurance_supply(Q):
-    return np.mean(π[-Q:])*cost
-
-def insurance_demand(σ):
-    return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[50]:
-:END:
-
-
-#+BEGIN_SRC ipython
-range_Q = np.arange(1,101,1)
-range_sigma = np.arange(0,1.01,0.01)
-plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
-plt.plot([insurance_demand(sigma) for sigma in range_sigma],range_sigma,label="insurance demand")
-plt.plot(range_Q,[π[-Q]*cost for Q in range_Q],label="marginal cost")
-plt.legend()
-plt.show()
-#+END_SRC
-
-#+RESULTS:
-:RESULTS:
-# Out[52]:
-# text/plain
-: <Figure size 432x288 with 1 Axes>
-
-# image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-kXHIqU.png]]
-:END:
-
-
-#+BEGIN_SRC ipython
-ρ = 0.2
-def u(x):
-    return x**ρ
-
 number_of_agents = 50
 
-π = pm.Beta.dist(8,2).random(size = number_of_agents)
+π = pm.Uniform.dist(0.0,1.0).random(size = number_of_agents)
 π.sort()
+#+END_SRC
 
-def insurance_supply(Q):
-    return np.mean(π[-Q:])*cost
+#+RESULTS:
+:RESULTS:
+# Out[29]:
+:END:
 
+Since we assume that $\rho \in \langle 0, 1 \rangle$, agents are risk averse and would like to buy insurance which covers the loss. We assume that insurance covers the loss completely at a premium $\sigma$. As we assume that the probability of loss, $\pi$, is exogenous, there is no reason to have co-payments of any sort.
+
+An agent buys insurance if and only if
+
+\begin{equation}
+\label{eq:2}
+u(\text{income}-\sigma) > \pi u(\text{income}-\text{cost}) + (1-\pi) u(\text{income})
+\end{equation}
+
+**Exercise** Define a function ~insurance_demand~ that returns the number of agents buying insurance as a function of the premium $\sigma$.
+
+#+BEGIN_SRC ipython :exports none
 def insurance_demand(σ):
     return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[31]:
+:END:
+
+We assume that this insurance market is perfectly competitive. That is, for each quantity supplied, the premium equals the average cost of the agents buying insurance.
+
+**Exercise** Explain the code of the following function.
+
+#+BEGIN_SRC ipython
+def insurance_supply(Q):
+    return np.mean(π[-Q:])*cost
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[30]:
+:END:
+
+We plot demand and supply in one figure. In addition, we plot the marginal costs curve.
+
+#+BEGIN_SRC ipython
 range_Q = np.arange(1,number_of_agents+1,1)
 range_sigma = np.arange(0,1.01,0.01)
 plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
@@ -934,22 +927,71 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[54]:
+# Out[33]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-n6UNID.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-JAA6bz.png]]
 :END:
 
+**Exercise** Interpret this figure. In particular, 
++ explain why all curves are downward sloping (is supply not usually upward sloping?)
++ what is approx. the equilibrium premium $\sigma$?
++ is the market outcome efficient?
++ what can we learn from the marginal cost curve?
 
 
+**Assignment** Show graphically the effect of an increase in income on the market outcome. Does the inefficiency increase or decrease with income? Why?
+
+#+BEGIN_SRC ipython :exports none
+income = 2
+
+def insurance_demand(σ):
+    return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
+plt.plot(range_Q,[insurance_supply(Q) for Q in range_Q],label="insurance supply")
+plt.plot([insurance_demand(sigma) for sigma in range_sigma],range_sigma,label="insurance demand")
+plt.plot(range_Q,[π[-Q]*cost for Q in range_Q],label="marginal cost")
+plt.legend()
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[35]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-zW4CNz.png]]
+:END:
 
 
 ** moral hazard: optimal taxation 
 
+With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
+
+People differ in their productivity. For some people it is easy to generate a gross income $x$, for others generating such an income would be very costly in terms of effort. In the real world, such differences in productivity can be caused by IQ, education, health status etc. Here, we simply model this as an effort cost. People with a high effort cost have lower productivity than people with low effort costs. We assume that the effort cost is log-normally distributed. 
+
+The government uses a linear tax schedule: $\tau x - \tau_0$. Hence, when you have a gross income $x$, your net income equals $(1-\tau)x+\tau_0$. Where we assume that for the economy as a whole the tax revenue is redistributed among the population. Hence, ~number_of_agents~ times $\tau_0$ has to equal the total revenue from the marginal tax rate $\tau$.
+
+Agents maximize their utility by choosing production $x$:
+
+\begin{equation}
+\label{eq:3}
+\max_{x \geq 0} (1-\tau)x+\tau_0 - cx^2
+\end{equation}
+
+where agents differ in $c$ and $c$ is not observable.
+ 
+These two aspects are important: if $c$ were observable or if everyone was symmetric (had the same $c$) taxation would be easy. To see why, first note that income $x$ is apparently observable since taxation depends on it. Hence, the government could say to an agent $c$: I want you to produce income $x$ and you give me a share $\tau$ of this income. 
+
+In our set-up with heterogeneity in $c$ and $c$ unobservable, the government cannot force people to generate income $x$ because some of these agents may have such a high $c$ that this is inefficient (or even impossible).
+
+Hence, the government sets the tax schedule (in our case here linear) and allows each agent to choose her own production level. The higher $\tau$, the lower an agent's production will be.
+
 #+BEGIN_SRC ipython
-number_of_agents = 100
+number_of_agents = 200
 effort_costs = pm.Lognormal.dist(mu=0.0,sd=0.5).random(size=number_of_agents)
 def effort(c,τ):
     sol = optimize.minimize(lambda x: -(x*(1-τ)-c*x**2),1)
@@ -958,45 +1000,112 @@ def effort(c,τ):
 
 #+RESULTS:
 :RESULTS:
-# Out[65]:
+# Out[51]:
 :END:
+
+We use the following welfare function:
+
+\begin{equation}
+\label{eq:4}
+W = \left(\sum_i ( (1-\tau)x_i + \tau_0 - c_i x_i^2)^{\rho} \right)^{1/\rho}
+\end{equation}
+
+With $\rho=1$, the social planner just maximizes the sum of utility. With $\rho<1$, the planner has a taste for redistribution: agents with low utility get a relatively high weight in this welfare function.
+
+The function ~Welfare~ first calculates for a given $\tau$, what the value of $\tau_0$ is (using budget balance for the government). Then for this value of $\tau$ and $\tau_{0}$, $W$ is calculated.
 
 #+BEGIN_SRC ipython
 def Welfare(τ,ρ):
     τ_0 = np.mean([τ*effort(c,τ) for c in effort_costs])
-    return (np.sum([((1-τ)*effort(c,τ)+τ_0)**ρ for c in effort_costs]))**(1/ρ)
+    return (np.sum([((1-τ)*effort(c,τ)+τ_0 - c*effort(c,τ)**2)**ρ for c in effort_costs]))**(1/ρ)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[74]:
+# Out[52]:
 :END:
 
-#+BEGIN_SRC ipython
+**Exercise** Plot ~Welfare~ as a function of $\tau$ for $\rho=1$. What is the welfare maximizing tax rate? Why?
+
+#+BEGIN_SRC ipython :exports none
 range_tax = np.arange(0,1.1,0.1)
-plt.plot(range_tax,[Welfare(τ,-5) for τ in range_tax])
+plt.plot(range_tax,[Welfare(τ,1) for τ in range_tax])
+plt.xlabel('$\\tau$')
+plt.ylabel('$W$')
 plt.show()
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[86]:
+# Out[55]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-g3Wrka.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-2D0DAB.png]]
+:END:
+
+**Exercise** What happens to the optimal tax rate as $\rho<1$ falls?
+
+#+BEGIN_SRC ipython :exports none
+range_tax = np.arange(0,1.1,0.1)
+plt.plot(range_tax,[Welfare(τ,-1.5) for τ in range_tax], label="$\\rho=-1.5$")
+plt.plot(range_tax,[Welfare(τ,-1.9) for τ in range_tax], label="$\\rho=-1.9$")
+plt.xlabel('$\\tau$')
+plt.ylabel('$W$')
+plt.legend()
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[57]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-odmGXG.png]]
 :END:
 
 
 
-**Question** Use Rawls criterion
+**Assignment** Redefine the function ~Welfare~ above such that it uses [[https://en.wikipedia.org/wiki/A_Theory_of_Justice][Rawls' criterion]] of maximizing the utility of the person who is worse off in society. Further, suppose that the government needs $g$ per head to finance a public good. What is the effect of $g$ on the optimal marginal tax rate?
+
+#+BEGIN_SRC ipython :exports none
+def Welfare_g(τ,g):
+    τ_0 = np.mean([τ*effort(c,τ) for c in effort_costs])-g
+    return np.min([((1-τ)*effort(c,τ)+τ_0 - c*effort(c,τ)**2) for c in effort_costs])
+
+plt.plot(range_tax,[Welfare_g(τ,0.01) for τ in range_tax], label="$g=0$")
+plt.plot(range_tax,[Welfare_g(τ,0.05) for τ in range_tax], label="$g=1$")
+plt.xlabel('$\\tau$')
+plt.ylabel('$W$')
+plt.legend()
+plt.show()
 
 
 
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[64]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-MV7T1A.png]]
+:END:
+
+
+:ANSWER:
+There is no effect of $g$ on $\tau$. The planner already maximizes the utility of the person who is worse off (disregarding everyone else's utility). An increase in $g$ does not affect this trade off and hence there is no effect on $\tau$.
+:END:
 
 
 * Financial crisis
+
+???continue here???
 
 
 #+BEGIN_SRC ipython
@@ -1985,6 +2094,12 @@ Analysis can be extended to become more convincing:
 + add year dummies to distinguish year effects (like changes in treatments covered by basic insurance) from changes in deductible.
 
 
+If you like this way of modelling, you can look at these videos: ....
+
+Simple introductions to Bayesian estimation: ....
+
+
+
 
 ** using python for empirical research
 
@@ -2037,7 +2152,7 @@ df_wb.head()
 
 #+RESULTS:
 :RESULTS:
-# Out[66]:
+# Out[2]:
 # text/plain
 :       country       date  GDP_per_head
 : 0  Arab World 2017-01-01  15413.791998
@@ -2241,7 +2356,7 @@ df_2017=df_wb[df_wb['date']=='2017-01-01']
 
 #+RESULTS:
 :RESULTS:
-# Out[70]:
+# Out[3]:
 :END:
 
 
@@ -2252,7 +2367,7 @@ df_merged = pd.merge(df_1990, df_2017, on=['country'], suffixes=['_1990', '_2017
 
 #+RESULTS:
 :RESULTS:
-# Out[71]:
+# Out[4]:
 :END:
 
 #+BEGIN_SRC ipython
@@ -2261,7 +2376,7 @@ df_merged.head()
 
 #+RESULTS:
 :RESULTS:
-# Out[72]:
+# Out[5]:
 # text/plain
 :                           country  date_1990  GDP_per_head_1990  date_2017  \
 : 0                      Arab World 1990-01-01       10450.208542 2017-01-01   
@@ -2370,6 +2485,29 @@ plt.show()
 [[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-NUQsKV.png]]
 :END:
 
+If all points would be on the 45-degree line, the distribution of income across countries in 2017 would be the same as in 1990. Instead we see that countries with high incomes in 1990, have even higher incomes in 2017, while this is less the case for countries with low incomes in 1990.
+
+
+You may wonder which observations ("dots") correspond to which countries. For this we need a plotting library that is more sophisticated on interactions than ~matplotlib~. A number of these libraries are available; here we consider [[https://bokeh.pydata.org/en/latest/docs/user_guide/quickstart.html][bokeh]]. If you want to know more about bokeh, there is a [[https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh][datacamp course]].
+
+#+BEGIN_SRC ipython
+from bokeh.io import output_file, show, output_notebook
+from bokeh.plotting import figure
+from bokeh.models import HoverTool
+output_notebook()
+
+hover = HoverTool(tooltips=[
+     ('country','@country'),
+     ])
+
+plot = figure(tools=[hover])
+plot.circle('GDP_per_head_1990','GDP_per_head_2017',
+    size=10, source=df_merged)
+output_file('inequality.html')
+show(plot)
+#+END_SRC
+
+[[./inequality.html]]
 
 
 
@@ -2377,8 +2515,7 @@ plt.show()
 
 
 
-
-#  ov-highlight-data: KCgyODk2OSAyODk4MiAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
+#  ov-highlight-data: KCgzMDEyMSAzMDEzNCAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
 
 # Local Variables:
 # eval: (ov-highlight-load)
