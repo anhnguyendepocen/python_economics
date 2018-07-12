@@ -39,7 +39,7 @@ plt.style.use('seaborn')
 
 #+RESULTS:
 :RESULTS:
-# Out[1]:
+# Out[2]:
 # output
 : /Users/boone/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
 :   from ._conv import register_converters as _register_converters
@@ -1186,6 +1186,71 @@ Explain the economic intuition of the graph above.
 
 * Regulation in health care markets
 
+Does government regulation have an effect on markets and how can we measure this?
+
+For this we consider the effect of an increase in the deductible in Dutch basic health insurance.
+
++ institutional background
++ simple theoretical model (year effects taken out by comparing 19 and 17 year olds over two years)
+
+
+A first simple theoretical framework could be the following. Assume that people
+can decide whether to accept the treatment "in their bin" or choose no
+treatment. That is, we assume that people cannot reduce their treatment at the
+margin. Each patient is offered one treatment only (per year) and decides
+whether to accept this treatment or not. Put differently, a series of treatments
+is offered to a patient as an indivisble good. Note that we can test this assumption
+in the data (and it will probably not hold).
+
+The figure below plots costs $c$ of treatment vs values $v$ of treatments. Each
+treatment is a point in this figure; a combination of $c$ and $v$.
+
+#+BEGIN_SRC ipython
+def deductible(c,d):
+   return min(c,d)
+
+range_c = np.arange(0,500,0.1)
+range_v170 = [deductible(c,170) for c in range_c]
+range_v365 = [deductible(c,365) for c in range_c]
+
+plt.plot(range_c,range_v365,'-', color = 'r', linewidth = 2)
+plt.plot(range_c,range_v170,'-', color = 'b', linewidth = 2)
+plt.fill_between(range_c, range_v170, range_v365, facecolor='yellow')
+plt.ylim(0,500)
+plt.xlabel('cost')
+plt.ylabel('Value')
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[8]:
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-BxBX1I.png]]
+:END:
+
+
+
+Hence, as the deductible increases --say, from 170 (blue line) to 365 (red line)
+as in the figure above-- people being offered a treatment in the yellow area
+will decide to drop the treatment. Under the high deductible, the value $v$ of
+these treatments is less than the cost to the patient (while it was the other
+way around with the low deductible)
+
+This is the expenditure reducing effect of an
+increase in the deductible. The elasticity of this increase in the deductible is
+determined by the probability mass over this area.
+
+When you expect that the effect of a change in the deductible is smaller for
+high cost treatments than for low cost treatments, you assume that the mass of
+treatments with value between $[170,365]$ is higher for low cost treatments.
+
+
+
+
 Effect of an increase in deductible; we compare the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro) 
 
 We use data from [[http://www.vektis.nl/index.php/vektis-open-data][Vektis]]. Download from this website the 'csv' files for 2011 and 2014. For the code below, we downloaded these csv-files in the sub-directory data (i.e. sub-directory of the directory in which this notebook resides). When you open the csv files, you can see that it uses ";" as separator between columns.
@@ -2094,16 +2159,12 @@ Analysis can be extended to become more convincing:
 + add year dummies to distinguish year effects (like changes in treatments covered by basic insurance) from changes in deductible.
 
 
-If you like this way of modelling, you can look at these videos: ....
+If you like this way of modelling with pymc3, you can look at [[https://www.youtube.com/watch?v=TMmSESkhRtI&t=9076s][this video]]
 
-Simple introductions to Bayesian estimation: ....
-
-
+A simple introductions to Bayesian estimation with python can be found [[https://www.youtube.com/watch?v=TpgiFIGXcT4&t=6s][here]]. Allen Downey also has [[http://www.allendowney.com/wp/books/][free books]] on statistics with python.
 
 
 ** using python for empirical research
-
-
 
 *** API's to get data
 
@@ -2510,12 +2571,13 @@ show(plot)
 [[./inequality.html]]
 
 
+*** Hacker statistics
 
 
 
 
 
-#  ov-highlight-data: KCgzMDEyMSAzMDEzNCAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
+#  ov-highlight-data: KCgzMDEyMSAzMDEzNCAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
 
 # Local Variables:
 # eval: (ov-highlight-load)
