@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-07 Sat 16:43 -->
+<!-- 2018-08-13 Mon 14:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doing economics with python</title>
@@ -329,47 +329,54 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org546bb5b">1. Introduction</a></li>
-<li><a href="#org5419c7d">2. Python packages that we will be using</a></li>
-<li><a href="#org34653ff">3. Why do we love the market?</a>
+<li><a href="#orge3a6b12">1. Introduction</a></li>
+<li><a href="#org742973b">2. Python packages that we will be using</a></li>
+<li><a href="#org19395f6">3. Why do we love the market?</a>
 <ul>
-<li><a href="#orgbbd4506">3.1. market outcome</a>
+<li><a href="#org7fe44f3">3.1. market outcome</a>
 <ul>
-<li><a href="#org7866c52">3.1.1. elastic demand and supply</a></li>
+<li><a href="#orga64f954">3.1.1. elastic demand and supply</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org54300da">4. why do others not love the market?</a>
+<li><a href="#orgad086c3">4. why do others not love the market?</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orgf66068a">4.0.1. income distribution</a></li>
-<li><a href="#orgf8442dd">4.0.2. market power</a></li>
-<li><a href="#orgc1c9356">4.0.3. merger simulation</a></li>
-<li><a href="#orgf2b7bee">4.0.4. external effects</a></li>
+<li><a href="#orga40ef40">4.0.1. income distribution</a></li>
+<li><a href="#org3afb21c">4.0.2. market power</a></li>
+<li><a href="#org150bafd">4.0.3. merger simulation</a></li>
+<li><a href="#org13d16d8">4.0.4. external effects</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgfd13055">5. Asymmetric information</a>
+<li><a href="#orgd258aad">5. Asymmetric information</a>
 <ul>
-<li><a href="#orgf07f53b">5.1. adverse selection</a></li>
-<li><a href="#org6099356">5.2. moral hazard: optimal taxation</a></li>
+<li><a href="#orgeb4c532">5.1. adverse selection</a></li>
+<li><a href="#org7e9570e">5.2. moral hazard: optimal taxation</a></li>
 </ul>
 </li>
-<li><a href="#orga3e4703">6. Financial crisis</a>
+<li><a href="#org3dd4f6a">6. Financial crisis</a>
 <ul>
-<li><a href="#orgf47e4f5">6.1. Why these bonus contracts?</a></li>
+<li><a href="#org1ed7ea7">6.1. Why these bonus contracts?</a></li>
 </ul>
 </li>
-<li><a href="#org87f4fdd">7. Regulation in health care markets</a>
+<li><a href="#orgb32adc6">7. Regulation in health care markets</a>
 <ul>
-<li><a href="#org54e9175">7.1. matplotlib</a></li>
-<li><a href="#org6b2a173">7.2. reversing the probability distributions</a></li>
-<li><a href="#org99bbb07">7.3. using python for empirical research</a>
+<li><a href="#org6513256">7.1. simple theory</a></li>
+<li><a href="#org0cb0830">7.2. some data</a></li>
+<li><a href="#org6d4d73c">7.3. matplotlib</a></li>
+<li><a href="#orgcbe4387">7.4. reversing the probability distributions</a></li>
+</ul>
+</li>
+<li><a href="#orga409815">8. Using python for empirical research</a>
 <ul>
-<li><a href="#org1ca94f2">7.3.1. API's to get data</a></li>
+<li>
+<ul>
+<li><a href="#orgc8d4fce">8.0.1. API's to get data</a></li>
+<li><a href="#orgb9b82da">8.0.2. Hacker statistics</a></li>
 </ul>
 </li>
 </ul>
@@ -378,18 +385,22 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org546bb5b" class="outline-2">
-<h2 id="org546bb5b"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orge3a6b12" class="outline-2">
+<h2 id="orge3a6b12"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is mainly based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
+This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
+</p>
+
+<p>
+The point is not that we go into a model in detail. Instead, we sketch the trade offs and then model these in python. We then make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than taking the third derivative.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-org5419c7d" class="outline-2">
-<h2 id="org5419c7d"><span class="section-number-2">2</span> Python packages that we will be using</h2>
+<div id="outline-container-org742973b" class="outline-2">
+<h2 id="org742973b"><span class="section-number-2">2</span> Python packages that we will be using</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either <code>pip install</code> or <code>conda install</code>.
@@ -420,8 +431,8 @@ plt.style.use(<span style="color: #2d9574;">'seaborn'</span>)
 </div>
 
 
-<div id="outline-container-org34653ff" class="outline-2">
-<h2 id="org34653ff"><span class="section-number-2">3</span> Why do we love the market?</h2>
+<div id="outline-container-org19395f6" class="outline-2">
+<h2 id="org19395f6"><span class="section-number-2">3</span> Why do we love the market?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his <a href="https://en.wikipedia.org/wiki/Invisible_hand">"invisible hand"</a>. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the <a href="https://en.wikipedia.org/wiki/Revolutions_of_1989">former Soviet Union</a>.
@@ -486,8 +497,8 @@ Hence, this is the best that we can do. It gives us an upperbound on the welfare
 </div>
 
 
-<div id="outline-container-orgbbd4506" class="outline-3">
-<h3 id="orgbbd4506"><span class="section-number-3">3.1</span> market outcome</h3>
+<div id="outline-container-org7fe44f3" class="outline-3">
+<h3 id="org7fe44f3"><span class="section-number-3">3.1</span> market outcome</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
@@ -551,8 +562,8 @@ So, now we know the equilibrium price
 </pre>
 </div>
 
-<div id="outline-container-org7866c52" class="outline-4">
-<h4 id="org7866c52"><span class="section-number-4">3.1.1</span> elastic demand and supply</h4>
+<div id="outline-container-orga64f954" class="outline-4">
+<h4 id="orga64f954"><span class="section-number-4">3.1.1</span> elastic demand and supply</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Up till now we assumed that supply was inelastic: there was a given endowment and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
@@ -596,16 +607,16 @@ Then use <code>fsolve</code> to find the equilibrium price.
 </div>
 </div>
 
-<div id="outline-container-org54300da" class="outline-2">
-<h2 id="org54300da"><span class="section-number-2">4</span> why do others not love the market?</h2>
+<div id="outline-container-orgad086c3" class="outline-2">
+<h2 id="orgad086c3"><span class="section-number-2">4</span> why do others not love the market?</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 </p>
 </div>
 
-<div id="outline-container-orgf66068a" class="outline-4">
-<h4 id="orgf66068a"><span class="section-number-4">4.0.1</span> income distribution</h4>
+<div id="outline-container-orga40ef40" class="outline-4">
+<h4 id="orga40ef40"><span class="section-number-4">4.0.1</span> income distribution</h4>
 <div class="outline-text-4" id="text-4-0-1">
 <p>
 In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
@@ -658,8 +669,8 @@ Next, we need to redefine demand, now denoted <code>demand_2</code> which takes 
 </div>
 </div>
 
-<div id="outline-container-orgf8442dd" class="outline-4">
-<h4 id="orgf8442dd"><span class="section-number-4">4.0.2</span> market power</h4>
+<div id="outline-container-org3afb21c" class="outline-4">
+<h4 id="org3afb21c"><span class="section-number-4">4.0.2</span> market power</h4>
 <div class="outline-text-4" id="text-4-0-2">
 <p>
 <b><b>Warning</b></b> We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
@@ -769,8 +780,8 @@ plt.show()
 
 
 
-<div id="outline-container-orgc1c9356" class="outline-4">
-<h4 id="orgc1c9356"><span class="section-number-4">4.0.3</span> merger simulation</h4>
+<div id="outline-container-org150bafd" class="outline-4">
+<h4 id="org150bafd"><span class="section-number-4">4.0.3</span> merger simulation</h4>
 <div class="outline-text-4" id="text-4-0-3">
 <p>
 In this section, we model a more standard oligopoly market with
@@ -965,8 +976,8 @@ associated with more competitive outcome. Would you agree with this?
 </div>
 </div>
 
-<div id="outline-container-orgf2b7bee" class="outline-4">
-<h4 id="orgf2b7bee"><span class="section-number-4">4.0.4</span> external effects</h4>
+<div id="outline-container-org13d16d8" class="outline-4">
+<h4 id="org13d16d8"><span class="section-number-4">4.0.4</span> external effects</h4>
 <div class="outline-text-4" id="text-4-0-4">
 <p>
 A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost \(c q\). But production leads to an external effect equal to \(\gamma q\). Hence, the social cost of production equals \((c+\gamma)q\)
@@ -1038,8 +1049,8 @@ plt.show()
 </div>
 
 
-<div id="outline-container-orgfd13055" class="outline-2">
-<h2 id="orgfd13055"><span class="section-number-2">5</span> Asymmetric information</h2>
+<div id="outline-container-orgd258aad" class="outline-2">
+<h2 id="orgd258aad"><span class="section-number-2">5</span> Asymmetric information</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 One of the reasons why markets (or other institutions for that matter) work less well than a naive observer may hope is asymmetric information. We consider here both adverse selection and moral hazard. Adverse selection we analyze in the context of insurance and moral hazard in the context of taxation.
@@ -1047,8 +1058,8 @@ One of the reasons why markets (or other institutions for that matter) work less
 </div>
 
 
-<div id="outline-container-orgf07f53b" class="outline-3">
-<h3 id="orgf07f53b"><span class="section-number-3">5.1</span> adverse selection</h3>
+<div id="outline-container-orgeb4c532" class="outline-3">
+<h3 id="orgeb4c532"><span class="section-number-3">5.1</span> adverse selection</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 <b><b>Exercise</b></b> What is adverse selection?
@@ -1150,8 +1161,8 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org6099356" class="outline-3">
-<h3 id="org6099356"><span class="section-number-3">5.2</span> moral hazard: optimal taxation</h3>
+<div id="outline-container-org7e9570e" class="outline-3">
+<h3 id="org7e9570e"><span class="section-number-3">5.2</span> moral hazard: optimal taxation</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
@@ -1239,8 +1250,8 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 </div>
 
 
-<div id="outline-container-orga3e4703" class="outline-2">
-<h2 id="orga3e4703"><span class="section-number-2">6</span> Financial crisis</h2>
+<div id="outline-container-org3dd4f6a" class="outline-2">
+<h2 id="org3dd4f6a"><span class="section-number-2">6</span> Financial crisis</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 ???continue here???
@@ -1309,8 +1320,8 @@ Explain the economic intuition of the graph above.
 </div>
 
 
-<div id="outline-container-orgf47e4f5" class="outline-3">
-<h3 id="orgf47e4f5"><span class="section-number-3">6.1</span> Why these bonus contracts?</h3>
+<div id="outline-container-org1ed7ea7" class="outline-3">
+<h3 id="org1ed7ea7"><span class="section-number-3">6.1</span> Why these bonus contracts?</h3>
 </div>
 </div>
 
@@ -1318,15 +1329,107 @@ Explain the economic intuition of the graph above.
 
 
 
-<div id="outline-container-org87f4fdd" class="outline-2">
-<h2 id="org87f4fdd"><span class="section-number-2">7</span> Regulation in health care markets</h2>
+<div id="outline-container-orgb32adc6" class="outline-2">
+<h2 id="orgb32adc6"><span class="section-number-2">7</span> Regulation in health care markets</h2>
 <div class="outline-text-2" id="text-7">
 <p>
-Effect of an increase in deductible; we compare the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro) 
+In this section, the main question is: does government regulation have an effect on markets and can we measure/quantify this?
 </p>
 
 <p>
-We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. For the code below, we downloaded these csv-files in the sub-directory data (i.e. sub-directory of the directory in which this notebook resides). When you open the csv files, you can see that it uses ";" as separator between columns.
+For this we consider the effect of an increase in the deductible \(d\) in Dutch basic health insurance.
+</p>
+
+<p>
+Some institutional background:
+</p>
+<ul class="org-ul">
+<li>we focus on the basic health insurance market (i.e. we ignore the supplementary health insurance market)</li>
+<li>basic health insurance is mandatory in the Netherlands</li>
+<li>for people below the age of 18, health care is free of charge</li>
+<li>for people older than 18: pay the first \(d\) euros of treatments per year yourself, treatments above \(d\) are free of charge</li>
+</ul>
+</div>
+
+<div id="outline-container-org6513256" class="outline-3">
+<h3 id="org6513256"><span class="section-number-3">7.1</span> simple theory</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Consider the following simple theoretical framework. People get
+offered at max. one treatment per year. They decide whether either to
+accept this treatment or to go without treatment.
+</p>
+
+<p>
+The figure below plots costs \(c\) of treatment vs values \(v\) of treatments. Each
+treatment is a point in this figure; a combination of \(c\) and \(v\).
+</p>
+
+<p>
+The red/blue line is the out-of-pocket payment by an agent facing two deductible levels: 365 and 170 euro resp. Treatments above the red line are always accepted. The value exceeds the out-of-pocket payment for both deductibles. Treatments below the blue line are always rejected: even with the low deductible, the value is below the out-of-pocket payment. Treatments in the yellow area are accepted with the low deductible but are rejected with the high deductible. Hence, to quantify the effect of an increase in the deductible, we want to know the probability that treatments fall in the yellow area. The more treatments in the yellow area, the bigger the fall in health care expenditure in response to an increase in \(d\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">deductible</span>(c,d):
+<span style="background-color: #ecf3ec;"> </span>  <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">min</span>(c,d)
+
+<span style="color: #715ab1;">range_c</span> = np.arange(0,500,0.1)
+<span style="color: #715ab1;">range_v170</span> = [deductible(c,170) <span style="color: #3a81c3;">for</span> c <span style="color: #3a81c3;">in</span> range_c]
+<span style="color: #715ab1;">range_v365</span> = [deductible(c,365) <span style="color: #3a81c3;">for</span> c <span style="color: #3a81c3;">in</span> range_c]
+
+plt.plot(range_c,range_v365,<span style="color: #2d9574;">'-'</span>, color = <span style="color: #2d9574;">'r'</span>, linewidth = 2, label = <span style="color: #2d9574;">'$d=365$'</span>)
+plt.plot(range_c,range_v170,<span style="color: #2d9574;">'-'</span>, color = <span style="color: #2d9574;">'b'</span>, linewidth = 2, label = <span style="color: #2d9574;">'$d=170$'</span>)
+plt.legend()
+plt.fill_between(range_c, range_v170, range_v365, facecolor=<span style="color: #2d9574;">'yellow'</span>)
+plt.ylim(0,500)
+plt.xlabel(<span style="color: #2d9574;">'Cost'</span>)
+plt.ylabel(<span style="color: #2d9574;">'Value'</span>)
+plt.show()
+</pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-f7H0B9.png" alt="48de63ba873b65759d43f92c5813c7a6-f7H0B9.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org0cb0830" class="outline-3">
+<h3 id="org0cb0830"><span class="section-number-3">7.2</span> some data</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+To find the effect of an increase in deductible, we compare health care expenditures in the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro). We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. To use the code below, download these csv-files into the sub-directory "data" (i.e. "data" is sub-directory of the directory in which this notebook resides). 
+</p>
+
+<p>
+When you open the csv files, you can see that it uses ";" as separator between columns. Hence, we use pandas' <code>read_csv</code> statement where we specify the separator as ';'. The data contain total cost per postal code area for a number of cost categories. The expenditures are grouped by sex and age.
+</p>
+
+<p>
+The function <code>get_data_into_shape</code> does a number of things:
+</p>
+<ul class="org-ul">
+<li>not all health care cost categories in the data "count" as far as the deductible is concerned. Hence, we select the ones that fall under the deductible and sum these as the relevant total expenditure under the deductible.</li>
+<li>the cost categories are in Dutch, hence we translate the labels into English</li>
+<li>we drop variables that we do not need for the analysis here</li>
+<li>we calculate cost per head per postal code area</li>
+<li>we also introduce the log of health care costs per head</li>
+<li>we turn the variable <code>sex</code> into a category with two values ('M' for makes, 'V' for females)</li>
+<li>we drop the age category '91+' and turn the remaining ages into integers</li>
+<li>finally, the function returns this new dataframe.</li>
+</ul>
+
+<p>
+The function illustrates the data manipulation you can do with pandas.
 </p>
 
 <div class="org-src-container">
@@ -1557,17 +1660,24 @@ df_2014.head()
 </table>
 </div>
 
+<p>
+We create <code>costs_per_sex_age</code> which contains the average health care expenditure (averaged over postal code areas) for each combination of sex and age in the data. This we will plot below.
+</p>
+
 
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">costs_per_sex_age</span> = df_2014.groupby([<span style="color: #2d9574;">'sex'</span>,<span style="color: #2d9574;">'age'</span>])[<span style="color: #2d9574;">'costs_per_head'</span>].mean()
 </pre>
 </div>
 </div>
+</div>
 
 
-<div id="outline-container-org54e9175" class="outline-3">
-<h3 id="org54e9175"><span class="section-number-3">7.1</span> matplotlib</h3>
-<div class="outline-text-3" id="text-7-1">
+
+
+<div id="outline-container-org6d4d73c" class="outline-3">
+<h3 id="org6d4d73c"><span class="section-number-3">7.3</span> matplotlib</h3>
+<div class="outline-text-3" id="text-7-3">
 <p>
 Then we can plot this distribution of health care expenditure per head with age for males and females.
 </p>
@@ -1593,18 +1703,29 @@ ax.legend([<span style="color: #2d9574;">'male'</span>,<span style="color: #2d95
 
 
 <div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-cau0YF.png" alt="48de63ba873b65759d43f92c5813c7a6-cau0YF.png" />
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-ouYEGQ.png" alt="48de63ba873b65759d43f92c5813c7a6-ouYEGQ.png" />
+</p>
+</div>
+
+<p>
+<b>Exercise</b> Can you interpret how these costs evolve with age and sex?
+</p>
+
+<p>
+<b>Exercise</b> How can a graph like this help us to determine the effect of \(d\) on health care expenditure?
 </p>
 </div>
 </div>
-</div>
 
-
-<div id="outline-container-org6b2a173" class="outline-3">
-<h3 id="org6b2a173"><span class="section-number-3">7.2</span> reversing the probability distributions</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-orgcbe4387" class="outline-3">
+<h3 id="orgcbe4387"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
-Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from.
+Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from. To illustrate this, consider the distribution of (average) costs for 30 year old males. Since, health care costs have a skewed distribution, we actually plot the distribution of log costs.
+</p>
+
+<p>
+<b>Exercise</b> Plot health care cost distributions for different age and sex categories.
 </p>
 
 <div class="org-src-container">
@@ -1613,23 +1734,26 @@ Above we used <code>pymc3</code> to generate vectors of productivities, valuatio
 </div>
 
 <pre class="example">
-&lt;Figure size 432x288 with 1 Axes&gt;
+&lt;Figure size 576x396 with 1 Axes&gt;
 
 </pre>
 
 
 <div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-jBtIvk.png" alt="48de63ba873b65759d43f92c5813c7a6-jBtIvk.png" />
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-yLRtHn.png" alt="48de63ba873b65759d43f92c5813c7a6-yLRtHn.png" />
 </p>
 </div>
 
-
 <p>
-We will assume that for each age and sex category <code>costs_per-head</code> are normally distributed.
+This distribution looks (sort of) normal. Hence, we assume that for each age and sex category <code>log_costs_per_head</code> are normally distributed. This implies that <code>costs_per_head</code> have a log-normal distribution.
 </p>
 
 <p>
-We focus on modelling female (log) costs
+We will focus here on health care costs for women. Clearly, a similar analysis can be done for men. In fact, it is also possible to combine men and women into one analysis with sex fixed effects.
+</p>
+
+<p>
+Here we focus on women and introduce age-fixed effects. We assume that observed costs \(z\) are <code>log_costs_per_head</code> which are normally distributed with a mean \(\mu\) and standard deviation \(\sigma\) that varies with age. We do not know these means and standard deviations <code>μ[age], σ[age]</code> but assume they are drawn from prior distributions. A <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> for \(\mu\) and a [[ Half
 </p>
 
 <div class="org-src-container">
@@ -1643,7 +1767,7 @@ We focus on modelling female (log) costs
 <span style="color: #3a81c3;">with</span> pm.Model() <span style="color: #3a81c3;">as</span> model:
 <span style="background-color: #ecf3ec;"> </span>   
 <span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">&#956;</span> = pm.Normal(<span style="color: #2d9574;">'&#956;'</span>, 8, 3, shape=<span style="color: #3a81c3;">len</span>(<span style="color: #3a81c3;">set</span>(age)))
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">&#963;</span> = pm.HalfCauchy(<span style="color: #2d9574;">'&#963;'</span>, 4, shape=<span style="color: #3a81c3;">len</span>(<span style="color: #3a81c3;">set</span>(age)))
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">&#963;</span> = pm.HalfNormal(<span style="color: #2d9574;">'&#963;'</span>, 4, shape=<span style="color: #3a81c3;">len</span>(<span style="color: #3a81c3;">set</span>(age)))
 <span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">z</span> = pm.Normal(<span style="color: #2d9574;">'z'</span>, &#956;[age], &#963;[age], observed=log_costs_per_head)
 
 </pre>
@@ -1656,121 +1780,49 @@ We focus on modelling female (log) costs
 </div>
 
 <pre class="example">
-  0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -1.5911e+05, ||grad|| = 6,672.7:   0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -43,838, ||grad|| = 4,393.6:   0%|          | 10/5000 [00:00&lt;00:21, 234.57it/s]logp = -33,639, ||grad|| = 18.977:   0%|          | 20/5000 [00:00&lt;00:19, 250.28it/s] logp = -33,639, ||grad|| = 18.977:   1%|          | 27/5000 [00:00&lt;00:18, 261.90it/s]logp = -33,639, ||grad|| = 18.977: 100%|██████████| 28/28 [00:00&lt;00:00, 268.45it/s]  
+  0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -1.4515e+05, ||grad|| = 6,423.5:   0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -47,944, ||grad|| = 11,521:   0%|          | 10/5000 [00:00&lt;00:21, 227.74it/s]logp = -33,682, ||grad|| = 617.12:   0%|          | 20/5000 [00:00&lt;00:20, 243.94it/s]logp = -33,682, ||grad|| = 617.12:   1%|          | 26/5000 [00:00&lt;00:19, 256.89it/s]logp = -33,618, ||grad|| = 0.2165:   1%|          | 30/5000 [00:00&lt;00:19, 256.89it/s]logp = -33,618, ||grad|| = 0.2165: 100%|██████████| 32/32 [00:00&lt;00:00, 262.53it/s]  
 Multiprocess sampling (4 chains in 4 jobs)
 CompoundStep
 &gt;Metropolis: [σ_log__]
 &gt;Metropolis: [μ]
-  0%|          | 0/4500 [00:00&lt;?, ?it/s]  0%|          | 15/4500 [00:00&lt;00:30, 144.96it/s]  1%|          | 40/4500 [00:00&lt;00:22, 194.96it/s]  1%|▏         | 63/4500 [00:00&lt;00:21, 205.23it/s]  2%|▏         | 86/4500 [00:00&lt;00:21, 209.84it/s]  2%|▏         | 108/4500 [00:00&lt;00:20, 210.39it/s]  3%|▎         | 131/4500 [00:00&lt;00:20, 213.42it/s]  3%|▎         | 154/4500 [00:00&lt;00:20, 214.93it/s]  4%|▍         | 176/4500 [00:00&lt;00:20, 214.68it/s]  4%|▍         | 198/4500 [00:00&lt;00:20, 214.94it/s]  5%|▍         | 219/4500 [00:01&lt;00:20, 214.03it/s]  5%|▌         | 242/4500 [00:01&lt;00:19, 214.71it/s]  6%|▌         | 264/4500 [00:01&lt;00:19, 215.02it/s]  6%|▋         | 286/4500 [00:01&lt;00:19, 214.54it/s]  7%|▋         | 308/4500 [00:01&lt;00:19, 213.65it/s]  7%|▋         | 331/4500 [00:01&lt;00:19, 214.16it/s]  8%|▊         | 354/4500 [00:01&lt;00:19, 214.67it/s]  8%|▊         | 376/4500 [00:01&lt;00:19, 214.92it/s]  9%|▉         | 398/4500 [00:01&lt;00:19, 214.50it/s]  9%|▉         | 420/4500 [00:01&lt;00:19, 213.76it/s] 10%|▉         | 442/4500 [00:02&lt;00:19, 213.24it/s] 10%|█         | 464/4500 [00:02&lt;00:18, 213.26it/s] 11%|█         | 487/4500 [00:02&lt;00:18, 213.66it/s] 11%|█▏        | 509/4500 [00:02&lt;00:18, 213.57it/s] 12%|█▏        | 531/4500 [00:02&lt;00:18, 213.47it/s] 12%|█▏        | 553/4500 [00:02&lt;00:18, 213.35it/s] 13%|█▎        | 575/4500 [00:02&lt;00:18, 213.27it/s] 13%|█▎        | 597/4500 [00:02&lt;00:18, 213.28it/s] 14%|█▍        | 619/4500 [00:02&lt;00:18, 213.45it/s] 14%|█▍        | 641/4500 [00:03&lt;00:18, 212.58it/s] 15%|█▍        | 664/4500 [00:03&lt;00:18, 212.92it/s] 15%|█▌        | 687/4500 [00:03&lt;00:17, 213.25it/s] 16%|█▌        | 709/4500 [00:03&lt;00:17, 213.39it/s] 16%|█▌        | 731/4500 [00:03&lt;00:17, 213.12it/s] 17%|█▋        | 753/4500 [00:03&lt;00:17, 213.12it/s] 17%|█▋        | 775/4500 [00:03&lt;00:17, 213.14it/s] 18%|█▊        | 798/4500 [00:03&lt;00:17, 213.45it/s] 18%|█▊        | 820/4500 [00:03&lt;00:17, 213.56it/s] 19%|█▊        | 842/4500 [00:03&lt;00:17, 212.91it/s] 19%|█▉        | 863/4500 [00:04&lt;00:17, 212.82it/s] 20%|█▉        | 884/4500 [00:04&lt;00:17, 212.41it/s] 20%|██        | 906/4500 [00:04&lt;00:16, 212.49it/s] 21%|██        | 928/4500 [00:04&lt;00:16, 212.62it/s] 21%|██        | 951/4500 [00:04&lt;00:16, 212.86it/s] 22%|██▏       | 973/4500 [00:04&lt;00:16, 212.96it/s] 22%|██▏       | 995/4500 [00:04&lt;00:16, 213.10it/s] 23%|██▎       | 1017/4500 [00:04&lt;00:16, 213.19it/s] 23%|██▎       | 1039/4500 [00:04&lt;00:16, 212.99it/s] 24%|██▎       | 1061/4500 [00:04&lt;00:16, 212.91it/s] 24%|██▍       | 1083/4500 [00:05&lt;00:16, 212.67it/s] 25%|██▍       | 1104/4500 [00:05&lt;00:16, 212.20it/s] 25%|██▌       | 1125/4500 [00:05&lt;00:15, 211.99it/s] 25%|██▌       | 1146/4500 [00:05&lt;00:15, 211.81it/s] 26%|██▌       | 1167/4500 [00:05&lt;00:15, 211.67it/s] 26%|██▋       | 1189/4500 [00:05&lt;00:15, 211.75it/s] 27%|██▋       | 1211/4500 [00:05&lt;00:15, 211.80it/s] 27%|██▋       | 1234/4500 [00:05&lt;00:15, 211.99it/s] 28%|██▊       | 1256/4500 [00:05&lt;00:15, 212.05it/s] 28%|██▊       | 1278/4500 [00:06&lt;00:15, 211.67it/s] 29%|██▉       | 1299/4500 [00:06&lt;00:15, 211.63it/s] 29%|██▉       | 1321/4500 [00:06&lt;00:15, 211.71it/s] 30%|██▉       | 1343/4500 [00:06&lt;00:14, 211.79it/s] 30%|███       | 1365/4500 [00:06&lt;00:14, 211.80it/s] 31%|███       | 1387/4500 [00:06&lt;00:14, 211.80it/s] 31%|███▏      | 1410/4500 [00:06&lt;00:14, 211.95it/s] 32%|███▏      | 1432/4500 [00:06&lt;00:14, 212.02it/s] 32%|███▏      | 1454/4500 [00:06&lt;00:14, 212.02it/s] 33%|███▎      | 1476/4500 [00:06&lt;00:14, 211.90it/s] 33%|███▎      | 1498/4500 [00:07&lt;00:14, 211.73it/s] 34%|███▍      | 1519/4500 [00:07&lt;00:14, 211.25it/s] 34%|███▍      | 1540/4500 [00:07&lt;00:14, 210.47it/s] 35%|███▍      | 1560/4500 [00:07&lt;00:13, 210.24it/s] 35%|███▌      | 1581/4500 [00:07&lt;00:13, 210.18it/s] 36%|███▌      | 1603/4500 [00:07&lt;00:13, 210.26it/s] 36%|███▌      | 1626/4500 [00:07&lt;00:13, 210.41it/s] 37%|███▋      | 1648/4500 [00:07&lt;00:13, 210.52it/s] 37%|███▋      | 1670/4500 [00:07&lt;00:13, 210.38it/s] 38%|███▊      | 1691/4500 [00:08&lt;00:13, 210.32it/s] 38%|███▊      | 1713/4500 [00:08&lt;00:13, 210.36it/s] 39%|███▊      | 1736/4500 [00:08&lt;00:13, 210.50it/s] 39%|███▉      | 1759/4500 [00:08&lt;00:13, 210.67it/s] 40%|███▉      | 1781/4500 [00:08&lt;00:12, 210.71it/s] 40%|████      | 1803/4500 [00:08&lt;00:12, 210.78it/s] 41%|████      | 1825/4500 [00:08&lt;00:12, 210.76it/s] 41%|████      | 1847/4500 [00:08&lt;00:12, 210.80it/s] 42%|████▏     | 1870/4500 [00:08&lt;00:12, 210.94it/s] 42%|████▏     | 1892/4500 [00:08&lt;00:12, 210.82it/s] 43%|████▎     | 1914/4500 [00:09&lt;00:12, 210.87it/s] 43%|████▎     | 1937/4500 [00:09&lt;00:12, 210.99it/s] 44%|████▎     | 1959/4500 [00:09&lt;00:12, 210.98it/s] 44%|████▍     | 1981/4500 [00:09&lt;00:11, 210.92it/s] 45%|████▍     | 2003/4500 [00:09&lt;00:11, 210.97it/s] 45%|████▌     | 2025/4500 [00:09&lt;00:11, 211.04it/s] 45%|████▌     | 2047/4500 [00:09&lt;00:11, 211.12it/s] 46%|████▌     | 2070/4500 [00:09&lt;00:11, 211.26it/s] 46%|████▋     | 2092/4500 [00:09&lt;00:11, 211.31it/s] 47%|████▋     | 2114/4500 [00:10&lt;00:11, 211.14it/s] 47%|████▋     | 2137/4500 [00:10&lt;00:11, 211.25it/s] 48%|████▊     | 2159/4500 [00:10&lt;00:11, 211.14it/s] 48%|████▊     | 2181/4500 [00:10&lt;00:10, 211.22it/s] 49%|████▉     | 2203/4500 [00:10&lt;00:10, 211.29it/s] 49%|████▉     | 2225/4500 [00:10&lt;00:10, 211.36it/s] 50%|████▉     | 2248/4500 [00:10&lt;00:10, 211.50it/s] 50%|█████     | 2270/4500 [00:10&lt;00:10, 211.56it/s] 51%|█████     | 2293/4500 [00:10&lt;00:10, 211.69it/s] 51%|█████▏    | 2316/4500 [00:10&lt;00:10, 211.61it/s] 52%|█████▏    | 2338/4500 [00:11&lt;00:10, 211.61it/s] 52%|█████▏    | 2360/4500 [00:11&lt;00:10, 211.65it/s] 53%|█████▎    | 2382/4500 [00:11&lt;00:10, 211.65it/s] 53%|█████▎    | 2404/4500 [00:11&lt;00:09, 211.61it/s] 54%|█████▍    | 2426/4500 [00:11&lt;00:09, 211.58it/s] 54%|█████▍    | 2448/4500 [00:11&lt;00:09, 211.65it/s] 55%|█████▍    | 2470/4500 [00:11&lt;00:09, 211.69it/s] 55%|█████▌    | 2492/4500 [00:11&lt;00:09, 211.74it/s] 56%|█████▌    | 2514/4500 [00:11&lt;00:09, 211.77it/s] 56%|█████▋    | 2536/4500 [00:11&lt;00:09, 211.72it/s] 57%|█████▋    | 2558/4500 [00:12&lt;00:09, 211.68it/s] 57%|█████▋    | 2581/4500 [00:12&lt;00:09, 211.76it/s] 58%|█████▊    | 2603/4500 [00:12&lt;00:08, 211.75it/s] 58%|█████▊    | 2625/4500 [00:12&lt;00:08, 211.77it/s] 59%|█████▉    | 2647/4500 [00:12&lt;00:08, 211.82it/s] 59%|█████▉    | 2670/4500 [00:12&lt;00:08, 211.91it/s] 60%|█████▉    | 2692/4500 [00:12&lt;00:08, 211.94it/s] 60%|██████    | 2714/4500 [00:12&lt;00:08, 211.98it/s] 61%|██████    | 2736/4500 [00:12&lt;00:08, 211.98it/s] 61%|██████▏   | 2758/4500 [00:13&lt;00:08, 211.90it/s] 62%|██████▏   | 2780/4500 [00:13&lt;00:08, 211.88it/s] 62%|██████▏   | 2802/4500 [00:13&lt;00:08, 211.90it/s] 63%|██████▎   | 2824/4500 [00:13&lt;00:07, 211.87it/s] 63%|██████▎   | 2846/4500 [00:13&lt;00:07, 211.89it/s] 64%|██████▎   | 2868/4500 [00:13&lt;00:07, 211.91it/s] 64%|██████▍   | 2890/4500 [00:13&lt;00:07, 211.93it/s] 65%|██████▍   | 2912/4500 [00:13&lt;00:07, 211.96it/s] 65%|██████▌   | 2934/4500 [00:13&lt;00:07, 211.98it/s] 66%|██████▌   | 2956/4500 [00:13&lt;00:07, 211.77it/s] 66%|██████▌   | 2977/4500 [00:14&lt;00:07, 211.73it/s] 67%|██████▋   | 2999/4500 [00:14&lt;00:07, 211.77it/s] 67%|██████▋   | 3021/4500 [00:14&lt;00:06, 211.81it/s] 68%|██████▊   | 3043/4500 [00:14&lt;00:06, 211.85it/s] 68%|██████▊   | 3065/4500 [00:14&lt;00:06, 211.71it/s] 69%|██████▊   | 3087/4500 [00:14&lt;00:06, 211.77it/s] 69%|██████▉   | 3109/4500 [00:14&lt;00:06, 211.82it/s] 70%|██████▉   | 3131/4500 [00:14&lt;00:06, 211.85it/s] 70%|███████   | 3153/4500 [00:14&lt;00:06, 211.91it/s] 71%|███████   | 3175/4500 [00:14&lt;00:06, 211.80it/s] 71%|███████   | 3197/4500 [00:15&lt;00:06, 211.75it/s] 72%|███████▏  | 3218/4500 [00:15&lt;00:06, 211.72it/s] 72%|███████▏  | 3239/4500 [00:15&lt;00:05, 211.71it/s] 72%|███████▏  | 3261/4500 [00:15&lt;00:05, 211.73it/s] 73%|███████▎  | 3283/4500 [00:15&lt;00:05, 211.77it/s] 73%|███████▎  | 3305/4500 [00:15&lt;00:05, 211.80it/s] 74%|███████▍  | 3327/4500 [00:15&lt;00:05, 211.84it/s] 74%|███████▍  | 3350/4500 [00:15&lt;00:05, 211.91it/s] 75%|███████▍  | 3372/4500 [00:15&lt;00:05, 211.87it/s] 75%|███████▌  | 3394/4500 [00:16&lt;00:05, 211.64it/s] 76%|███████▌  | 3416/4500 [00:16&lt;00:05, 211.66it/s] 76%|███████▋  | 3438/4500 [00:16&lt;00:05, 211.66it/s] 77%|███████▋  | 3460/4500 [00:16&lt;00:04, 211.69it/s] 77%|███████▋  | 3482/4500 [00:16&lt;00:04, 211.74it/s] 78%|███████▊  | 3505/4500 [00:16&lt;00:04, 211.83it/s] 78%|███████▊  | 3528/4500 [00:16&lt;00:04, 211.89it/s] 79%|███████▉  | 3550/4500 [00:16&lt;00:04, 211.92it/s] 79%|███████▉  | 3572/4500 [00:16&lt;00:04, 211.94it/s] 80%|███████▉  | 3594/4500 [00:16&lt;00:04, 211.80it/s] 80%|████████  | 3615/4500 [00:17&lt;00:04, 211.77it/s] 81%|████████  | 3636/4500 [00:17&lt;00:04, 211.73it/s] 81%|████████▏ | 3658/4500 [00:17&lt;00:03, 211.76it/s] 82%|████████▏ | 3680/4500 [00:17&lt;00:03, 211.65it/s] 82%|████████▏ | 3701/4500 [00:17&lt;00:03, 211.55it/s] 83%|████████▎ | 3722/4500 [00:17&lt;00:03, 211.36it/s] 83%|████████▎ | 3744/4500 [00:17&lt;00:03, 211.38it/s] 84%|████████▎ | 3766/4500 [00:17&lt;00:03, 211.38it/s] 84%|████████▍ | 3789/4500 [00:17&lt;00:03, 211.45it/s] 85%|████████▍ | 3811/4500 [00:18&lt;00:03, 211.35it/s] 85%|████████▌ | 3833/4500 [00:18&lt;00:03, 211.39it/s] 86%|████████▌ | 3855/4500 [00:18&lt;00:03, 211.43it/s] 86%|████████▌ | 3877/4500 [00:18&lt;00:02, 211.45it/s] 87%|████████▋ | 3899/4500 [00:18&lt;00:02, 211.40it/s] 87%|████████▋ | 3921/4500 [00:18&lt;00:02, 211.41it/s] 88%|████████▊ | 3943/4500 [00:18&lt;00:02, 211.42it/s] 88%|████████▊ | 3965/4500 [00:18&lt;00:02, 211.44it/s] 89%|████████▊ | 3987/4500 [00:18&lt;00:02, 211.48it/s] 89%|████████▉ | 4009/4500 [00:18&lt;00:02, 211.43it/s] 90%|████████▉ | 4031/4500 [00:19&lt;00:02, 211.40it/s] 90%|█████████ | 4052/4500 [00:19&lt;00:02, 211.31it/s] 91%|█████████ | 4073/4500 [00:19&lt;00:02, 211.27it/s] 91%|█████████ | 4095/4500 [00:19&lt;00:01, 211.30it/s] 92%|█████████▏| 4118/4500 [00:19&lt;00:01, 211.36it/s] 92%|█████████▏| 4140/4500 [00:19&lt;00:01, 211.38it/s] 92%|█████████▏| 4162/4500 [00:19&lt;00:01, 211.41it/s] 93%|█████████▎| 4185/4500 [00:19&lt;00:01, 211.47it/s] 93%|█████████▎| 4207/4500 [00:19&lt;00:01, 211.49it/s] 94%|█████████▍| 4229/4500 [00:20&lt;00:01, 211.37it/s] 94%|█████████▍| 4251/4500 [00:20&lt;00:01, 211.41it/s] 95%|█████████▍| 4274/4500 [00:20&lt;00:01, 211.46it/s] 95%|█████████▌| 4296/4500 [00:20&lt;00:00, 211.45it/s] 96%|█████████▌| 4318/4500 [00:20&lt;00:00, 211.46it/s] 96%|█████████▋| 4340/4500 [00:20&lt;00:00, 211.32it/s] 97%|█████████▋| 4361/4500 [00:20&lt;00:00, 211.18it/s] 97%|█████████▋| 4381/4500 [00:20&lt;00:00, 211.11it/s] 98%|█████████▊| 4401/4500 [00:20&lt;00:00, 210.92it/s] 98%|█████████▊| 4421/4500 [00:20&lt;00:00, 210.62it/s] 99%|█████████▊| 4440/4500 [00:21&lt;00:00, 210.51it/s] 99%|█████████▉| 4460/4500 [00:21&lt;00:00, 210.44it/s]100%|█████████▉| 4481/4500 [00:21&lt;00:00, 210.42it/s]100%|██████████| 4500/4500 [00:21&lt;00:00, 210.27it/s]
+  0%|          | 0/4500 [00:00&lt;?, ?it/s]  0%|          | 1/4500 [00:00&lt;08:03,  9.31it/s]  1%|          | 26/4500 [00:00&lt;00:36, 123.29it/s]  1%|          | 50/4500 [00:00&lt;00:27, 158.93it/s]  2%|▏         | 73/4500 [00:00&lt;00:25, 175.32it/s]  2%|▏         | 96/4500 [00:00&lt;00:23, 184.56it/s]  3%|▎         | 119/4500 [00:00&lt;00:22, 191.17it/s]  3%|▎         | 142/4500 [00:00&lt;00:22, 195.43it/s]  4%|▎         | 165/4500 [00:00&lt;00:21, 198.64it/s]  4%|▍         | 187/4500 [00:00&lt;00:21, 200.77it/s]  5%|▍         | 209/4500 [00:01&lt;00:21, 201.99it/s]  5%|▌         | 231/4500 [00:01&lt;00:21, 201.63it/s]  6%|▌         | 253/4500 [00:01&lt;00:20, 203.00it/s]  6%|▌         | 275/4500 [00:01&lt;00:20, 203.78it/s]  7%|▋         | 297/4500 [00:01&lt;00:20, 203.78it/s]  7%|▋         | 318/4500 [00:01&lt;00:20, 203.70it/s]  8%|▊         | 340/4500 [00:01&lt;00:20, 204.43it/s]  8%|▊         | 362/4500 [00:01&lt;00:20, 204.87it/s]  9%|▊         | 384/4500 [00:01&lt;00:20, 205.62it/s]  9%|▉         | 406/4500 [00:01&lt;00:19, 206.03it/s] 10%|▉         | 428/4500 [00:02&lt;00:19, 205.68it/s] 10%|█         | 450/4500 [00:02&lt;00:19, 205.95it/s] 10%|█         | 472/4500 [00:02&lt;00:19, 206.28it/s] 11%|█         | 494/4500 [00:02&lt;00:19, 206.52it/s] 11%|█▏        | 517/4500 [00:02&lt;00:19, 207.21it/s] 12%|█▏        | 539/4500 [00:02&lt;00:19, 207.24it/s] 12%|█▏        | 561/4500 [00:02&lt;00:18, 207.36it/s] 13%|█▎        | 583/4500 [00:02&lt;00:18, 207.64it/s] 13%|█▎        | 605/4500 [00:02&lt;00:18, 207.84it/s] 14%|█▍        | 627/4500 [00:03&lt;00:18, 207.91it/s] 14%|█▍        | 649/4500 [00:03&lt;00:18, 207.75it/s] 15%|█▍        | 670/4500 [00:03&lt;00:18, 207.36it/s] 15%|█▌        | 691/4500 [00:03&lt;00:18, 206.77it/s] 16%|█▌        | 712/4500 [00:03&lt;00:18, 206.05it/s] 16%|█▋        | 733/4500 [00:03&lt;00:18, 206.09it/s] 17%|█▋        | 754/4500 [00:03&lt;00:18, 206.03it/s] 17%|█▋        | 775/4500 [00:03&lt;00:18, 206.12it/s] 18%|█▊        | 797/4500 [00:03&lt;00:17, 206.28it/s] 18%|█▊        | 819/4500 [00:03&lt;00:17, 206.55it/s] 19%|█▊        | 840/4500 [00:04&lt;00:17, 205.99it/s] 19%|█▉        | 862/4500 [00:04&lt;00:17, 206.18it/s] 20%|█▉        | 883/4500 [00:04&lt;00:17, 206.22it/s] 20%|██        | 905/4500 [00:04&lt;00:17, 206.39it/s] 21%|██        | 926/4500 [00:04&lt;00:17, 206.40it/s] 21%|██        | 948/4500 [00:04&lt;00:17, 206.59it/s] 22%|██▏       | 970/4500 [00:04&lt;00:17, 206.22it/s] 22%|██▏       | 991/4500 [00:04&lt;00:17, 206.24it/s] 23%|██▎       | 1013/4500 [00:04&lt;00:16, 206.46it/s] 23%|██▎       | 1035/4500 [00:05&lt;00:16, 206.60it/s] 23%|██▎       | 1057/4500 [00:05&lt;00:16, 205.60it/s] 24%|██▍       | 1077/4500 [00:05&lt;00:16, 204.10it/s] 24%|██▍       | 1096/4500 [00:05&lt;00:16, 203.33it/s] 25%|██▍       | 1117/4500 [00:05&lt;00:16, 203.45it/s] 25%|██▌       | 1138/4500 [00:05&lt;00:16, 203.51it/s] 26%|██▌       | 1160/4500 [00:05&lt;00:16, 203.71it/s] 26%|██▋       | 1182/4500 [00:05&lt;00:16, 203.86it/s] 27%|██▋       | 1204/4500 [00:05&lt;00:16, 204.03it/s] 27%|██▋       | 1226/4500 [00:06&lt;00:16, 204.22it/s] 28%|██▊       | 1247/4500 [00:06&lt;00:15, 203.73it/s] 28%|██▊       | 1268/4500 [00:06&lt;00:15, 203.70it/s] 29%|██▊       | 1289/4500 [00:06&lt;00:15, 203.53it/s] 29%|██▉       | 1310/4500 [00:06&lt;00:15, 203.61it/s] 30%|██▉       | 1332/4500 [00:06&lt;00:15, 203.73it/s] 30%|███       | 1354/4500 [00:06&lt;00:15, 203.98it/s] 31%|███       | 1375/4500 [00:06&lt;00:15, 203.86it/s] 31%|███       | 1396/4500 [00:06&lt;00:15, 203.81it/s] 31%|███▏      | 1417/4500 [00:06&lt;00:15, 203.85it/s] 32%|███▏      | 1438/4500 [00:07&lt;00:15, 203.68it/s] 32%|███▏      | 1459/4500 [00:07&lt;00:14, 203.75it/s] 33%|███▎      | 1480/4500 [00:07&lt;00:14, 203.76it/s] 33%|███▎      | 1501/4500 [00:07&lt;00:14, 203.72it/s] 34%|███▍      | 1523/4500 [00:07&lt;00:14, 203.84it/s] 34%|███▍      | 1546/4500 [00:07&lt;00:14, 204.11it/s] 35%|███▍      | 1569/4500 [00:07&lt;00:14, 204.35it/s] 35%|███▌      | 1592/4500 [00:07&lt;00:14, 204.58it/s] 36%|███▌      | 1615/4500 [00:07&lt;00:14, 204.82it/s] 36%|███▋      | 1637/4500 [00:07&lt;00:13, 204.95it/s] 37%|███▋      | 1659/4500 [00:08&lt;00:13, 204.76it/s] 37%|███▋      | 1681/4500 [00:08&lt;00:13, 204.87it/s] 38%|███▊      | 1703/4500 [00:08&lt;00:13, 204.78it/s] 38%|███▊      | 1725/4500 [00:08&lt;00:13, 204.95it/s] 39%|███▉      | 1747/4500 [00:08&lt;00:13, 205.10it/s] 39%|███▉      | 1769/4500 [00:08&lt;00:13, 205.07it/s] 40%|███▉      | 1791/4500 [00:08&lt;00:13, 205.18it/s] 40%|████      | 1813/4500 [00:08&lt;00:13, 205.10it/s] 41%|████      | 1834/4500 [00:08&lt;00:12, 205.09it/s] 41%|████      | 1855/4500 [00:09&lt;00:12, 205.03it/s] 42%|████▏     | 1877/4500 [00:09&lt;00:12, 205.11it/s] 42%|████▏     | 1899/4500 [00:09&lt;00:12, 205.25it/s] 43%|████▎     | 1921/4500 [00:09&lt;00:12, 205.32it/s] 43%|████▎     | 1943/4500 [00:09&lt;00:12, 205.38it/s] 44%|████▎     | 1965/4500 [00:09&lt;00:12, 205.47it/s] 44%|████▍     | 1987/4500 [00:09&lt;00:12, 205.33it/s] 45%|████▍     | 2008/4500 [00:09&lt;00:12, 205.15it/s] 45%|████▌     | 2029/4500 [00:09&lt;00:12, 205.13it/s] 46%|████▌     | 2050/4500 [00:09&lt;00:11, 205.11it/s] 46%|████▌     | 2071/4500 [00:10&lt;00:11, 205.05it/s] 47%|████▋     | 2093/4500 [00:10&lt;00:11, 205.17it/s] 47%|████▋     | 2115/4500 [00:10&lt;00:11, 205.23it/s] 47%|████▋     | 2136/4500 [00:10&lt;00:11, 205.26it/s] 48%|████▊     | 2158/4500 [00:10&lt;00:11, 205.39it/s] 48%|████▊     | 2180/4500 [00:10&lt;00:11, 205.40it/s] 49%|████▉     | 2203/4500 [00:10&lt;00:11, 205.55it/s] 49%|████▉     | 2225/4500 [00:10&lt;00:11, 205.66it/s] 50%|████▉     | 2247/4500 [00:10&lt;00:10, 205.76it/s] 50%|█████     | 2269/4500 [00:11&lt;00:10, 205.70it/s] 51%|█████     | 2291/4500 [00:11&lt;00:10, 205.71it/s] 51%|█████▏    | 2312/4500 [00:11&lt;00:10, 205.74it/s] 52%|█████▏    | 2334/4500 [00:11&lt;00:10, 205.86it/s] 52%|█████▏    | 2356/4500 [00:11&lt;00:10, 205.88it/s] 53%|█████▎    | 2378/4500 [00:11&lt;00:10, 205.87it/s] 53%|█████▎    | 2399/4500 [00:11&lt;00:10, 205.89it/s] 54%|█████▍    | 2421/4500 [00:11&lt;00:10, 205.94it/s] 54%|█████▍    | 2443/4500 [00:11&lt;00:09, 206.04it/s] 55%|█████▍    | 2465/4500 [00:11&lt;00:09, 205.95it/s] 55%|█████▌    | 2486/4500 [00:12&lt;00:09, 205.59it/s] 56%|█████▌    | 2508/4500 [00:12&lt;00:09, 205.63it/s] 56%|█████▌    | 2529/4500 [00:12&lt;00:09, 205.55it/s] 57%|█████▋    | 2551/4500 [00:12&lt;00:09, 205.60it/s] 57%|█████▋    | 2574/4500 [00:12&lt;00:09, 205.73it/s] 58%|█████▊    | 2595/4500 [00:12&lt;00:09, 205.62it/s] 58%|█████▊    | 2616/4500 [00:12&lt;00:09, 205.64it/s] 59%|█████▊    | 2638/4500 [00:12&lt;00:09, 205.74it/s] 59%|█████▉    | 2660/4500 [00:12&lt;00:08, 205.79it/s] 60%|█████▉    | 2681/4500 [00:13&lt;00:08, 205.74it/s] 60%|██████    | 2702/4500 [00:13&lt;00:08, 205.72it/s] 61%|██████    | 2724/4500 [00:13&lt;00:08, 205.79it/s] 61%|██████    | 2745/4500 [00:13&lt;00:08, 205.78it/s] 61%|██████▏   | 2766/4500 [00:13&lt;00:08, 205.79it/s] 62%|██████▏   | 2788/4500 [00:13&lt;00:08, 205.86it/s] 62%|██████▏   | 2809/4500 [00:13&lt;00:08, 205.88it/s] 63%|██████▎   | 2831/4500 [00:13&lt;00:08, 205.98it/s] 63%|██████▎   | 2853/4500 [00:13&lt;00:07, 206.06it/s] 64%|██████▍   | 2875/4500 [00:13&lt;00:07, 206.12it/s] 64%|██████▍   | 2897/4500 [00:14&lt;00:07, 206.15it/s] 65%|██████▍   | 2919/4500 [00:14&lt;00:07, 206.11it/s] 65%|██████▌   | 2941/4500 [00:14&lt;00:07, 206.16it/s] 66%|██████▌   | 2963/4500 [00:14&lt;00:07, 206.20it/s] 66%|██████▋   | 2985/4500 [00:14&lt;00:07, 206.22it/s] 67%|██████▋   | 3007/4500 [00:14&lt;00:07, 206.25it/s] 67%|██████▋   | 3029/4500 [00:14&lt;00:07, 206.30it/s] 68%|██████▊   | 3051/4500 [00:14&lt;00:07, 206.28it/s] 68%|██████▊   | 3072/4500 [00:14&lt;00:06, 206.24it/s] 69%|██████▉   | 3094/4500 [00:14&lt;00:06, 206.28it/s] 69%|██████▉   | 3115/4500 [00:15&lt;00:06, 206.05it/s] 70%|██████▉   | 3135/4500 [00:15&lt;00:06, 205.64it/s] 70%|███████   | 3155/4500 [00:15&lt;00:06, 205.58it/s] 71%|███████   | 3175/4500 [00:15&lt;00:06, 205.54it/s] 71%|███████   | 3196/4500 [00:15&lt;00:06, 205.53it/s] 71%|███████▏  | 3216/4500 [00:15&lt;00:06, 205.40it/s] 72%|███████▏  | 3236/4500 [00:15&lt;00:06, 205.27it/s] 72%|███████▏  | 3256/4500 [00:15&lt;00:06, 205.22it/s] 73%|███████▎  | 3276/4500 [00:15&lt;00:05, 205.07it/s] 73%|███████▎  | 3295/4500 [00:16&lt;00:05, 204.45it/s] 74%|███████▎  | 3313/4500 [00:16&lt;00:05, 203.97it/s] 74%|███████▍  | 3330/4500 [00:16&lt;00:05, 203.61it/s] 74%|███████▍  | 3351/4500 [00:16&lt;00:05, 203.60it/s] 75%|███████▍  | 3373/4500 [00:16&lt;00:05, 203.66it/s] 75%|███████▌  | 3395/4500 [00:16&lt;00:05, 203.74it/s] 76%|███████▌  | 3417/4500 [00:16&lt;00:05, 203.83it/s] 76%|███████▋  | 3439/4500 [00:16&lt;00:05, 203.89it/s] 77%|███████▋  | 3461/4500 [00:16&lt;00:05, 203.93it/s] 77%|███████▋  | 3482/4500 [00:17&lt;00:04, 203.84it/s] 78%|███████▊  | 3503/4500 [00:17&lt;00:04, 203.84it/s] 78%|███████▊  | 3524/4500 [00:17&lt;00:04, 203.84it/s] 79%|███████▉  | 3546/4500 [00:17&lt;00:04, 203.89it/s] 79%|███████▉  | 3567/4500 [00:17&lt;00:04, 203.88it/s] 80%|███████▉  | 3589/4500 [00:17&lt;00:04, 203.97it/s] 80%|████████  | 3610/4500 [00:17&lt;00:04, 203.99it/s] 81%|████████  | 3633/4500 [00:17&lt;00:04, 204.09it/s] 81%|████████  | 3655/4500 [00:17&lt;00:04, 204.14it/s] 82%|████████▏ | 3677/4500 [00:18&lt;00:04, 204.16it/s] 82%|████████▏ | 3699/4500 [00:18&lt;00:03, 204.19it/s] 83%|████████▎ | 3721/4500 [00:18&lt;00:03, 204.20it/s] 83%|████████▎ | 3744/4500 [00:18&lt;00:03, 204.27it/s] 84%|████████▎ | 3766/4500 [00:18&lt;00:03, 204.09it/s] 84%|████████▍ | 3787/4500 [00:18&lt;00:03, 204.00it/s] 85%|████████▍ | 3808/4500 [00:18&lt;00:03, 204.01it/s] 85%|████████▌ | 3830/4500 [00:18&lt;00:03, 204.06it/s] 86%|████████▌ | 3853/4500 [00:18&lt;00:03, 204.15it/s] 86%|████████▌ | 3875/4500 [00:18&lt;00:03, 204.23it/s] 87%|████████▋ | 3897/4500 [00:19&lt;00:02, 204.19it/s] 87%|████████▋ | 3919/4500 [00:19&lt;00:02, 204.24it/s] 88%|████████▊ | 3940/4500 [00:19&lt;00:02, 204.27it/s] 88%|████████▊ | 3961/4500 [00:19&lt;00:02, 204.27it/s] 89%|████████▊ | 3983/4500 [00:19&lt;00:02, 204.32it/s] 89%|████████▉ | 4004/4500 [00:19&lt;00:02, 204.34it/s] 89%|████████▉ | 4026/4500 [00:19&lt;00:02, 204.42it/s] 90%|████████▉ | 4048/4500 [00:19&lt;00:02, 204.44it/s] 90%|█████████ | 4070/4500 [00:19&lt;00:02, 204.34it/s] 91%|█████████ | 4091/4500 [00:20&lt;00:02, 204.15it/s] 91%|█████████▏| 4111/4500 [00:20&lt;00:01, 203.90it/s] 92%|█████████▏| 4133/4500 [00:20&lt;00:01, 203.95it/s] 92%|█████████▏| 4155/4500 [00:20&lt;00:01, 204.01it/s] 93%|█████████▎| 4178/4500 [00:20&lt;00:01, 204.10it/s] 93%|█████████▎| 4199/4500 [00:20&lt;00:01, 204.10it/s] 94%|█████████▍| 4220/4500 [00:20&lt;00:01, 204.10it/s] 94%|█████████▍| 4241/4500 [00:20&lt;00:01, 204.13it/s] 95%|█████████▍| 4263/4500 [00:20&lt;00:01, 204.20it/s] 95%|█████████▌| 4285/4500 [00:20&lt;00:01, 204.26it/s] 96%|█████████▌| 4307/4500 [00:21&lt;00:00, 204.26it/s] 96%|█████████▌| 4329/4500 [00:21&lt;00:00, 204.30it/s] 97%|█████████▋| 4351/4500 [00:21&lt;00:00, 204.31it/s] 97%|█████████▋| 4372/4500 [00:21&lt;00:00, 204.32it/s] 98%|█████████▊| 4393/4500 [00:21&lt;00:00, 204.20it/s] 98%|█████████▊| 4415/4500 [00:21&lt;00:00, 204.27it/s] 99%|█████████▊| 4436/4500 [00:21&lt;00:00, 204.25it/s] 99%|█████████▉| 4458/4500 [00:21&lt;00:00, 204.30it/s]100%|█████████▉| 4480/4500 [00:21&lt;00:00, 204.36it/s]100%|██████████| 4500/4500 [00:22&lt;00:00, 204.47it/s]
 The gelman-rubin statistic is larger than 1.4 for some parameters. The sampler did not converge.
 The estimated number of effective samples is smaller than 200 for some parameters.
 
 
 </pre>
 
-
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">summary</span> = pm.summary(trace, varnames=[<span style="color: #2d9574;">'&#956;'</span>])
-
-pm.plot_posterior(trace, varnames=[<span style="color: #2d9574;">'&#956;'</span>],ref_val = log_costs_per_age_female.values)
-
+<pre class="src src-ipython">trace[<span style="color: #2d9574;">'&#956;'</span>]
 </pre>
 </div>
 
 <pre class="example">
-array([&lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c218e08d0&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c222f1828&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bb40d30&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bb45438&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c36097438&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c352e5cf8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c352fb400&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c37f50ac8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35b431d0&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35b2e898&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35361f60&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c352c4668&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bd45d30&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bd72438&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35d9edd8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c37f16208&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c37efa908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c1e2283c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c1e24ce48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c1e279908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c1e83a3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20da0e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20dcd908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20dfb3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20e1fe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20e4d908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20e7b3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20e9de48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c20eca908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2121d3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2123fe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2126c908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2129b3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c212bfe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c21378908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c281ff3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28224e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2841b908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c284483c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2846ee48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2862f908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c287263c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2874de48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c2877a908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c287a83c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c287cde48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c287f9908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c288b03c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c289ebe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28a19908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28c793c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28f94e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28fc3908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c28ff03c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c34affe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c34b2a908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c34b5b3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c34c0be48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c34c39908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c353903c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c353b5e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c353e6908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c354133c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35438e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35467908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c354983c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c354bfe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c354ed908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3551d3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35542e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c35607908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c356373c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3565de48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c38363908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c383933c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c383b8e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3aa908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3d73c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3a3ffe48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3b558908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3b8df3c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3b903e48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3b932908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf193c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf3de48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3bf6e908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3c0253c8&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3c04ae48&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3c455908&gt;,
-       &lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c3da8f3c8&gt;],
-      dtype=object)
+array([[7.88236047, 6.63073061, 6.05459276, ..., 8.42983587, 8.41133372,
+        8.42032429],
+       [7.88808829, 6.62941107, 6.05599429, ..., 8.42735344, 8.41043991,
+        8.41911799],
+       [7.88808829, 6.62941107, 6.05599429, ..., 8.42735344, 8.41043991,
+        8.41911799],
+       ...,
+       [7.84690562, 6.60379374, 6.09020542, ..., 8.40614413, 8.4248877 ,
+        8.38521775],
+       [7.84690562, 6.60379374, 6.09020542, ..., 8.40614413, 8.4248877 ,
+        8.38521775],
+       [7.84690562, 6.60379374, 6.09020542, ..., 8.40614413, 8.4248877 ,
+        8.38521775]])
 
 </pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">summary</span> = pm.summary(trace, varnames=[<span style="color: #2d9574;">'&#956;'</span>])
+
+pm.plot_posterior(trace, varnames=[<span style="color: #2d9574;">'&#956;'</span>],ref_val = log_costs_per_age_female.values)[0]
+
+</pre>
+</div>
 
 <pre class="example">
 &lt;Figure size 864x8100 with 90 Axes&gt;
@@ -1779,10 +1831,17 @@ array([&lt;matplotlib.axes._subplots.AxesSubplot object at 0x1c218e08d0&gt;,
 
 
 <div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-MfZafc.png" alt="48de63ba873b65759d43f92c5813c7a6-MfZafc.png" />
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-BOQtiX.png" alt="48de63ba873b65759d43f92c5813c7a6-BOQtiX.png" />
 </p>
 </div>
 
+<p>
+The figures above compare the estimated \(\mu\) for each age category with the average expenditure for this age category in the data.
+</p>
+
+<p>
+Let's plot the mean \(\mu\) for each age and the observed average expenditure per age category in a graph:
+</p>
 
 <div class="org-src-container">
 <pre class="src src-ipython">plt.plot(summary[<span style="color: #2d9574;">'mean'</span>].values,label=<span style="color: #2d9574;">'calculated means'</span>)
@@ -1798,42 +1857,36 @@ plt.legend()
 
 
 <div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-XRlNtD.png" alt="48de63ba873b65759d43f92c5813c7a6-XRlNtD.png" />
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-0kbuvS.png" alt="48de63ba873b65759d43f92c5813c7a6-0kbuvS.png" />
 </p>
 </div>
 
+<p>
+To see the effect of the deductible, we compare the average \(\mu\) for 17 year olds with the average \(\mu\) for 19 year olds:
+</p>
+
+
 
 <div class="org-src-container">
-<pre class="src src-ipython">summary[<span style="color: #2d9574;">'mean'</span>][<span style="color: #2d9574;">'&#956;__17'</span>]
+<pre class="src src-ipython">summary[<span style="color: #2d9574;">'mean'</span>][<span style="color: #2d9574;">'&#956;__17'</span>] - summary[<span style="color: #2d9574;">'mean'</span>][<span style="color: #2d9574;">'&#956;__19'</span>]
 </pre>
 </div>
 
 <pre class="example">
-6.701193635863198
+0.28969038682368264
 
 </pre>
-
-<div class="org-src-container">
-<pre class="src src-ipython">summary[<span style="color: #2d9574;">'mean'</span>][<span style="color: #2d9574;">'&#956;__19'</span>]
-</pre>
-</div>
-
-<pre class="example">
-6.408512997449338
-
-</pre>
-
-
-
-
-
 
 <p>
-compare average at 17 and 19 and redo this for another year&#x2026;
+This is positive: 17 year olds spend more on health care than 19 year olds. One explanation is that 17 year olds do not face a deductible, while 19 year olds do. But an other explanation is that health care expenditure simply differs by age (irrespective of a deductible). In order to control for the age effect, we re-do the analysis above for 2011. Also in 2011 we can take the difference in means for 17 and 19 year olds. If there is (only) a biological reason for the different expenditures between 17 and 19 year olds, the difference in 2011 should be the same as the difference in 2014. 
 </p>
 
 <p>
-Adjusted function below slightly as some columns are missing in the 2011 dataset compared to 2014.
+If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our theory above: the yellow area is the additional effect due to the higher deductible in 2014.
+</p>
+
+<p>
+Hence, we do the same analysis as above for 2011. We need to adjust the function <code>get_data_into_shape</code> as there are fewer cost categories in 2011 than in 2011.
 </p>
 
 <div class="org-src-container">
@@ -2077,84 +2130,9 @@ df_2011.head()
 </div>
 
 
-
 <p>
-???delete????
+As above we estimate the model.
 </p>
-
-<div class="org-src-container">
-<pre class="src src-ipython">df_2011[df_2011[<span style="color: #2d9574;">'sex'</span>]==<span style="color: #2d9574;">'V'</span>].groupby([<span style="color: #2d9574;">'age'</span>])[<span style="color: #2d9574;">'costs_per_head'</span>].mean()
-</pre>
-</div>
-
-<pre class="example">
-age
-0     2319.162817
-1      789.701372
-2      519.638247
-3      531.079552
-4      523.951780
-5      561.863211
-6      594.751258
-7      560.116594
-8      528.866292
-9      516.259605
-10     528.715873
-11     541.900909
-12     557.955258
-13     585.595991
-14     645.655728
-15     683.892494
-16     774.230615
-17     826.967902
-18     798.428238
-19     704.724896
-20     741.023921
-21     763.235522
-22     792.369337
-23     838.041001
-24     947.225260
-25    1016.065861
-26    1111.348157
-27    1195.852406
-28    1312.559831
-29    1379.574599
-         ...     
-60    2224.081305
-61    2232.370753
-62    2293.861715
-63    2438.486937
-64    2542.826753
-65    2623.297043
-66    2821.451192
-67    2899.043885
-68    3011.341197
-69    3130.130411
-70    3293.522082
-71    3385.305796
-72    3542.575447
-73    3664.890088
-74    3853.816196
-75    3898.750500
-76    4062.604276
-77    4218.190945
-78    4366.339671
-79    4425.921933
-80    4335.768236
-81    4530.436861
-82    4487.016618
-83    4572.725461
-84    4635.019260
-85    4506.862034
-86    4476.350871
-87    4433.144639
-88    4427.351553
-89    4302.677315
-Name: costs_per_head, Length: 90, dtype: float64
-
-</pre>
-
-
 
 <div class="org-src-container">
 <pre class="src src-ipython">
@@ -2180,13 +2158,13 @@ Name: costs_per_head, Length: 90, dtype: float64
 </div>
 
 <pre class="example">
-  0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -1.5898e+05, ||grad|| = 6,668.8:   0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -38,605, ||grad|| = 4,877.8:   0%|          | 10/5000 [00:00&lt;00:21, 229.78it/s]logp = -26,948, ||grad|| = 36.313:   0%|          | 20/5000 [00:00&lt;00:20, 246.40it/s] logp = -26,948, ||grad|| = 36.313:   1%|          | 26/5000 [00:00&lt;00:19, 258.66it/s]logp = -26,948, ||grad|| = 36.313: 100%|██████████| 30/30 [00:00&lt;00:00, 263.75it/s]  
+  0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -1.5898e+05, ||grad|| = 6,668.8:   0%|          | 0/5000 [00:00&lt;?, ?it/s]logp = -38,605, ||grad|| = 4,877.8:   0%|          | 10/5000 [00:00&lt;00:21, 231.81it/s]logp = -26,948, ||grad|| = 36.313:   0%|          | 20/5000 [00:00&lt;00:20, 238.55it/s] logp = -26,948, ||grad|| = 36.313:   0%|          | 25/5000 [00:00&lt;00:19, 249.98it/s]logp = -26,948, ||grad|| = 36.313: 100%|██████████| 30/30 [00:00&lt;00:00, 259.35it/s]  
 Multiprocess sampling (4 chains in 4 jobs)
 CompoundStep
 &gt;Metropolis: [σ_log__]
 &gt;Metropolis: [μ]
-  0%|          | 0/4500 [00:00&lt;?, ?it/s]  0%|          | 18/4500 [00:00&lt;00:25, 176.55it/s]  1%|          | 42/4500 [00:00&lt;00:21, 206.46it/s]  1%|▏         | 61/4500 [00:00&lt;00:22, 199.03it/s]  2%|▏         | 83/4500 [00:00&lt;00:21, 204.05it/s]  2%|▏         | 105/4500 [00:00&lt;00:21, 205.87it/s]  3%|▎         | 127/4500 [00:00&lt;00:21, 207.22it/s]  3%|▎         | 147/4500 [00:00&lt;00:21, 205.46it/s]  4%|▍         | 169/4500 [00:00&lt;00:20, 206.93it/s]  4%|▍         | 191/4500 [00:00&lt;00:20, 207.37it/s]  5%|▍         | 212/4500 [00:01&lt;00:20, 205.76it/s]  5%|▌         | 232/4500 [00:01&lt;00:20, 204.85it/s]  6%|▌         | 254/4500 [00:01&lt;00:20, 205.58it/s]  6%|▌         | 277/4500 [00:01&lt;00:20, 206.79it/s]  7%|▋         | 298/4500 [00:01&lt;00:20, 204.61it/s]  7%|▋         | 321/4500 [00:01&lt;00:20, 205.78it/s]  8%|▊         | 342/4500 [00:01&lt;00:20, 205.81it/s]  8%|▊         | 364/4500 [00:01&lt;00:20, 206.43it/s]  9%|▊         | 386/4500 [00:01&lt;00:19, 207.15it/s]  9%|▉         | 408/4500 [00:01&lt;00:19, 207.67it/s] 10%|▉         | 430/4500 [00:02&lt;00:19, 207.58it/s] 10%|█         | 452/4500 [00:02&lt;00:19, 207.74it/s] 11%|█         | 475/4500 [00:02&lt;00:19, 208.40it/s] 11%|█         | 497/4500 [00:02&lt;00:19, 207.90it/s] 12%|█▏        | 520/4500 [00:02&lt;00:19, 208.46it/s] 12%|█▏        | 542/4500 [00:02&lt;00:18, 208.81it/s] 13%|█▎        | 564/4500 [00:02&lt;00:18, 208.38it/s] 13%|█▎        | 586/4500 [00:02&lt;00:18, 208.70it/s] 14%|█▎        | 608/4500 [00:02&lt;00:18, 209.04it/s] 14%|█▍        | 631/4500 [00:03&lt;00:18, 209.32it/s] 15%|█▍        | 653/4500 [00:03&lt;00:18, 209.36it/s] 15%|█▌        | 675/4500 [00:03&lt;00:18, 209.50it/s] 15%|█▌        | 697/4500 [00:03&lt;00:18, 209.78it/s] 16%|█▌        | 719/4500 [00:03&lt;00:18, 210.04it/s] 16%|█▋        | 741/4500 [00:03&lt;00:17, 210.08it/s] 17%|█▋        | 763/4500 [00:03&lt;00:17, 210.09it/s] 17%|█▋        | 785/4500 [00:03&lt;00:17, 210.06it/s] 18%|█▊        | 808/4500 [00:03&lt;00:17, 210.42it/s] 18%|█▊        | 830/4500 [00:03&lt;00:17, 210.60it/s] 19%|█▉        | 852/4500 [00:04&lt;00:17, 209.99it/s] 19%|█▉        | 874/4500 [00:04&lt;00:17, 210.06it/s] 20%|█▉        | 895/4500 [00:04&lt;00:17, 210.04it/s] 20%|██        | 917/4500 [00:04&lt;00:17, 210.14it/s] 21%|██        | 939/4500 [00:04&lt;00:16, 210.15it/s] 21%|██▏       | 961/4500 [00:04&lt;00:16, 209.88it/s] 22%|██▏       | 983/4500 [00:04&lt;00:16, 210.03it/s] 22%|██▏       | 1005/4500 [00:04&lt;00:16, 210.08it/s] 23%|██▎       | 1028/4500 [00:04&lt;00:16, 210.36it/s] 23%|██▎       | 1050/4500 [00:04&lt;00:16, 210.52it/s] 24%|██▍       | 1072/4500 [00:05&lt;00:16, 209.69it/s] 24%|██▍       | 1094/4500 [00:05&lt;00:16, 209.86it/s] 25%|██▍       | 1117/4500 [00:05&lt;00:16, 210.13it/s] 25%|██▌       | 1139/4500 [00:05&lt;00:15, 210.30it/s] 26%|██▌       | 1161/4500 [00:05&lt;00:15, 210.46it/s] 26%|██▋       | 1183/4500 [00:05&lt;00:15, 210.47it/s] 27%|██▋       | 1205/4500 [00:05&lt;00:15, 210.63it/s] 27%|██▋       | 1227/4500 [00:05&lt;00:15, 210.72it/s] 28%|██▊       | 1249/4500 [00:05&lt;00:15, 210.68it/s] 28%|██▊       | 1271/4500 [00:06&lt;00:15, 210.61it/s] 29%|██▉       | 1294/4500 [00:06&lt;00:15, 210.82it/s] 29%|██▉       | 1317/4500 [00:06&lt;00:15, 211.01it/s] 30%|██▉       | 1339/4500 [00:06&lt;00:14, 211.09it/s] 30%|███       | 1361/4500 [00:06&lt;00:14, 211.12it/s] 31%|███       | 1384/4500 [00:06&lt;00:14, 211.31it/s] 31%|███       | 1406/4500 [00:06&lt;00:14, 211.31it/s] 32%|███▏      | 1428/4500 [00:06&lt;00:14, 211.37it/s] 32%|███▏      | 1450/4500 [00:06&lt;00:14, 211.39it/s] 33%|███▎      | 1473/4500 [00:06&lt;00:14, 211.58it/s] 33%|███▎      | 1495/4500 [00:07&lt;00:14, 211.48it/s] 34%|███▎      | 1517/4500 [00:07&lt;00:14, 211.28it/s] 34%|███▍      | 1539/4500 [00:07&lt;00:14, 211.37it/s] 35%|███▍      | 1561/4500 [00:07&lt;00:13, 211.24it/s] 35%|███▌      | 1582/4500 [00:07&lt;00:13, 211.19it/s] 36%|███▌      | 1605/4500 [00:07&lt;00:13, 211.33it/s] 36%|███▌      | 1627/4500 [00:07&lt;00:13, 211.42it/s] 37%|███▋      | 1649/4500 [00:07&lt;00:13, 211.35it/s] 37%|███▋      | 1671/4500 [00:07&lt;00:13, 211.41it/s] 38%|███▊      | 1694/4500 [00:08&lt;00:13, 211.43it/s] 38%|███▊      | 1716/4500 [00:08&lt;00:13, 211.37it/s] 39%|███▊      | 1738/4500 [00:08&lt;00:13, 211.43it/s] 39%|███▉      | 1760/4500 [00:08&lt;00:12, 211.50it/s] 40%|███▉      | 1782/4500 [00:08&lt;00:12, 211.48it/s] 40%|████      | 1804/4500 [00:08&lt;00:12, 211.50it/s] 41%|████      | 1826/4500 [00:08&lt;00:12, 211.53it/s] 41%|████      | 1848/4500 [00:08&lt;00:12, 211.58it/s] 42%|████▏     | 1871/4500 [00:08&lt;00:12, 211.70it/s] 42%|████▏     | 1893/4500 [00:08&lt;00:12, 211.71it/s] 43%|████▎     | 1915/4500 [00:09&lt;00:12, 211.41it/s] 43%|████▎     | 1938/4500 [00:09&lt;00:12, 211.54it/s] 44%|████▎     | 1960/4500 [00:09&lt;00:12, 211.56it/s] 44%|████▍     | 1982/4500 [00:09&lt;00:11, 211.64it/s] 45%|████▍     | 2004/4500 [00:09&lt;00:11, 211.64it/s] 45%|████▌     | 2026/4500 [00:09&lt;00:11, 211.50it/s] 45%|████▌     | 2047/4500 [00:09&lt;00:11, 211.14it/s] 46%|████▌     | 2069/4500 [00:09&lt;00:11, 211.23it/s] 46%|████▋     | 2091/4500 [00:09&lt;00:11, 211.22it/s] 47%|████▋     | 2113/4500 [00:10&lt;00:11, 211.23it/s] 47%|████▋     | 2134/4500 [00:10&lt;00:11, 210.92it/s] 48%|████▊     | 2156/4500 [00:10&lt;00:11, 210.95it/s] 48%|████▊     | 2179/4500 [00:10&lt;00:10, 211.08it/s] 49%|████▉     | 2201/4500 [00:10&lt;00:10, 211.13it/s] 49%|████▉     | 2223/4500 [00:10&lt;00:10, 211.14it/s] 50%|████▉     | 2245/4500 [00:10&lt;00:10, 211.21it/s] 50%|█████     | 2267/4500 [00:10&lt;00:10, 211.24it/s] 51%|█████     | 2289/4500 [00:10&lt;00:10, 211.32it/s] 51%|█████▏    | 2311/4500 [00:10&lt;00:10, 211.29it/s] 52%|█████▏    | 2333/4500 [00:11&lt;00:10, 211.09it/s] 52%|█████▏    | 2355/4500 [00:11&lt;00:10, 211.16it/s] 53%|█████▎    | 2377/4500 [00:11&lt;00:10, 211.10it/s] 53%|█████▎    | 2398/4500 [00:11&lt;00:09, 210.99it/s] 54%|█████▍    | 2419/4500 [00:11&lt;00:09, 210.97it/s] 54%|█████▍    | 2441/4500 [00:11&lt;00:09, 211.02it/s] 55%|█████▍    | 2463/4500 [00:11&lt;00:09, 211.04it/s] 55%|█████▌    | 2486/4500 [00:11&lt;00:09, 211.15it/s] 56%|█████▌    | 2508/4500 [00:11&lt;00:09, 211.06it/s] 56%|█████▌    | 2531/4500 [00:11&lt;00:09, 211.17it/s] 57%|█████▋    | 2553/4500 [00:12&lt;00:09, 211.00it/s] 57%|█████▋    | 2575/4500 [00:12&lt;00:09, 211.06it/s] 58%|█████▊    | 2597/4500 [00:12&lt;00:09, 211.10it/s] 58%|█████▊    | 2619/4500 [00:12&lt;00:08, 211.09it/s] 59%|█████▊    | 2641/4500 [00:12&lt;00:08, 211.13it/s] 59%|█████▉    | 2663/4500 [00:12&lt;00:08, 211.17it/s] 60%|█████▉    | 2685/4500 [00:12&lt;00:08, 211.02it/s] 60%|██████    | 2707/4500 [00:12&lt;00:08, 211.03it/s] 61%|██████    | 2730/4500 [00:12&lt;00:08, 211.12it/s] 61%|██████    | 2752/4500 [00:13&lt;00:08, 211.13it/s] 62%|██████▏   | 2774/4500 [00:13&lt;00:08, 211.15it/s] 62%|██████▏   | 2796/4500 [00:13&lt;00:08, 211.18it/s] 63%|██████▎   | 2819/4500 [00:13&lt;00:07, 211.29it/s] 63%|██████▎   | 2842/4500 [00:13&lt;00:07, 211.37it/s] 64%|██████▎   | 2864/4500 [00:13&lt;00:07, 211.38it/s] 64%|██████▍   | 2886/4500 [00:13&lt;00:07, 211.44it/s] 65%|██████▍   | 2908/4500 [00:13&lt;00:07, 211.49it/s] 65%|██████▌   | 2931/4500 [00:13&lt;00:07, 211.59it/s] 66%|██████▌   | 2954/4500 [00:13&lt;00:07, 211.65it/s] 66%|██████▌   | 2976/4500 [00:14&lt;00:07, 211.58it/s] 67%|██████▋   | 2998/4500 [00:14&lt;00:07, 211.57it/s] 67%|██████▋   | 3021/4500 [00:14&lt;00:06, 211.65it/s] 68%|██████▊   | 3043/4500 [00:14&lt;00:06, 211.61it/s] 68%|██████▊   | 3065/4500 [00:14&lt;00:06, 211.49it/s] 69%|██████▊   | 3087/4500 [00:14&lt;00:06, 211.54it/s] 69%|██████▉   | 3109/4500 [00:14&lt;00:06, 211.58it/s] 70%|██████▉   | 3131/4500 [00:14&lt;00:06, 211.63it/s] 70%|███████   | 3153/4500 [00:14&lt;00:06, 211.68it/s] 71%|███████   | 3175/4500 [00:14&lt;00:06, 211.73it/s] 71%|███████   | 3197/4500 [00:15&lt;00:06, 211.64it/s] 72%|███████▏  | 3219/4500 [00:15&lt;00:06, 211.61it/s] 72%|███████▏  | 3241/4500 [00:15&lt;00:05, 211.63it/s] 73%|███████▎  | 3263/4500 [00:15&lt;00:05, 211.63it/s] 73%|███████▎  | 3286/4500 [00:15&lt;00:05, 211.70it/s] 74%|███████▎  | 3308/4500 [00:15&lt;00:05, 211.72it/s] 74%|███████▍  | 3331/4500 [00:15&lt;00:05, 211.79it/s] 75%|███████▍  | 3353/4500 [00:15&lt;00:05, 211.82it/s] 75%|███████▌  | 3375/4500 [00:15&lt;00:05, 211.74it/s] 75%|███████▌  | 3397/4500 [00:16&lt;00:05, 211.64it/s] 76%|███████▌  | 3418/4500 [00:16&lt;00:05, 211.62it/s] 76%|███████▋  | 3441/4500 [00:16&lt;00:05, 211.69it/s] 77%|███████▋  | 3463/4500 [00:16&lt;00:04, 211.69it/s] 77%|███████▋  | 3485/4500 [00:16&lt;00:04, 211.73it/s] 78%|███████▊  | 3507/4500 [00:16&lt;00:04, 211.75it/s] 78%|███████▊  | 3529/4500 [00:16&lt;00:04, 211.79it/s] 79%|███████▉  | 3552/4500 [00:16&lt;00:04, 211.85it/s] 79%|███████▉  | 3574/4500 [00:16&lt;00:04, 211.84it/s] 80%|███████▉  | 3596/4500 [00:16&lt;00:04, 211.86it/s] 80%|████████  | 3618/4500 [00:17&lt;00:04, 211.76it/s] 81%|████████  | 3640/4500 [00:17&lt;00:04, 211.78it/s] 81%|████████▏ | 3662/4500 [00:17&lt;00:03, 211.81it/s] 82%|████████▏ | 3684/4500 [00:17&lt;00:03, 211.83it/s] 82%|████████▏ | 3706/4500 [00:17&lt;00:03, 211.75it/s] 83%|████████▎ | 3728/4500 [00:17&lt;00:03, 211.78it/s] 83%|████████▎ | 3750/4500 [00:17&lt;00:03, 211.78it/s] 84%|████████▍ | 3772/4500 [00:17&lt;00:03, 211.75it/s] 84%|████████▍ | 3794/4500 [00:17&lt;00:03, 211.76it/s] 85%|████████▍ | 3816/4500 [00:18&lt;00:03, 211.65it/s] 85%|████████▌ | 3837/4500 [00:18&lt;00:03, 211.60it/s] 86%|████████▌ | 3859/4500 [00:18&lt;00:03, 211.62it/s] 86%|████████▌ | 3881/4500 [00:18&lt;00:02, 211.66it/s] 87%|████████▋ | 3904/4500 [00:18&lt;00:02, 211.72it/s] 87%|████████▋ | 3926/4500 [00:18&lt;00:02, 211.75it/s] 88%|████████▊ | 3948/4500 [00:18&lt;00:02, 211.67it/s] 88%|████████▊ | 3970/4500 [00:18&lt;00:02, 211.70it/s] 89%|████████▊ | 3993/4500 [00:18&lt;00:02, 211.76it/s] 89%|████████▉ | 4016/4500 [00:18&lt;00:02, 211.81it/s] 90%|████████▉ | 4038/4500 [00:19&lt;00:02, 211.75it/s] 90%|█████████ | 4060/4500 [00:19&lt;00:02, 211.76it/s] 91%|█████████ | 4082/4500 [00:19&lt;00:01, 211.78it/s] 91%|█████████ | 4105/4500 [00:19&lt;00:01, 211.84it/s] 92%|█████████▏| 4127/4500 [00:19&lt;00:01, 211.86it/s] 92%|█████████▏| 4149/4500 [00:19&lt;00:01, 211.89it/s] 93%|█████████▎| 4171/4500 [00:19&lt;00:01, 211.91it/s] 93%|█████████▎| 4193/4500 [00:19&lt;00:01, 211.79it/s] 94%|█████████▎| 4214/4500 [00:19&lt;00:01, 211.61it/s] 94%|█████████▍| 4235/4500 [00:20&lt;00:01, 211.56it/s] 95%|█████████▍| 4256/4500 [00:20&lt;00:01, 211.52it/s] 95%|█████████▌| 4278/4500 [00:20&lt;00:01, 211.55it/s] 96%|█████████▌| 4300/4500 [00:20&lt;00:00, 211.55it/s] 96%|█████████▌| 4322/4500 [00:20&lt;00:00, 211.59it/s] 97%|█████████▋| 4344/4500 [00:20&lt;00:00, 211.62it/s] 97%|█████████▋| 4366/4500 [00:20&lt;00:00, 211.64it/s] 98%|█████████▊| 4389/4500 [00:20&lt;00:00, 211.69it/s] 98%|█████████▊| 4411/4500 [00:20&lt;00:00, 211.70it/s] 99%|█████████▊| 4433/4500 [00:20&lt;00:00, 211.65it/s] 99%|█████████▉| 4455/4500 [00:21&lt;00:00, 211.57it/s] 99%|█████████▉| 4477/4500 [00:21&lt;00:00, 211.59it/s]100%|█████████▉| 4499/4500 [00:21&lt;00:00, 211.61it/s]100%|██████████| 4500/4500 [00:21&lt;00:00, 211.59it/s]
-The gelman-rubin statistic is larger than 1.2 for some parameters.
+  0%|          | 0/4500 [00:00&lt;?, ?it/s]  0%|          | 7/4500 [00:00&lt;01:04, 69.41it/s]  1%|          | 31/4500 [00:00&lt;00:29, 152.35it/s]  1%|          | 50/4500 [00:00&lt;00:27, 162.23it/s]  2%|▏         | 70/4500 [00:00&lt;00:26, 169.05it/s]  2%|▏         | 89/4500 [00:00&lt;00:25, 172.18it/s]  2%|▏         | 107/4500 [00:00&lt;00:25, 172.51it/s]  3%|▎         | 125/4500 [00:00&lt;00:25, 172.84it/s]  3%|▎         | 142/4500 [00:00&lt;00:25, 172.10it/s]  4%|▎         | 160/4500 [00:00&lt;00:25, 172.67it/s]  4%|▍         | 178/4500 [00:01&lt;00:25, 172.72it/s]  4%|▍         | 199/4500 [00:01&lt;00:24, 175.52it/s]  5%|▍         | 221/4500 [00:01&lt;00:23, 178.67it/s]  5%|▌         | 241/4500 [00:01&lt;00:23, 180.08it/s]  6%|▌         | 261/4500 [00:01&lt;00:23, 180.32it/s]  6%|▌         | 280/4500 [00:01&lt;00:23, 180.75it/s]  7%|▋         | 299/4500 [00:01&lt;00:23, 180.70it/s]  7%|▋         | 319/4500 [00:01&lt;00:23, 181.60it/s]  8%|▊         | 338/4500 [00:01&lt;00:22, 181.63it/s]  8%|▊         | 357/4500 [00:01&lt;00:22, 181.79it/s]  8%|▊         | 377/4500 [00:02&lt;00:22, 182.58it/s]  9%|▉         | 399/4500 [00:02&lt;00:22, 184.10it/s]  9%|▉         | 420/4500 [00:02&lt;00:22, 184.99it/s] 10%|▉         | 442/4500 [00:02&lt;00:21, 186.30it/s] 10%|█         | 464/4500 [00:02&lt;00:21, 187.61it/s] 11%|█         | 486/4500 [00:02&lt;00:21, 188.70it/s] 11%|█▏        | 508/4500 [00:02&lt;00:21, 189.68it/s] 12%|█▏        | 530/4500 [00:02&lt;00:20, 189.85it/s] 12%|█▏        | 551/4500 [00:02&lt;00:20, 190.28it/s] 13%|█▎        | 572/4500 [00:03&lt;00:20, 190.41it/s] 13%|█▎        | 594/4500 [00:03&lt;00:20, 191.12it/s] 14%|█▎        | 615/4500 [00:03&lt;00:20, 191.66it/s] 14%|█▍        | 637/4500 [00:03&lt;00:20, 192.29it/s] 15%|█▍        | 659/4500 [00:03&lt;00:19, 192.94it/s] 15%|█▌        | 680/4500 [00:03&lt;00:19, 193.15it/s] 16%|█▌        | 702/4500 [00:03&lt;00:19, 193.78it/s] 16%|█▌        | 723/4500 [00:03&lt;00:19, 194.20it/s] 17%|█▋        | 744/4500 [00:03&lt;00:19, 194.45it/s] 17%|█▋        | 765/4500 [00:03&lt;00:19, 194.54it/s] 17%|█▋        | 786/4500 [00:04&lt;00:19, 194.58it/s] 18%|█▊        | 807/4500 [00:04&lt;00:18, 194.77it/s] 18%|█▊        | 828/4500 [00:04&lt;00:18, 195.10it/s] 19%|█▉        | 849/4500 [00:04&lt;00:18, 195.45it/s] 19%|█▉        | 871/4500 [00:04&lt;00:18, 195.95it/s] 20%|█▉        | 894/4500 [00:04&lt;00:18, 196.58it/s] 20%|██        | 917/4500 [00:04&lt;00:18, 197.13it/s] 21%|██        | 939/4500 [00:04&lt;00:18, 197.10it/s] 21%|██▏       | 960/4500 [00:04&lt;00:17, 197.31it/s] 22%|██▏       | 981/4500 [00:04&lt;00:17, 197.19it/s] 22%|██▏       | 1003/4500 [00:05&lt;00:17, 197.51it/s] 23%|██▎       | 1025/4500 [00:05&lt;00:17, 197.81it/s] 23%|██▎       | 1047/4500 [00:05&lt;00:17, 198.15it/s] 24%|██▍       | 1070/4500 [00:05&lt;00:17, 198.59it/s] 24%|██▍       | 1092/4500 [00:05&lt;00:17, 198.96it/s] 25%|██▍       | 1114/4500 [00:05&lt;00:16, 199.25it/s] 25%|██▌       | 1136/4500 [00:05&lt;00:16, 199.56it/s] 26%|██▌       | 1158/4500 [00:05&lt;00:16, 199.87it/s] 26%|██▌       | 1180/4500 [00:05&lt;00:16, 200.12it/s] 27%|██▋       | 1202/4500 [00:06&lt;00:16, 200.15it/s] 27%|██▋       | 1224/4500 [00:06&lt;00:16, 200.31it/s] 28%|██▊       | 1246/4500 [00:06&lt;00:16, 200.58it/s] 28%|██▊       | 1268/4500 [00:06&lt;00:16, 200.59it/s] 29%|██▊       | 1290/4500 [00:06&lt;00:15, 200.82it/s] 29%|██▉       | 1312/4500 [00:06&lt;00:15, 200.09it/s] 30%|██▉       | 1332/4500 [00:06&lt;00:15, 199.61it/s] 30%|███       | 1351/4500 [00:06&lt;00:15, 199.10it/s] 30%|███       | 1370/4500 [00:06&lt;00:15, 198.78it/s] 31%|███       | 1389/4500 [00:07&lt;00:15, 197.87it/s] 31%|███▏      | 1407/4500 [00:07&lt;00:15, 196.99it/s] 32%|███▏      | 1424/4500 [00:07&lt;00:15, 196.55it/s] 32%|███▏      | 1441/4500 [00:07&lt;00:15, 196.09it/s] 32%|███▏      | 1458/4500 [00:07&lt;00:15, 195.69it/s] 33%|███▎      | 1477/4500 [00:07&lt;00:15, 195.51it/s] 33%|███▎      | 1495/4500 [00:07&lt;00:15, 195.21it/s] 34%|███▎      | 1515/4500 [00:07&lt;00:15, 195.16it/s] 34%|███▍      | 1534/4500 [00:07&lt;00:15, 195.04it/s] 35%|███▍      | 1553/4500 [00:07&lt;00:15, 194.58it/s] 35%|███▍      | 1572/4500 [00:08&lt;00:15, 194.46it/s] 35%|███▌      | 1591/4500 [00:08&lt;00:14, 194.39it/s] 36%|███▌      | 1611/4500 [00:08&lt;00:14, 194.39it/s] 36%|███▋      | 1633/4500 [00:08&lt;00:14, 194.62it/s] 37%|███▋      | 1656/4500 [00:08&lt;00:14, 194.94it/s] 37%|███▋      | 1678/4500 [00:08&lt;00:14, 195.21it/s] 38%|███▊      | 1700/4500 [00:08&lt;00:14, 195.43it/s] 38%|███▊      | 1721/4500 [00:08&lt;00:14, 195.49it/s] 39%|███▊      | 1742/4500 [00:08&lt;00:14, 195.64it/s] 39%|███▉      | 1763/4500 [00:09&lt;00:13, 195.58it/s] 40%|███▉      | 1785/4500 [00:09&lt;00:13, 195.82it/s] 40%|████      | 1807/4500 [00:09&lt;00:13, 196.07it/s] 41%|████      | 1829/4500 [00:09&lt;00:13, 196.31it/s] 41%|████      | 1851/4500 [00:09&lt;00:13, 196.47it/s] 42%|████▏     | 1873/4500 [00:09&lt;00:13, 196.58it/s] 42%|████▏     | 1895/4500 [00:09&lt;00:13, 196.78it/s] 43%|████▎     | 1917/4500 [00:09&lt;00:13, 196.91it/s] 43%|████▎     | 1939/4500 [00:09&lt;00:12, 197.04it/s] 44%|████▎     | 1961/4500 [00:09&lt;00:12, 197.04it/s] 44%|████▍     | 1982/4500 [00:10&lt;00:12, 197.14it/s] 45%|████▍     | 2003/4500 [00:10&lt;00:12, 197.15it/s] 45%|████▌     | 2025/4500 [00:10&lt;00:12, 197.29it/s] 45%|████▌     | 2046/4500 [00:10&lt;00:12, 197.07it/s] 46%|████▌     | 2066/4500 [00:10&lt;00:12, 196.78it/s] 46%|████▋     | 2085/4500 [00:10&lt;00:12, 196.61it/s] 47%|████▋     | 2105/4500 [00:10&lt;00:12, 196.61it/s] 47%|████▋     | 2124/4500 [00:10&lt;00:12, 196.52it/s] 48%|████▊     | 2143/4500 [00:10&lt;00:12, 196.40it/s] 48%|████▊     | 2162/4500 [00:11&lt;00:11, 196.00it/s] 48%|████▊     | 2180/4500 [00:11&lt;00:11, 195.75it/s] 49%|████▉     | 2202/4500 [00:11&lt;00:11, 195.92it/s] 49%|████▉     | 2223/4500 [00:11&lt;00:11, 196.01it/s] 50%|████▉     | 2244/4500 [00:11&lt;00:11, 196.05it/s] 50%|█████     | 2265/4500 [00:11&lt;00:11, 196.08it/s] 51%|█████     | 2287/4500 [00:11&lt;00:11, 196.24it/s] 51%|█████▏    | 2309/4500 [00:11&lt;00:11, 196.38it/s] 52%|█████▏    | 2330/4500 [00:11&lt;00:11, 196.43it/s] 52%|█████▏    | 2351/4500 [00:11&lt;00:10, 196.18it/s] 53%|█████▎    | 2372/4500 [00:12&lt;00:10, 196.24it/s] 53%|█████▎    | 2393/4500 [00:12&lt;00:10, 196.32it/s] 54%|█████▎    | 2414/4500 [00:12&lt;00:10, 196.42it/s] 54%|█████▍    | 2435/4500 [00:12&lt;00:10, 196.44it/s] 55%|█████▍    | 2458/4500 [00:12&lt;00:10, 196.64it/s] 55%|█████▌    | 2481/4500 [00:12&lt;00:10, 196.84it/s] 56%|█████▌    | 2503/4500 [00:12&lt;00:10, 196.95it/s] 56%|█████▌    | 2525/4500 [00:12&lt;00:10, 197.09it/s] 57%|█████▋    | 2547/4500 [00:12&lt;00:09, 197.21it/s] 57%|█████▋    | 2569/4500 [00:13&lt;00:09, 197.23it/s] 58%|█████▊    | 2590/4500 [00:13&lt;00:09, 197.24it/s] 58%|█████▊    | 2612/4500 [00:13&lt;00:09, 197.37it/s] 59%|█████▊    | 2633/4500 [00:13&lt;00:09, 197.40it/s] 59%|█████▉    | 2654/4500 [00:13&lt;00:09, 197.07it/s] 59%|█████▉    | 2675/4500 [00:13&lt;00:09, 197.11it/s] 60%|█████▉    | 2697/4500 [00:13&lt;00:09, 197.25it/s] 60%|██████    | 2719/4500 [00:13&lt;00:09, 197.40it/s] 61%|██████    | 2740/4500 [00:13&lt;00:08, 197.46it/s] 61%|██████▏   | 2761/4500 [00:13&lt;00:08, 197.45it/s] 62%|██████▏   | 2782/4500 [00:14&lt;00:08, 197.53it/s] 62%|██████▏   | 2803/4500 [00:14&lt;00:08, 197.56it/s] 63%|██████▎   | 2825/4500 [00:14&lt;00:08, 197.64it/s] 63%|██████▎   | 2847/4500 [00:14&lt;00:08, 197.79it/s] 64%|██████▍   | 2869/4500 [00:14&lt;00:08, 197.90it/s] 64%|██████▍   | 2891/4500 [00:14&lt;00:08, 197.99it/s] 65%|██████▍   | 2913/4500 [00:14&lt;00:08, 198.10it/s] 65%|██████▌   | 2935/4500 [00:14&lt;00:07, 198.16it/s] 66%|██████▌   | 2956/4500 [00:14&lt;00:07, 198.17it/s] 66%|██████▌   | 2977/4500 [00:15&lt;00:07, 198.05it/s] 67%|██████▋   | 2999/4500 [00:15&lt;00:07, 198.15it/s] 67%|██████▋   | 3020/4500 [00:15&lt;00:07, 198.22it/s] 68%|██████▊   | 3041/4500 [00:15&lt;00:07, 198.25it/s] 68%|██████▊   | 3063/4500 [00:15&lt;00:07, 198.37it/s] 69%|██████▊   | 3084/4500 [00:15&lt;00:07, 198.43it/s] 69%|██████▉   | 3105/4500 [00:15&lt;00:07, 198.45it/s] 69%|██████▉   | 3126/4500 [00:15&lt;00:06, 198.45it/s] 70%|██████▉   | 3147/4500 [00:15&lt;00:06, 198.47it/s] 70%|███████   | 3168/4500 [00:15&lt;00:06, 198.40it/s] 71%|███████   | 3189/4500 [00:16&lt;00:06, 198.40it/s] 71%|███████▏  | 3209/4500 [00:16&lt;00:06, 198.14it/s] 72%|███████▏  | 3230/4500 [00:16&lt;00:06, 198.21it/s] 72%|███████▏  | 3252/4500 [00:16&lt;00:06, 198.30it/s] 73%|███████▎  | 3273/4500 [00:16&lt;00:06, 198.37it/s] 73%|███████▎  | 3295/4500 [00:16&lt;00:06, 198.45it/s] 74%|███████▎  | 3316/4500 [00:16&lt;00:05, 198.50it/s] 74%|███████▍  | 3337/4500 [00:16&lt;00:05, 198.56it/s] 75%|███████▍  | 3358/4500 [00:16&lt;00:05, 198.45it/s] 75%|███████▌  | 3378/4500 [00:17&lt;00:05, 198.34it/s] 76%|███████▌  | 3400/4500 [00:17&lt;00:05, 198.42it/s] 76%|███████▌  | 3420/4500 [00:17&lt;00:05, 198.37it/s] 76%|███████▋  | 3440/4500 [00:17&lt;00:05, 198.22it/s] 77%|███████▋  | 3462/4500 [00:17&lt;00:05, 198.30it/s] 77%|███████▋  | 3482/4500 [00:17&lt;00:05, 198.30it/s] 78%|███████▊  | 3503/4500 [00:17&lt;00:05, 198.34it/s] 78%|███████▊  | 3524/4500 [00:17&lt;00:04, 198.41it/s] 79%|███████▉  | 3545/4500 [00:17&lt;00:04, 198.40it/s] 79%|███████▉  | 3566/4500 [00:17&lt;00:04, 198.27it/s] 80%|███████▉  | 3586/4500 [00:18&lt;00:04, 198.25it/s] 80%|████████  | 3607/4500 [00:18&lt;00:04, 198.28it/s] 81%|████████  | 3628/4500 [00:18&lt;00:04, 198.31it/s] 81%|████████  | 3650/4500 [00:18&lt;00:04, 198.38it/s] 82%|████████▏ | 3671/4500 [00:18&lt;00:04, 198.41it/s] 82%|████████▏ | 3692/4500 [00:18&lt;00:04, 198.46it/s] 83%|████████▎ | 3714/4500 [00:18&lt;00:03, 198.54it/s] 83%|████████▎ | 3735/4500 [00:18&lt;00:03, 198.57it/s] 83%|████████▎ | 3756/4500 [00:18&lt;00:03, 198.57it/s] 84%|████████▍ | 3777/4500 [00:19&lt;00:03, 198.55it/s] 84%|████████▍ | 3798/4500 [00:19&lt;00:03, 198.52it/s] 85%|████████▍ | 3819/4500 [00:19&lt;00:03, 198.55it/s] 85%|████████▌ | 3841/4500 [00:19&lt;00:03, 198.63it/s] 86%|████████▌ | 3863/4500 [00:19&lt;00:03, 198.70it/s] 86%|████████▋ | 3884/4500 [00:19&lt;00:03, 198.75it/s] 87%|████████▋ | 3906/4500 [00:19&lt;00:02, 198.84it/s] 87%|████████▋ | 3928/4500 [00:19&lt;00:02, 198.90it/s] 88%|████████▊ | 3950/4500 [00:19&lt;00:02, 198.90it/s] 88%|████████▊ | 3971/4500 [00:19&lt;00:02, 198.87it/s] 89%|████████▊ | 3992/4500 [00:20&lt;00:02, 198.88it/s] 89%|████████▉ | 4013/4500 [00:20&lt;00:02, 198.82it/s] 90%|████████▉ | 4033/4500 [00:20&lt;00:02, 198.68it/s] 90%|█████████ | 4053/4500 [00:20&lt;00:02, 198.61it/s] 90%|█████████ | 4072/4500 [00:20&lt;00:02, 198.45it/s] 91%|█████████ | 4091/4500 [00:20&lt;00:02, 198.39it/s] 91%|█████████▏| 4110/4500 [00:20&lt;00:01, 198.26it/s] 92%|█████████▏| 4129/4500 [00:20&lt;00:01, 198.12it/s] 92%|█████████▏| 4147/4500 [00:20&lt;00:01, 197.99it/s] 93%|█████████▎| 4165/4500 [00:21&lt;00:01, 197.82it/s] 93%|█████████▎| 4183/4500 [00:21&lt;00:01, 197.70it/s] 93%|█████████▎| 4202/4500 [00:21&lt;00:01, 197.62it/s] 94%|█████████▍| 4222/4500 [00:21&lt;00:01, 197.62it/s] 94%|█████████▍| 4244/4500 [00:21&lt;00:01, 197.69it/s] 95%|█████████▍| 4264/4500 [00:21&lt;00:01, 197.70it/s] 95%|█████████▌| 4285/4500 [00:21&lt;00:01, 197.72it/s] 96%|█████████▌| 4305/4500 [00:21&lt;00:00, 197.73it/s] 96%|█████████▌| 4326/4500 [00:21&lt;00:00, 197.74it/s] 97%|█████████▋| 4346/4500 [00:21&lt;00:00, 197.64it/s] 97%|█████████▋| 4367/4500 [00:22&lt;00:00, 197.68it/s] 97%|█████████▋| 4387/4500 [00:22&lt;00:00, 197.56it/s] 98%|█████████▊| 4408/4500 [00:22&lt;00:00, 197.59it/s] 98%|█████████▊| 4429/4500 [00:22&lt;00:00, 197.63it/s] 99%|█████████▉| 4451/4500 [00:22&lt;00:00, 197.72it/s] 99%|█████████▉| 4473/4500 [00:22&lt;00:00, 197.80it/s]100%|█████████▉| 4494/4500 [00:22&lt;00:00, 197.85it/s]
+100%|██████████| 4500/4500 [00:22&lt;00:00, 197.86it/s]The gelman-rubin statistic is larger than 1.4 for some parameters. The sampler did not converge.
 The estimated number of effective samples is smaller than 200 for some parameters.
 
 
@@ -2198,7 +2176,7 @@ The estimated number of effective samples is smaller than 200 for some parameter
 </div>
 
 <p>
-In 2014 the difference in mean log expenditure equals: 0.29
+Recall that in 2014 the difference in mean log expenditure equals: 0.29
 </p>
 
 <div class="org-src-container">
@@ -2207,13 +2185,13 @@ In 2014 the difference in mean log expenditure equals: 0.29
 </div>
 
 <pre class="example">
-0.2926806384138594
+0.28969038682368264
 
 </pre>
 
 
 <p>
-In 2011, this difference is smaller: 0.20
+In 2011, this difference is smaller: 0.19
 </p>
 
 <div class="org-src-container">
@@ -2222,52 +2200,53 @@ In 2011, this difference is smaller: 0.20
 </div>
 
 <pre class="example">
-0.1950123746795569
+0.18852248889858103
 
 </pre>
 
 <p>
-Hence we find that regulation in terms of a deductible has an effect on health care expenditures.
+Hence we find that government regulation in terms of a deductible has an effect on health care expenditures. People spend less on health care if they face a higher deductible.
 </p>
 
 <p>
-Analysis can be extended to become more convincing:
+One can extend the analysis above to make it more convincing. Think of things like
 </p>
 <ul class="org-ul">
-<li>add more years</li>
-<li>add year dummies to distinguish year effects (like changes in treatments covered by basic insurance) from changes in deductible.</li>
+<li>add more years (using the Vektis website)</li>
+<li>add year dummies to distinguish year effects (like changes in treatments covered by basic insurance) from changes in deductible</li>
+<li>add the level of the deductible in the estimation.</li>
 </ul>
 
-
 <p>
-If you like this way of modelling, you can look at these videos: &#x2026;.
+If you like this way of modelling with pymc3, you can look at <a href="https://www.youtube.com/watch?v=TMmSESkhRtI&amp;t=9076s">this video</a>
 </p>
 
 <p>
-Simple introductions to Bayesian estimation: &#x2026;.
+A simple introductions to Bayesian estimation with python can be found <a href="https://www.youtube.com/watch?v=TpgiFIGXcT4&amp;t=6s">here</a>. Allen Downey also has <a href="http://www.allendowney.com/wp/books/">free books</a> on statistics with python.
 </p>
 </div>
 </div>
-
-
-
-
-<div id="outline-container-org99bbb07" class="outline-3">
-<h3 id="org99bbb07"><span class="section-number-3">7.3</span> using python for empirical research</h3>
-<div class="outline-text-3" id="text-7-3">
 </div>
-<div id="outline-container-org1ca94f2" class="outline-4">
-<h4 id="org1ca94f2"><span class="section-number-4">7.3.1</span> API's to get data</h4>
-<div class="outline-text-4" id="text-7-3-1">
+
+
+<div id="outline-container-orga409815" class="outline-2">
+<h2 id="orga409815"><span class="section-number-2">8</span> Using python for empirical research</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orgc8d4fce" class="outline-4">
+<h4 id="orgc8d4fce"><span class="section-number-4">8.0.1</span> API's to get data</h4>
+<div class="outline-text-4" id="text-8-0-1">
 <p>
-look at inequality in gdp per head
+A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
 </p>
 
 <p>
-<a href="http://wbdata.readthedocs.io/en/latest/">this website</a>
+The advantage of doing your analysis in this way is that your research becomes better reproducible. Everyone can run the same code and then go through your code of data cleaning steps to end up with the same data set. If instead you first download the data to your computer, then use excel to clean the data and then start analyzing it (say, with stata), no one will be able to reproduce the steps that you have taken.
 </p>
 
-
+<p>
+To illustrate, the Worldbank API, we will look at the development over time of inequality in gdp per head. So we want measures of gdp per head. The API allows us to search for such indicators in the Worldbank data set. The column on the left gives the name of the variables (that we will use below to download the data); the column on the right explains what the variable provides.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-ipython">wb.search_indicators(<span style="color: #2d9574;">"gdp per capita"</span>)
@@ -2277,7 +2256,6 @@ look at inequality in gdp per head
 <pre class="example">
 6.0.GDPpc_constant      	GDP per capita, PPP (constant 2011 international $) 
 FB.DPT.INSU.PC.ZS       	Deposit insurance coverage (% of GDP per capita)
-NV.AGR.PCAP.KD.ZG       	Real agricultural GDP per capita growth rate (%)
 NY.GDP.PCAP.PP.KD.ZG    	GDP per capita, PPP annual growth (%)
 NY.GDP.PCAP.PP.KD.87    	GDP per capita, PPP (constant 1987 international $)
 NY.GDP.PCAP.PP.KD       	GDP per capita, PPP (constant 2011 international $)
@@ -2287,6 +2265,7 @@ NY.GDP.PCAP.KD.ZG       	GDP per capita growth (annual %)
 NY.GDP.PCAP.KD          	GDP per capita (constant 2010 US$)
 NY.GDP.PCAP.CN          	GDP per capita (current LCU)
 NY.GDP.PCAP.CD          	GDP per capita (current US$)
+NV.AGR.PCAP.KD.ZG       	Real agricultural GDP per capita growth rate (%)
 SE.XPD.TERT.PC.ZS       	Government expenditure per student, tertiary (% of GDP per capita)
 SE.XPD.SECO.PC.ZS       	Government expenditure per student, secondary (% of GDP per capita)
 SE.XPD.PRIM.PC.ZS       	Government expenditure per student, primary (% of GDP per capita)
@@ -2297,6 +2276,13 @@ UIS.XUNIT.GDPCAP.2.FSGOV	Government expenditure per lower secondary student as %
 
 </pre>
 
+<p>
+Let's say that we are interested in "GDP per capita, PPP (constant 2011 international $)", we specify this indicator in a dictionary where the key is the "official name" of the variable and the value is the way that we want to refer to the variable (in this case: "GDP_per_head").
+</p>
+
+<p>
+With <code>get_dataframe</code> we actually download the data into the dataframe <code>df_wb</code>. We reset the index in this case (just see what happens to the dataframe if you don't do this). And we look at the first 5 rows to get an idea of what the data are.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">indicators</span> = {<span style="color: #2d9574;">"NY.GDP.PCAP.PP.KD"</span>: <span style="color: #2d9574;">"GDP_per_head"</span>}
@@ -2375,123 +2361,22 @@ df_wb.head()
 </div>
 
 
-<div class="org-src-container">
-<pre class="src src-ipython">df_wb.tail(10)
-</pre>
-</div>
-
-<pre class="example">
-        country       date  GDP_per_head
-15302  Zimbabwe 1969-01-01           NaN
-15303  Zimbabwe 1968-01-01           NaN
-15304  Zimbabwe 1967-01-01           NaN
-15305  Zimbabwe 1966-01-01           NaN
-15306  Zimbabwe 1965-01-01           NaN
-15307  Zimbabwe 1964-01-01           NaN
-15308  Zimbabwe 1963-01-01           NaN
-15309  Zimbabwe 1962-01-01           NaN
-15310  Zimbabwe 1961-01-01           NaN
-15311  Zimbabwe 1960-01-01           NaN
-
-</pre>
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>country</th>
-      <th>date</th>
-      <th>GDP_per_head</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>15302</th>
-      <td>Zimbabwe</td>
-      <td>1969-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15303</th>
-      <td>Zimbabwe</td>
-      <td>1968-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15304</th>
-      <td>Zimbabwe</td>
-      <td>1967-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15305</th>
-      <td>Zimbabwe</td>
-      <td>1966-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15306</th>
-      <td>Zimbabwe</td>
-      <td>1965-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15307</th>
-      <td>Zimbabwe</td>
-      <td>1964-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15308</th>
-      <td>Zimbabwe</td>
-      <td>1963-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15309</th>
-      <td>Zimbabwe</td>
-      <td>1962-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15310</th>
-      <td>Zimbabwe</td>
-      <td>1961-01-01</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>15311</th>
-      <td>Zimbabwe</td>
-      <td>1960-01-01</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 <p>
-If you like the dataframe that you have downloaded from the web, you can save it.
+<b>Exercise</b> What do the last 10 rows look like?
 </p>
 
+<p>
+If you like the dataframe that you have downloaded from the web, you can save it with pandas <code>to_csv</code>. We save the data in the subdirectory "data".
+</p>
 
 <div class="org-src-container">
 <pre class="src src-ipython">df_wb.to_csv(<span style="color: #2d9574;">'data/worldbank_data_gdp_per_capita.csv'</span>)
 </pre>
 </div>
+
+<p>
+Let's compare the distribution of gdp per head in 1990 with the distribution in 2017. In order to illustrate how we can combine dataframes in pandas, we first define separate dataframes for the years 1990 and 2017.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">df_1990</span>=df_wb[df_wb[<span style="color: #2d9574;">'date'</span>]==<span style="color: #2d9574;">'1990-01-01'</span>]
@@ -2499,127 +2384,26 @@ If you like the dataframe that you have downloaded from the web, you can save it
 </pre>
 </div>
 
+<p>
+<b>Exercise</b> What does the dataframe <code>df_1990</code> look like?
+</p>
+
+<p>
+Both dataframes have a column <code>country</code>. Hence, we can merge the dataframes on this column. There are a number of <code>how</code> methods, here we use 'inner' which means that only countries that are present in both datasets will be in <code>df_merged</code>. To distinguish the columns, like <code>GDP_per_head</code> from the two dataframes, we can provide suffixes. All columns from <code>df_1990</code> (except for <code>country</code>) will be suffixed with '_1990'; and similarly for 2017.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">df_merged</span> = pd.merge(df_1990, df_2017, on=[<span style="color: #2d9574;">'country'</span>], suffixes=[<span style="color: #2d9574;">'_1990'</span>, <span style="color: #2d9574;">'_2017'</span>], how=<span style="color: #2d9574;">'inner'</span>)
 
 </pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-ipython">df_merged.head()
-</pre>
-</div>
-
-<pre class="example">
-                          country  date_1990  GDP_per_head_1990  date_2017  \
-0                      Arab World 1990-01-01       10450.208542 2017-01-01   
-1          Caribbean small states 1990-01-01        9387.693760 2017-01-01   
-2  Central Europe and the Baltics 1990-01-01       12257.927436 2017-01-01   
-3      Early-demographic dividend 1990-01-01        4243.600332 2017-01-01   
-4             East Asia &amp; Pacific 1990-01-01        4964.741818 2017-01-01   
-
-   GDP_per_head_2017  
-0       15413.791998  
-1       14356.372119  
-2       26499.126110  
-3        8857.519723  
-4       16525.394471  
-
-</pre>
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>country</th>
-      <th>date_1990</th>
-      <th>GDP_per_head_1990</th>
-      <th>date_2017</th>
-      <th>GDP_per_head_2017</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Arab World</td>
-      <td>1990-01-01</td>
-      <td>10450.208542</td>
-      <td>2017-01-01</td>
-      <td>15413.791998</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Caribbean small states</td>
-      <td>1990-01-01</td>
-      <td>9387.693760</td>
-      <td>2017-01-01</td>
-      <td>14356.372119</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Central Europe and the Baltics</td>
-      <td>1990-01-01</td>
-      <td>12257.927436</td>
-      <td>2017-01-01</td>
-      <td>26499.126110</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Early-demographic dividend</td>
-      <td>1990-01-01</td>
-      <td>4243.600332</td>
-      <td>2017-01-01</td>
-      <td>8857.519723</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>East Asia &amp; Pacific</td>
-      <td>1990-01-01</td>
-      <td>4964.741818</td>
-      <td>2017-01-01</td>
-      <td>16525.394471</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-<div class="org-src-container">
-<pre class="src src-ipython">plt.scatter(df_merged[<span style="color: #2d9574;">'GDP_per_head_1990'</span>],df_merged[<span style="color: #2d9574;">'GDP_per_head_2017'</span>])
-plt.plot(np.arange(0,100000),np.arange(0,100000))
-plt.xlabel(<span style="color: #2d9574;">'gdp per head in 1990'</span>)
-plt.ylabel(<span style="color: #2d9574;">'gdp per head in 2017'</span>)
-plt.show()
-</pre>
-</div>
-
-<pre class="example">
-&lt;Figure size 432x288 with 1 Axes&gt;
-
-</pre>
-
-
-<div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-NUQsKV.png" alt="48de63ba873b65759d43f92c5813c7a6-NUQsKV.png" />
+<p>
+<b>Exercise</b> To see how the suffixes work, check what <code>df_merged</code> looks like.
 </p>
-</div>
 
 <p>
-If all points would be on the 45-degree line, the distribution of income across countries in 2017 would be the same as in 1990. Instead we see that countries with high incomes in 1990, have even higher incomes in 2017, while this is less the case for countries with low incomes in 1990.
+<b>Exercise</b> Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
 </p>
 
 
@@ -2650,12 +2434,106 @@ show(plot)
 </p>
 </div>
 </div>
+
+
+<div id="outline-container-orgb9b82da" class="outline-4">
+<h4 id="orgb9b82da"><span class="section-number-4">8.0.2</span> Hacker statistics</h4>
+<div class="outline-text-4" id="text-8-0-2">
+<p>
+If you can program, you can recap all the statistics that you were taught (and probably forgot).
+</p>
+
+<p>
+Consider the following code block and try to understand what it does.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">mu</span> = 1000
+<span style="color: #715ab1;">sd</span> = 100
+<span style="color: #715ab1;">number_of_samples</span>=250
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">moments</span>(n):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">samples</span> = pm.Normal.dist(mu,sd).random(size=(number_of_samples,n))
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">mus</span> = samples.mean(axis=1)
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">std</span> = mus.std()
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> [mus,std]
+</pre>
+</div>
+
+<p>
+<b>Exercise</b> Redefine the function <code>my_function(n)</code> such that it goes through the points in the figure below. [hint: you do not need to fit a function, just use your knowledge of statistics]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">my_function</span>(n):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> 20
+</pre>
+</div>
+
+<p>
+We plot the second element of the function <code>moments</code> against \(n\) and the function <code>my_function</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_n</span> = np.arange(1,1000)
+
+plt.plot(range_n,[moments(n)[1] <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'moments'</span>)
+plt.plot(range_n,[my_function(n) <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'my_function'</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">'$n$'</span>)
+plt.show()
+</pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 576x396 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" alt="48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" />
+</p>
+</div>
+
+<p>
+<b>Exercise</b> Explain what the distribution below is.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.hist(moments(10)[0],bins=30,label=<span style="color: #2d9574;">'$n=10$'</span>)
+plt.hist(moments(100)[0],bins=30,alpha=0.6,label=<span style="color: #2d9574;">'$n=100$'</span>)
+plt.legend()
+plt.show()
+</pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 576x396 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" alt="48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" />
+</p>
+</div>
+
+
+<p>
+<b>Exercise</b> Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
+</p>
+
+<p>
+If you like this approach, see <a href="https://www.youtube.com/watch?time_continue=1&amp;v=ssVsVhZEQ9M">this video</a> for more examples. There is also a free book (in the form of jupyter notebooks) to <a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">recap your statistics</a>.
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Boone</p>
-<p class="date">Created: 2018-07-07 Sat 16:43</p>
+<p class="date">Created: 2018-08-13 Mon 14:14</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
