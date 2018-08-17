@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-13 Mon 14:14 -->
+<!-- 2018-08-17 Fri 12:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doing economics with python</title>
@@ -329,64 +329,64 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge3a6b12">1. Introduction</a></li>
-<li><a href="#org742973b">2. Python packages that we will be using</a></li>
-<li><a href="#org19395f6">3. Why do we love the market?</a>
+<li><a href="#org44f41dd">1. Introduction</a></li>
+<li><a href="#org3a7b984">2. Python packages that we will be using</a></li>
+<li><a href="#org3b53602">3. Why do we love the market?</a>
 <ul>
-<li><a href="#org7fe44f3">3.1. market outcome</a>
+<li><a href="#orga2496f6">3.1. market outcome</a>
 <ul>
-<li><a href="#orga64f954">3.1.1. elastic demand and supply</a></li>
+<li><a href="#org3dcd711">3.1.1. elastic demand and supply</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgad086c3">4. why do others not love the market?</a>
+<li><a href="#org5f1a890">4. why do others not love the market?</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orga40ef40">4.0.1. income distribution</a></li>
-<li><a href="#org3afb21c">4.0.2. market power</a></li>
-<li><a href="#org150bafd">4.0.3. merger simulation</a></li>
-<li><a href="#org13d16d8">4.0.4. external effects</a></li>
+<li><a href="#orgf67f5b8">4.0.1. income distribution</a></li>
+<li><a href="#org3502b5e">4.0.2. market power</a></li>
+<li><a href="#org982accb">4.0.3. merger simulation</a></li>
+<li><a href="#org2104c52">4.0.4. external effects</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd258aad">5. Asymmetric information</a>
+<li><a href="#org1c5894a">5. Asymmetric information</a>
 <ul>
-<li><a href="#orgeb4c532">5.1. adverse selection</a></li>
-<li><a href="#org7e9570e">5.2. moral hazard: optimal taxation</a></li>
+<li><a href="#org45b08cb">5.1. adverse selection</a></li>
+<li><a href="#orgaad7734">5.2. moral hazard: optimal taxation</a></li>
 </ul>
 </li>
-<li><a href="#org3dd4f6a">6. Financial crisis</a>
+<li><a href="#org8ec040b">6. Financial crisis</a>
 <ul>
-<li><a href="#org1ed7ea7">6.1. Why these bonus contracts?</a></li>
+<li><a href="#org0c80ded">6.1. Why these bonus contracts?</a></li>
 </ul>
 </li>
-<li><a href="#orgb32adc6">7. Regulation in health care markets</a>
-<ul>
-<li><a href="#org6513256">7.1. simple theory</a></li>
-<li><a href="#org0cb0830">7.2. some data</a></li>
-<li><a href="#org6d4d73c">7.3. matplotlib</a></li>
-<li><a href="#orgcbe4387">7.4. reversing the probability distributions</a></li>
-</ul>
-</li>
-<li><a href="#orga409815">8. Using python for empirical research</a>
+<li><a href="#org4be6717">7. Using python for empirical research</a>
 <ul>
 <li>
 <ul>
-<li><a href="#orgc8d4fce">8.0.1. API's to get data</a></li>
-<li><a href="#orgb9b82da">8.0.2. Hacker statistics</a></li>
+<li><a href="#orga73d2ac">7.0.1. API's to get data</a></li>
+<li><a href="#orgeba12c5">7.0.2. Hacker statistics</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#orgb9bb8cf">8. Regulation in health care markets</a>
+<ul>
+<li><a href="#org8c95d43">8.1. simple theory</a></li>
+<li><a href="#orgd8f177e">8.2. some data</a></li>
+<li><a href="#orgc4fde08">8.3. matplotlib</a></li>
+<li><a href="#org7648ccc">8.4. reversing the probability distributions</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge3a6b12" class="outline-2">
-<h2 id="orge3a6b12"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org44f41dd" class="outline-2">
+<h2 id="org44f41dd"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
@@ -399,8 +399,8 @@ The point is not that we go into a model in detail. Instead, we sketch the trade
 </div>
 
 
-<div id="outline-container-org742973b" class="outline-2">
-<h2 id="org742973b"><span class="section-number-2">2</span> Python packages that we will be using</h2>
+<div id="outline-container-org3a7b984" class="outline-2">
+<h2 id="org3a7b984"><span class="section-number-2">2</span> Python packages that we will be using</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either <code>pip install</code> or <code>conda install</code>.
@@ -431,8 +431,8 @@ plt.style.use(<span style="color: #2d9574;">'seaborn'</span>)
 </div>
 
 
-<div id="outline-container-org19395f6" class="outline-2">
-<h2 id="org19395f6"><span class="section-number-2">3</span> Why do we love the market?</h2>
+<div id="outline-container-org3b53602" class="outline-2">
+<h2 id="org3b53602"><span class="section-number-2">3</span> Why do we love the market?</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his <a href="https://en.wikipedia.org/wiki/Invisible_hand">"invisible hand"</a>. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the <a href="https://en.wikipedia.org/wiki/Revolutions_of_1989">former Soviet Union</a>.
@@ -497,8 +497,8 @@ Hence, this is the best that we can do. It gives us an upperbound on the welfare
 </div>
 
 
-<div id="outline-container-org7fe44f3" class="outline-3">
-<h3 id="org7fe44f3"><span class="section-number-3">3.1</span> market outcome</h3>
+<div id="outline-container-orga2496f6" class="outline-3">
+<h3 id="orga2496f6"><span class="section-number-3">3.1</span> market outcome</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
@@ -562,8 +562,8 @@ So, now we know the equilibrium price
 </pre>
 </div>
 
-<div id="outline-container-orga64f954" class="outline-4">
-<h4 id="orga64f954"><span class="section-number-4">3.1.1</span> elastic demand and supply</h4>
+<div id="outline-container-org3dcd711" class="outline-4">
+<h4 id="org3dcd711"><span class="section-number-4">3.1.1</span> elastic demand and supply</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Up till now we assumed that supply was inelastic: there was a given endowment and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
@@ -607,16 +607,16 @@ Then use <code>fsolve</code> to find the equilibrium price.
 </div>
 </div>
 
-<div id="outline-container-orgad086c3" class="outline-2">
-<h2 id="orgad086c3"><span class="section-number-2">4</span> why do others not love the market?</h2>
+<div id="outline-container-org5f1a890" class="outline-2">
+<h2 id="org5f1a890"><span class="section-number-2">4</span> why do others not love the market?</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 </p>
 </div>
 
-<div id="outline-container-orga40ef40" class="outline-4">
-<h4 id="orga40ef40"><span class="section-number-4">4.0.1</span> income distribution</h4>
+<div id="outline-container-orgf67f5b8" class="outline-4">
+<h4 id="orgf67f5b8"><span class="section-number-4">4.0.1</span> income distribution</h4>
 <div class="outline-text-4" id="text-4-0-1">
 <p>
 In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
@@ -669,8 +669,8 @@ Next, we need to redefine demand, now denoted <code>demand_2</code> which takes 
 </div>
 </div>
 
-<div id="outline-container-org3afb21c" class="outline-4">
-<h4 id="org3afb21c"><span class="section-number-4">4.0.2</span> market power</h4>
+<div id="outline-container-org3502b5e" class="outline-4">
+<h4 id="org3502b5e"><span class="section-number-4">4.0.2</span> market power</h4>
 <div class="outline-text-4" id="text-4-0-2">
 <p>
 <b><b>Warning</b></b> We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
@@ -780,8 +780,8 @@ plt.show()
 
 
 
-<div id="outline-container-org150bafd" class="outline-4">
-<h4 id="org150bafd"><span class="section-number-4">4.0.3</span> merger simulation</h4>
+<div id="outline-container-org982accb" class="outline-4">
+<h4 id="org982accb"><span class="section-number-4">4.0.3</span> merger simulation</h4>
 <div class="outline-text-4" id="text-4-0-3">
 <p>
 In this section, we model a more standard oligopoly market with
@@ -976,8 +976,8 @@ associated with more competitive outcome. Would you agree with this?
 </div>
 </div>
 
-<div id="outline-container-org13d16d8" class="outline-4">
-<h4 id="org13d16d8"><span class="section-number-4">4.0.4</span> external effects</h4>
+<div id="outline-container-org2104c52" class="outline-4">
+<h4 id="org2104c52"><span class="section-number-4">4.0.4</span> external effects</h4>
 <div class="outline-text-4" id="text-4-0-4">
 <p>
 A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost \(c q\). But production leads to an external effect equal to \(\gamma q\). Hence, the social cost of production equals \((c+\gamma)q\)
@@ -1049,8 +1049,8 @@ plt.show()
 </div>
 
 
-<div id="outline-container-orgd258aad" class="outline-2">
-<h2 id="orgd258aad"><span class="section-number-2">5</span> Asymmetric information</h2>
+<div id="outline-container-org1c5894a" class="outline-2">
+<h2 id="org1c5894a"><span class="section-number-2">5</span> Asymmetric information</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 One of the reasons why markets (or other institutions for that matter) work less well than a naive observer may hope is asymmetric information. We consider here both adverse selection and moral hazard. Adverse selection we analyze in the context of insurance and moral hazard in the context of taxation.
@@ -1058,8 +1058,8 @@ One of the reasons why markets (or other institutions for that matter) work less
 </div>
 
 
-<div id="outline-container-orgeb4c532" class="outline-3">
-<h3 id="orgeb4c532"><span class="section-number-3">5.1</span> adverse selection</h3>
+<div id="outline-container-org45b08cb" class="outline-3">
+<h3 id="org45b08cb"><span class="section-number-3">5.1</span> adverse selection</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 <b><b>Exercise</b></b> What is adverse selection?
@@ -1161,8 +1161,8 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org7e9570e" class="outline-3">
-<h3 id="org7e9570e"><span class="section-number-3">5.2</span> moral hazard: optimal taxation</h3>
+<div id="outline-container-orgaad7734" class="outline-3">
+<h3 id="orgaad7734"><span class="section-number-3">5.2</span> moral hazard: optimal taxation</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
@@ -1250,8 +1250,8 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 </div>
 
 
-<div id="outline-container-org3dd4f6a" class="outline-2">
-<h2 id="org3dd4f6a"><span class="section-number-2">6</span> Financial crisis</h2>
+<div id="outline-container-org8ec040b" class="outline-2">
+<h2 id="org8ec040b"><span class="section-number-2">6</span> Financial crisis</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 ???continue here???
@@ -1259,8 +1259,8 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 
 
 <div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">profit</span>(x):
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> np.mean(np.maximum(x,0))
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">profit</span>(x,equity=0):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> np.mean(np.maximum(x,-equity))
 </pre>
 </div>
 
@@ -1275,7 +1275,7 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 </div>
 
 <pre class="example">
--7.579427962699954
+-10.522984781928876
 
 </pre>
 
@@ -1286,19 +1286,23 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 </div>
 
 <pre class="example">
-35.28327597418695
+34.6279830367431
 
 </pre>
 
 
 <p>
-Explain what the python does in the following code cell:
+Explain what "python" does in the following code cell:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">v_std</span> = np.arange(0,200,1)
 <span style="color: #715ab1;">v_returns</span> = [pm.Normal.dist(-10,std).random(size=1000) <span style="color: #3a81c3;">for</span> std <span style="color: #3a81c3;">in</span> v_std]
-plt.scatter([np.std(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns],[profit(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns])
+plt.scatter([np.std(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns],[profit(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns], label=<span style="color: #2d9574;">"no equity"</span>)
+plt.scatter([np.std(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns],[profit(vx,60) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns], label=<span style="color: #2d9574;">"equity equals 60"</span>)
+plt.scatter([np.std(vx) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns],[profit(vx,10000) <span style="color: #3a81c3;">for</span> vx <span style="color: #3a81c3;">in</span> v_returns], label=<span style="color: #2d9574;">"social value"</span>)
+plt.legend()
+
 plt.show()
 </pre>
 </div>
@@ -1310,7 +1314,7 @@ plt.show()
 
 
 <div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-02bjjB.png" alt="48de63ba873b65759d43f92c5813c7a6-02bjjB.png" />
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-oyrCi0.png" alt="48de63ba873b65759d43f92c5813c7a6-oyrCi0.png" />
 </p>
 </div>
 
@@ -1320,18 +1324,361 @@ Explain the economic intuition of the graph above.
 </div>
 
 
-<div id="outline-container-org1ed7ea7" class="outline-3">
-<h3 id="org1ed7ea7"><span class="section-number-3">6.1</span> Why these bonus contracts?</h3>
+<div id="outline-container-org0c80ded" class="outline-3">
+<h3 id="org0c80ded"><span class="section-number-3">6.1</span> Why these bonus contracts?</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+<a class='org-ref-reference' href="#tirole_2017">tirole_2017</a> claims that before the financial crisis investments bank offered high bonuses to attract talented employees (page 345). These bonuses led to inefficient risky behaviour by these employees. But why should competition for talent lead to inefficiencies? If you need to pay employees more, not need to start paying them in an inefficient way?
+</p>
+
+<p>
+We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">y_a</span> = 1
+<span style="color: #715ab1;">y_g</span> = 10
+<span style="color: #715ab1;">y_b</span> = -20
+
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">q_g</span>(q,ability=0.5):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> ability*(1-q)*(1+q)
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">q_b</span>(q,ability=0.5):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> 1 - q - q_g(q,ability=ability)
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">q_choice</span>(w,ability=0.5): <span style="color: #8D8D84;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">w = [w_a,w_g]</span>
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">choice</span> = optimize.fminbound(<span style="color: #3a81c3;">lambda</span> x: -(q_g(x,ability=ability)*w[1] + x*w[0]),0,1) <span style="color: #8D8D84;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">note the minus sign in front of the lambda function</span>
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> choice
+
+<span style="color: #715ab1;">initial_guess</span> = [1,1]
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">objective</span>(ability):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">opt_q</span> = optimize.fmin(<span style="color: #3a81c3;">lambda</span> x: -(q_g(q_choice(x,ability=ability),ability=ability)*y_g + q_choice(x,ability=ability)*y_a + (1-q_choice(x,ability=ability)-q_g(q_choice(x,ability=ability),ability=ability))*y_b),initial_guess)
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> opt_q
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">contract</span>(ability,outside_option):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">q</span> = objective(ability)
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">profit</span> = 
+
+</pre>
+</div>
+</div>
 </div>
 </div>
 
 
 
 
-
-<div id="outline-container-orgb32adc6" class="outline-2">
-<h2 id="orgb32adc6"><span class="section-number-2">7</span> Regulation in health care markets</h2>
+<div id="outline-container-org4be6717" class="outline-2">
+<h2 id="org4be6717"><span class="section-number-2">7</span> Using python for empirical research</h2>
 <div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orga73d2ac" class="outline-4">
+<h4 id="orga73d2ac"><span class="section-number-4">7.0.1</span> API's to get data</h4>
+<div class="outline-text-4" id="text-7-0-1">
+<p>
+A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
+</p>
+
+<p>
+The advantage of doing your analysis in this way is that your research becomes better reproducible. Everyone can run the same code and then go through your code of data cleaning steps to end up with the same data set. If instead you first download the data to your computer, then use excel to clean the data and then start analyzing it (say, with stata), no one will be able to reproduce the steps that you have taken.
+</p>
+
+<p>
+To illustrate, the Worldbank API, we will look at the development over time of inequality in gdp per head. So we want measures of gdp per head. The API allows us to search for such indicators in the Worldbank data set. The column on the left gives the name of the variables (that we will use below to download the data); the column on the right explains what the variable provides.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">wb.search_indicators(<span style="color: #2d9574;">"gdp per capita"</span>)
+</pre>
+</div>
+
+<pre class="example">
+6.0.GDPpc_constant      	GDP per capita, PPP (constant 2011 international $) 
+FB.DPT.INSU.PC.ZS       	Deposit insurance coverage (% of GDP per capita)
+NY.GDP.PCAP.PP.KD.ZG    	GDP per capita, PPP annual growth (%)
+NY.GDP.PCAP.PP.KD.87    	GDP per capita, PPP (constant 1987 international $)
+NY.GDP.PCAP.PP.KD       	GDP per capita, PPP (constant 2011 international $)
+NY.GDP.PCAP.PP.CD       	GDP per capita, PPP (current international $)
+NY.GDP.PCAP.KN          	GDP per capita (constant LCU)
+NY.GDP.PCAP.KD.ZG       	GDP per capita growth (annual %)
+NY.GDP.PCAP.KD          	GDP per capita (constant 2010 US$)
+NY.GDP.PCAP.CN          	GDP per capita (current LCU)
+NY.GDP.PCAP.CD          	GDP per capita (current US$)
+NV.AGR.PCAP.KD.ZG       	Real agricultural GDP per capita growth rate (%)
+SE.XPD.TERT.PC.ZS       	Government expenditure per student, tertiary (% of GDP per capita)
+SE.XPD.SECO.PC.ZS       	Government expenditure per student, secondary (% of GDP per capita)
+SE.XPD.PRIM.PC.ZS       	Government expenditure per student, primary (% of GDP per capita)
+UIS.XUNIT.GDPCAP.4.FSGOV	Government expenditure per post-secondary non-tertiary student as % of GDP per capita (%)
+UIS.XUNIT.GDPCAP.3.FSGOV	Government expenditure per upper secondary student as % of GDP per capita (%)
+UIS.XUNIT.GDPCAP.2.FSGOV	Government expenditure per lower secondary student as % of GDP per capita (%)
+
+
+</pre>
+
+<p>
+Let's say that we are interested in "GDP per capita, PPP (constant 2011 international $)", we specify this indicator in a dictionary where the key is the "official name" of the variable and the value is the way that we want to refer to the variable (in this case: "GDP_per_head").
+</p>
+
+<p>
+With <code>get_dataframe</code> we actually download the data into the dataframe <code>df_wb</code>. We reset the index in this case (just see what happens to the dataframe if you don't do this). And we look at the first 5 rows to get an idea of what the data are.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">indicators</span> = {<span style="color: #2d9574;">"NY.GDP.PCAP.PP.KD"</span>: <span style="color: #2d9574;">"GDP_per_head"</span>}
+<span style="color: #715ab1;">df_wb</span> = wb.get_dataframe(indicators, convert_date=<span style="color: #4e3163;">True</span>)
+df_wb.reset_index(inplace = <span style="color: #4e3163;">True</span>)
+df_wb.head()
+</pre>
+</div>
+
+<pre class="example">
+      country       date  GDP_per_head
+0  Arab World 2017-01-01  15413.791998
+1  Arab World 2016-01-01  15500.530523
+2  Arab World 2015-01-01  15342.766482
+3  Arab World 2014-01-01  15199.008915
+4  Arab World 2013-01-01  15174.101703
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date</th>
+      <th>GDP_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Arab World</td>
+      <td>2017-01-01</td>
+      <td>15413.791998</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Arab World</td>
+      <td>2016-01-01</td>
+      <td>15500.530523</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Arab World</td>
+      <td>2015-01-01</td>
+      <td>15342.766482</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Arab World</td>
+      <td>2014-01-01</td>
+      <td>15199.008915</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Arab World</td>
+      <td>2013-01-01</td>
+      <td>15174.101703</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<p>
+<b>Exercise</b> What do the last 10 rows look like?
+</p>
+
+<p>
+If you like the dataframe that you have downloaded from the web, you can save it with pandas <code>to_csv</code>. We save the data in the subdirectory "data".
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">df_wb.to_csv(<span style="color: #2d9574;">'data/worldbank_data_gdp_per_capita.csv'</span>)
+</pre>
+</div>
+
+<p>
+Let's compare the distribution of gdp per head in 1990 with the distribution in 2017. In order to illustrate how we can combine dataframes in pandas, we first define separate dataframes for the years 1990 and 2017.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">df_1990</span>=df_wb[df_wb[<span style="color: #2d9574;">'date'</span>]==<span style="color: #2d9574;">'1990-01-01'</span>]
+<span style="color: #715ab1;">df_2017</span>=df_wb[df_wb[<span style="color: #2d9574;">'date'</span>]==<span style="color: #2d9574;">'2017-01-01'</span>]
+</pre>
+</div>
+
+<p>
+<b>Exercise</b> What does the dataframe <code>df_1990</code> look like?
+</p>
+
+<p>
+Both dataframes have a column <code>country</code>. Hence, we can merge the dataframes on this column. There are a number of <code>how</code> methods, here we use 'inner' which means that only countries that are present in both datasets will be in <code>df_merged</code>. To distinguish the columns, like <code>GDP_per_head</code> from the two dataframes, we can provide suffixes. All columns from <code>df_1990</code> (except for <code>country</code>) will be suffixed with '_1990'; and similarly for 2017.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">df_merged</span> = pd.merge(df_1990, df_2017, on=[<span style="color: #2d9574;">'country'</span>], suffixes=[<span style="color: #2d9574;">'_1990'</span>, <span style="color: #2d9574;">'_2017'</span>], how=<span style="color: #2d9574;">'inner'</span>)
+
+</pre>
+</div>
+
+<p>
+<b>Exercise</b> To see how the suffixes work, check what <code>df_merged</code> looks like.
+</p>
+
+<p>
+<b>Exercise</b> Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
+</p>
+
+
+<p>
+You may wonder which observations ("dots") correspond to which countries. For this we need a plotting library that is more sophisticated on interactions than <code>matplotlib</code>. A number of these libraries are available; here we consider <a href="https://bokeh.pydata.org/en/latest/docs/user_guide/quickstart.html">bokeh</a>. If you want to know more about bokeh, there is a <a href="https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh">datacamp course</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">from</span> bokeh.io <span style="color: #3a81c3;">import</span> output_file, show, output_notebook
+<span style="color: #3a81c3;">from</span> bokeh.plotting <span style="color: #3a81c3;">import</span> figure
+<span style="color: #3a81c3;">from</span> bokeh.models <span style="color: #3a81c3;">import</span> HoverTool
+output_notebook()
+
+<span style="color: #715ab1;">hover</span> = HoverTool(tooltips=[
+<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>(<span style="color: #2d9574;">'country'</span>,<span style="color: #2d9574;">'@country'</span>),
+<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>])
+
+<span style="color: #715ab1;">plot</span> = figure(tools=[hover])
+plot.circle(<span style="color: #2d9574;">'GDP_per_head_1990'</span>,<span style="color: #2d9574;">'GDP_per_head_2017'</span>,
+<span style="background-color: #ecf3ec;"> </span>   size=10, source=df_merged)
+output_file(<span style="color: #2d9574;">'inequality.html'</span>)
+show(plot)
+</pre>
+</div>
+
+<p>
+<a href="./inequality.html">./inequality.html</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgeba12c5" class="outline-4">
+<h4 id="orgeba12c5"><span class="section-number-4">7.0.2</span> Hacker statistics</h4>
+<div class="outline-text-4" id="text-7-0-2">
+<p>
+If you can program, you can recap all the statistics that you were taught (and probably forgot).
+</p>
+
+<p>
+Consider the following code block and try to understand what it does.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">mu</span> = 1000
+<span style="color: #715ab1;">sd</span> = 100
+<span style="color: #715ab1;">number_of_samples</span>=250
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">moments</span>(n):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">samples</span> = pm.Normal.dist(mu,sd).random(size=(number_of_samples,n))
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">mus</span> = samples.mean(axis=1)
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">std</span> = mus.std()
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> [mus,std]
+</pre>
+</div>
+
+<p>
+<b>Exercise</b> Redefine the function <code>my_function(n)</code> such that it goes through the points in the figure below. [hint: you do not need to fit a function, just use your knowledge of statistics]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">my_function</span>(n):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> 20
+</pre>
+</div>
+
+<p>
+We plot the second element of the function <code>moments</code> against \(n\) and the function <code>my_function</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_n</span> = np.arange(1,1000)
+
+plt.plot(range_n,[moments(n)[1] <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'moments'</span>)
+plt.plot(range_n,[my_function(n) <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'my_function'</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">'$n$'</span>)
+plt.show()
+</pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 576x396 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" alt="48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" />
+</p>
+</div>
+
+<p>
+<b>Exercise</b> Explain what the distribution below is.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.hist(moments(10)[0],bins=30,label=<span style="color: #2d9574;">'$n=10$'</span>)
+plt.hist(moments(100)[0],bins=30,alpha=0.6,label=<span style="color: #2d9574;">'$n=100$'</span>)
+plt.legend()
+plt.show()
+</pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 576x396 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" alt="48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" />
+</p>
+</div>
+
+
+<p>
+<b>Exercise</b> Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
+</p>
+
+<p>
+If you like this approach, see <a href="https://www.youtube.com/watch?time_continue=1&amp;v=ssVsVhZEQ9M">this video</a> for more examples. There is also a free book (in the form of jupyter notebooks) to <a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">recap your statistics</a>.
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-orgb9bb8cf" class="outline-2">
+<h2 id="orgb9bb8cf"><span class="section-number-2">8</span> Regulation in health care markets</h2>
+<div class="outline-text-2" id="text-8">
 <p>
 In this section, the main question is: does government regulation have an effect on markets and can we measure/quantify this?
 </p>
@@ -1351,9 +1698,9 @@ Some institutional background:
 </ul>
 </div>
 
-<div id="outline-container-org6513256" class="outline-3">
-<h3 id="org6513256"><span class="section-number-3">7.1</span> simple theory</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-org8c95d43" class="outline-3">
+<h3 id="org8c95d43"><span class="section-number-3">8.1</span> simple theory</h3>
+<div class="outline-text-3" id="text-8-1">
 <p>
 Consider the following simple theoretical framework. People get
 offered at max. one treatment per year. They decide whether either to
@@ -1403,9 +1750,9 @@ plt.show()
 
 
 
-<div id="outline-container-org0cb0830" class="outline-3">
-<h3 id="org0cb0830"><span class="section-number-3">7.2</span> some data</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-orgd8f177e" class="outline-3">
+<h3 id="orgd8f177e"><span class="section-number-3">8.2</span> some data</h3>
+<div class="outline-text-3" id="text-8-2">
 <p>
 To find the effect of an increase in deductible, we compare health care expenditures in the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro). We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. To use the code below, download these csv-files into the sub-directory "data" (i.e. "data" is sub-directory of the directory in which this notebook resides). 
 </p>
@@ -1675,9 +2022,9 @@ We create <code>costs_per_sex_age</code> which contains the average health care 
 
 
 
-<div id="outline-container-org6d4d73c" class="outline-3">
-<h3 id="org6d4d73c"><span class="section-number-3">7.3</span> matplotlib</h3>
-<div class="outline-text-3" id="text-7-3">
+<div id="outline-container-orgc4fde08" class="outline-3">
+<h3 id="orgc4fde08"><span class="section-number-3">8.3</span> matplotlib</h3>
+<div class="outline-text-3" id="text-8-3">
 <p>
 Then we can plot this distribution of health care expenditure per head with age for males and females.
 </p>
@@ -1717,9 +2064,9 @@ ax.legend([<span style="color: #2d9574;">'male'</span>,<span style="color: #2d95
 </div>
 </div>
 
-<div id="outline-container-orgcbe4387" class="outline-3">
-<h3 id="orgcbe4387"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
-<div class="outline-text-3" id="text-7-4">
+<div id="outline-container-org7648ccc" class="outline-3">
+<h3 id="org7648ccc"><span class="section-number-3">8.4</span> reversing the probability distributions</h3>
+<div class="outline-text-3" id="text-8-4">
 <p>
 Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from. To illustrate this, consider the distribution of (average) costs for 30 year old males. Since, health care costs have a skewed distribution, we actually plot the distribution of log costs.
 </p>
@@ -2204,6 +2551,12 @@ In 2011, this difference is smaller: 0.19
 
 </pre>
 
+
+<p>
+????also give probabilities that one is bigger than the other????
+</p>
+
+
 <p>
 Hence we find that government regulation in terms of a deductible has an effect on health care expenditures. People spend less on health care if they face a higher deductible.
 </p>
@@ -2224,308 +2577,22 @@ If you like this way of modelling with pymc3, you can look at <a href="https://w
 <p>
 A simple introductions to Bayesian estimation with python can be found <a href="https://www.youtube.com/watch?v=TpgiFIGXcT4&amp;t=6s">here</a>. Allen Downey also has <a href="http://www.allendowney.com/wp/books/">free books</a> on statistics with python.
 </p>
-</div>
-</div>
-</div>
 
 
-<div id="outline-container-orga409815" class="outline-2">
-<h2 id="orga409815"><span class="section-number-2">8</span> Using python for empirical research</h2>
-<div class="outline-text-2" id="text-8">
-</div>
-<div id="outline-container-orgc8d4fce" class="outline-4">
-<h4 id="orgc8d4fce"><span class="section-number-4">8.0.1</span> API's to get data</h4>
-<div class="outline-text-4" id="text-8-0-1">
-<p>
-A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
-</p>
-
-<p>
-The advantage of doing your analysis in this way is that your research becomes better reproducible. Everyone can run the same code and then go through your code of data cleaning steps to end up with the same data set. If instead you first download the data to your computer, then use excel to clean the data and then start analyzing it (say, with stata), no one will be able to reproduce the steps that you have taken.
-</p>
-
-<p>
-To illustrate, the Worldbank API, we will look at the development over time of inequality in gdp per head. So we want measures of gdp per head. The API allows us to search for such indicators in the Worldbank data set. The column on the left gives the name of the variables (that we will use below to download the data); the column on the right explains what the variable provides.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython">wb.search_indicators(<span style="color: #2d9574;">"gdp per capita"</span>)
-</pre>
-</div>
-
-<pre class="example">
-6.0.GDPpc_constant      	GDP per capita, PPP (constant 2011 international $) 
-FB.DPT.INSU.PC.ZS       	Deposit insurance coverage (% of GDP per capita)
-NY.GDP.PCAP.PP.KD.ZG    	GDP per capita, PPP annual growth (%)
-NY.GDP.PCAP.PP.KD.87    	GDP per capita, PPP (constant 1987 international $)
-NY.GDP.PCAP.PP.KD       	GDP per capita, PPP (constant 2011 international $)
-NY.GDP.PCAP.PP.CD       	GDP per capita, PPP (current international $)
-NY.GDP.PCAP.KN          	GDP per capita (constant LCU)
-NY.GDP.PCAP.KD.ZG       	GDP per capita growth (annual %)
-NY.GDP.PCAP.KD          	GDP per capita (constant 2010 US$)
-NY.GDP.PCAP.CN          	GDP per capita (current LCU)
-NY.GDP.PCAP.CD          	GDP per capita (current US$)
-NV.AGR.PCAP.KD.ZG       	Real agricultural GDP per capita growth rate (%)
-SE.XPD.TERT.PC.ZS       	Government expenditure per student, tertiary (% of GDP per capita)
-SE.XPD.SECO.PC.ZS       	Government expenditure per student, secondary (% of GDP per capita)
-SE.XPD.PRIM.PC.ZS       	Government expenditure per student, primary (% of GDP per capita)
-UIS.XUNIT.GDPCAP.4.FSGOV	Government expenditure per post-secondary non-tertiary student as % of GDP per capita (%)
-UIS.XUNIT.GDPCAP.3.FSGOV	Government expenditure per upper secondary student as % of GDP per capita (%)
-UIS.XUNIT.GDPCAP.2.FSGOV	Government expenditure per lower secondary student as % of GDP per capita (%)
 
 
-</pre>
-
-<p>
-Let's say that we are interested in "GDP per capita, PPP (constant 2011 international $)", we specify this indicator in a dictionary where the key is the "official name" of the variable and the value is the way that we want to refer to the variable (in this case: "GDP_per_head").
-</p>
-
-<p>
-With <code>get_dataframe</code> we actually download the data into the dataframe <code>df_wb</code>. We reset the index in this case (just see what happens to the dataframe if you don't do this). And we look at the first 5 rows to get an idea of what the data are.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">indicators</span> = {<span style="color: #2d9574;">"NY.GDP.PCAP.PP.KD"</span>: <span style="color: #2d9574;">"GDP_per_head"</span>}
-<span style="color: #715ab1;">df_wb</span> = wb.get_dataframe(indicators, convert_date=<span style="color: #4e3163;">True</span>)
-df_wb.reset_index(inplace = <span style="color: #4e3163;">True</span>)
-df_wb.head()
-</pre>
-</div>
-
-<pre class="example">
-      country       date  GDP_per_head
-0  Arab World 2017-01-01  15413.791998
-1  Arab World 2016-01-01  15500.530523
-2  Arab World 2015-01-01  15342.766482
-3  Arab World 2014-01-01  15199.008915
-4  Arab World 2013-01-01  15174.101703
-
-</pre>
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>country</th>
-      <th>date</th>
-      <th>GDP_per_head</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Arab World</td>
-      <td>2017-01-01</td>
-      <td>15413.791998</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Arab World</td>
-      <td>2016-01-01</td>
-      <td>15500.530523</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Arab World</td>
-      <td>2015-01-01</td>
-      <td>15342.766482</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Arab World</td>
-      <td>2014-01-01</td>
-      <td>15199.008915</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Arab World</td>
-      <td>2013-01-01</td>
-      <td>15174.101703</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 <p>
-<b>Exercise</b> What do the last 10 rows look like?
+\newpage
 </p>
 
 <p>
-If you like the dataframe that you have downloaded from the web, you can save it with pandas <code>to_csv</code>. We save the data in the subdirectory "data".
-</p>
 
-<div class="org-src-container">
-<pre class="src src-ipython">df_wb.to_csv(<span style="color: #2d9574;">'data/worldbank_data_gdp_per_capita.csv'</span>)
-</pre>
-</div>
-
-<p>
-Let's compare the distribution of gdp per head in 1990 with the distribution in 2017. In order to illustrate how we can combine dataframes in pandas, we first define separate dataframes for the years 1990 and 2017.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">df_1990</span>=df_wb[df_wb[<span style="color: #2d9574;">'date'</span>]==<span style="color: #2d9574;">'1990-01-01'</span>]
-<span style="color: #715ab1;">df_2017</span>=df_wb[df_wb[<span style="color: #2d9574;">'date'</span>]==<span style="color: #2d9574;">'2017-01-01'</span>]
-</pre>
-</div>
-
-<p>
-<b>Exercise</b> What does the dataframe <code>df_1990</code> look like?
-</p>
-
-<p>
-Both dataframes have a column <code>country</code>. Hence, we can merge the dataframes on this column. There are a number of <code>how</code> methods, here we use 'inner' which means that only countries that are present in both datasets will be in <code>df_merged</code>. To distinguish the columns, like <code>GDP_per_head</code> from the two dataframes, we can provide suffixes. All columns from <code>df_1990</code> (except for <code>country</code>) will be suffixed with '_1990'; and similarly for 2017.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">df_merged</span> = pd.merge(df_1990, df_2017, on=[<span style="color: #2d9574;">'country'</span>], suffixes=[<span style="color: #2d9574;">'_1990'</span>, <span style="color: #2d9574;">'_2017'</span>], how=<span style="color: #2d9574;">'inner'</span>)
-
-</pre>
-</div>
-
-<p>
-<b>Exercise</b> To see how the suffixes work, check what <code>df_merged</code> looks like.
-</p>
-
-<p>
-<b>Exercise</b> Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
-</p>
-
-
-<p>
-You may wonder which observations ("dots") correspond to which countries. For this we need a plotting library that is more sophisticated on interactions than <code>matplotlib</code>. A number of these libraries are available; here we consider <a href="https://bokeh.pydata.org/en/latest/docs/user_guide/quickstart.html">bokeh</a>. If you want to know more about bokeh, there is a <a href="https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh">datacamp course</a>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #3a81c3;">from</span> bokeh.io <span style="color: #3a81c3;">import</span> output_file, show, output_notebook
-<span style="color: #3a81c3;">from</span> bokeh.plotting <span style="color: #3a81c3;">import</span> figure
-<span style="color: #3a81c3;">from</span> bokeh.models <span style="color: #3a81c3;">import</span> HoverTool
-output_notebook()
-
-<span style="color: #715ab1;">hover</span> = HoverTool(tooltips=[
-<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>(<span style="color: #2d9574;">'country'</span>,<span style="color: #2d9574;">'@country'</span>),
-<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>])
-
-<span style="color: #715ab1;">plot</span> = figure(tools=[hover])
-plot.circle(<span style="color: #2d9574;">'GDP_per_head_1990'</span>,<span style="color: #2d9574;">'GDP_per_head_2017'</span>,
-<span style="background-color: #ecf3ec;"> </span>   size=10, source=df_merged)
-output_file(<span style="color: #2d9574;">'inequality.html'</span>)
-show(plot)
-</pre>
-</div>
-
-<p>
-<a href="./inequality.html">./inequality.html</a>
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-orgb9b82da" class="outline-4">
-<h4 id="orgb9b82da"><span class="section-number-4">8.0.2</span> Hacker statistics</h4>
-<div class="outline-text-4" id="text-8-0-2">
-<p>
-If you can program, you can recap all the statistics that you were taught (and probably forgot).
-</p>
-
-<p>
-Consider the following code block and try to understand what it does.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">mu</span> = 1000
-<span style="color: #715ab1;">sd</span> = 100
-<span style="color: #715ab1;">number_of_samples</span>=250
-
-<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">moments</span>(n):
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">samples</span> = pm.Normal.dist(mu,sd).random(size=(number_of_samples,n))
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">mus</span> = samples.mean(axis=1)
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">std</span> = mus.std()
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> [mus,std]
-</pre>
-</div>
-
-<p>
-<b>Exercise</b> Redefine the function <code>my_function(n)</code> such that it goes through the points in the figure below. [hint: you do not need to fit a function, just use your knowledge of statistics]
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">my_function</span>(n):
-<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> 20
-</pre>
-</div>
-
-<p>
-We plot the second element of the function <code>moments</code> against \(n\) and the function <code>my_function</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython"><span style="color: #715ab1;">range_n</span> = np.arange(1,1000)
-
-plt.plot(range_n,[moments(n)[1] <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'moments'</span>)
-plt.plot(range_n,[my_function(n) <span style="color: #3a81c3;">for</span> n <span style="color: #3a81c3;">in</span> range_n], label=<span style="color: #2d9574;">'my_function'</span>)
-plt.legend()
-plt.xlabel(<span style="color: #2d9574;">'$n$'</span>)
-plt.show()
-</pre>
-</div>
-
-<pre class="example">
-&lt;Figure size 576x396 with 1 Axes&gt;
-
-</pre>
-
-
-<div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" alt="48de63ba873b65759d43f92c5813c7a6-jL5ZAT.png" />
-</p>
-</div>
-
-<p>
-<b>Exercise</b> Explain what the distribution below is.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-ipython">plt.hist(moments(10)[0],bins=30,label=<span style="color: #2d9574;">'$n=10$'</span>)
-plt.hist(moments(100)[0],bins=30,alpha=0.6,label=<span style="color: #2d9574;">'$n=100$'</span>)
-plt.legend()
-plt.show()
-</pre>
-</div>
-
-<pre class="example">
-&lt;Figure size 576x396 with 1 Axes&gt;
-
-</pre>
-
-
-<div class="figure">
-<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" alt="48de63ba873b65759d43f92c5813c7a6-X7gzvP.png" />
-</p>
-</div>
-
-
-<p>
-<b>Exercise</b> Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
-</p>
-
-<p>
-If you like this approach, see <a href="https://www.youtube.com/watch?time_continue=1&amp;v=ssVsVhZEQ9M">this video</a> for more examples. There is also a free book (in the form of jupyter notebooks) to <a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">recap your statistics</a>.
+<h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="tirole_2017">[tirole_2017]</a> <a name="tirole_2017"></a>Jean Tirole, Economics for the Common Good, Princeton University Press (2017).</li>
+<li><a id="bijlsma2018">[bijlsma2018]</a> <a name="bijlsma2018"></a>Bijlsma, Boone & Zwart, Competition for traders and risk, <i>RAND Journal of Economics</i>, <b>34(4)</b>, 737-763 (forthcoming).</li>
+</ul>
 </p>
 </div>
 </div>
@@ -2533,7 +2600,7 @@ If you like this approach, see <a href="https://www.youtube.com/watch?time_conti
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Boone</p>
-<p class="date">Created: 2018-08-13 Mon 14:14</p>
+<p class="date">Created: 2018-08-17 Fri 12:44</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

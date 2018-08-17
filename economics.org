@@ -3,10 +3,11 @@
 #+LANGUAGE:  en
 #+INFOJS_OPT: view:showall toc:t ltoc:t mouse:underline path:http://orgmode.org/org-info.js
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/notebook.css" />
-#+LaTeX_CLASS: article
+#+LaTeX_CLASS: article-nodefaults
 #+LaTeX_HEADER: \usepackage{sectsty}
 #+LaTeX_HEADER: \sectionfont{\normalfont\scshape}
 #+LaTeX_HEADER: \subsectionfont{\normalfont\itshape}
+#+latex_header: \usepackage[round,authoryear]{natbib}
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+OPTIONS: \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
@@ -18,14 +19,14 @@
 
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is based on cite:tirole_2017.
 
-The point is not that we go into a model in detail. Instead, we sketch the trade offs and then model these in python. We then make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than taking the third derivative.
+The point is not that we go into models in detail. Instead, we sketch the trade offs and then model these in python. We then make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than "taking the third derivative".
 
 
 * Python packages that we will be using
 
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either ~pip install~ or ~conda install~.
 
-#+BEGIN_SRC ipython
+#+BEGIN_SRC ipython :exports none
 import pandas as pd
 import numpy as np
 import pymc3 as pm
@@ -48,8 +49,9 @@ plt.style.use('seaborn')
 : 
 :END:
 
+* The market
 
-* Why do we love the market?
+** why do we love the market?
 
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his [[https://en.wikipedia.org/wiki/Invisible_hand]["invisible hand"]]. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the [[https://en.wikipedia.org/wiki/Revolutions_of_1989][former Soviet Union]].
 
@@ -115,7 +117,7 @@ print("{0:.2f}".format(max_welfare))
 Hence, this is the best that we can do. It gives us an upperbound on the welfare that can be achieved. Having an omniscient social planner seems unrealistic, but perhaps there is an institution that can achieve this outcome without omniscient intervention. You guessed it...
 
 
-** market outcome
+*** market outcome
 
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
 
@@ -303,7 +305,7 @@ price
 :END:
 
 
-* why do others not love the market?
+** why do others not love the market?
 
 Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 
@@ -1110,14 +1112,17 @@ There is no effect of $g$ on $\tau$. The planner already maximizes the utility o
 ???continue here???
 
 
+** Why is there a problem in financial markets?
+
+
 #+BEGIN_SRC ipython
-def profit(x):
-    return np.mean(np.maximum(x,0))
+def profit(x,equity=0):
+    return np.mean(np.maximum(x,-equity))
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[3]:
+# Out[7]:
 :END:
 
 
@@ -1130,7 +1135,7 @@ vector_returns = pm.Normal.dist(-10,100).random(size=1000)
 
 #+RESULTS:
 :RESULTS:
-# Out[4]:
+# Out[3]:
 :END:
 
 
@@ -1140,9 +1145,9 @@ np.mean(vector_returns)
 
 #+RESULTS:
 :RESULTS:
-# Out[5]:
+# Out[4]:
 # text/plain
-: -7.579427962699954
+: -10.522984781928876
 :END:
 
 
@@ -1152,35 +1157,228 @@ profit(vector_returns)
 
 #+RESULTS:
 :RESULTS:
-# Out[6]:
+# Out[5]:
 # text/plain
-: 35.28327597418695
+: 34.6279830367431
 :END:
 
 
-Explain what the python does in the following code cell:
+Explain what "python" does in the following code cell:
 
 #+BEGIN_SRC ipython
 v_std = np.arange(0,200,1)
 v_returns = [pm.Normal.dist(-10,std).random(size=1000) for std in v_std]
-plt.scatter([np.std(vx) for vx in v_returns],[profit(vx) for vx in v_returns])
+plt.scatter([np.std(vx) for vx in v_returns],[profit(vx) for vx in v_returns], label="no equity")
+plt.scatter([np.std(vx) for vx in v_returns],[profit(vx,60) for vx in v_returns], label="equity equals 60")
+plt.scatter([np.std(vx) for vx in v_returns],[profit(vx,10000) for vx in v_returns], label="social value")
+plt.legend()
+
 plt.show()
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[15]:
+# Out[13]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-02bjjB.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-oyrCi0.png]]
 :END:
 
 Explain the economic intuition of the graph above.
 
 
 ** Why these bonus contracts?
+
+*** one type of asymmetric information
+
+Hard for banks to monitor exactly what trades are being chosen ????: asymmetric information: pay bonuses to get the desired behaviour from employees.
+
+cite:tirole_2017 claims that before the financial crisis investments bank offered high bonuses to attract talented employees (page 345). These bonuses led to inefficient risky behaviour by these employees. But why should competition for talent lead to inefficiencies?
+
+We follow cite:bijlsma2018 to model this question.
+
+???add model???
+
+limited liability: $w_b \geq 0$
+
+
+#+BEGIN_SRC ipython
+y_a = 1
+y_g = 10
+y_b = -20
+
+
+def q_g(q,ability):
+    return ability*(1-q)*(1+q)
+
+def q_b(q,ability):
+    return 1 - q - q_g(q,ability)
+
+def q_choice(w,ability): # w = [w_a,w_g]
+    choice = optimize.fminbound(lambda x: -(q_g(x,ability)*w[1] + x*w[0]),0,1,disp=0) #note the minus sign in front of the lambda function
+    return choice
+
+initial_guess = [0.5,1.5]
+
+def bank_choices(ability):
+    opt_w = optimize.fmin(lambda x: -(q_g(q_choice(x,ability),ability)*y_g + q_choice(x,ability)*y_a + (1-q_choice(x,ability)-q_g(q_choice(x,ability),ability))*y_b),initial_guess, disp=0)
+    return [opt_w,q_choice(opt_w,ability)]
+
+def contract(ability,outside_option):
+    q = bank_choices(ability)[1]
+    profit = q*y_a + q_g(q,ability)*y_g + q_b(q,ability)*y_b
+    if profit - outside_option >= 0:
+        q_out = q
+    else:
+        q_out = -1
+    return q_out
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[22]:
+:END:
+
+#+BEGIN_SRC ipython
+range_outside_options = np.arange(0,4.01,0.01)
+plt.plot(range_outside_options, [contract(0.5,o) for o in range_outside_options])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[23]:
+# text/plain
+: [<matplotlib.lines.Line2D at 0x1c1a9dbcf8>]
+
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-0aYQNi.png]]
+:END:
+
+#+BEGIN_SRC ipython
+contract(0.5,0)
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[24]:
+# text/plain
+: 0.7000000050116716
+:END:
+
+Hence, we see that more competition for talented traders which increases their outside options (offers from other banks) does not increase the risks that the banks induce traders to take. Hence, we need to add something to the story to make sense of this. Therefore we will elaborate the model.
+
+Before we do this and in order to speed up the code below, we will also solve the problem above analytically.
+
+The bank solves the following optimization problem:
+\begin{equation}
+\label{eq:5}
+\max_q qy_a + \alpha (1-q)(1+q)y_g + (1-q-\alpha (1-q)(1+q)) y_b
+\end{equation}
+
+*Exercise* By taking the first order condition for $q$, show that the bank would like to implement:
+\begin{equation}
+\label{eq:6}
+q = \frac{y_a-y_b}{2\alpha(y_g-y_b)}
+\end{equation}
+What is the optimal $q$ for a trader with $\alpha=0.5$?
+
+*Exercise* For a social planner, the damage in the bad state ($y_b$) may be bigger (i.e. more negative) than for the bank. The bank only loses its equity, the government may need to bail out the bank or there can be a bank run if one bank collapses. What is the effect on the optimal $q$ of lower (more negative) $y_b$?
+
+*Exercise* A less talented trader has lower $\alpha$; what is the effect on $q$?
+
+*Exercise* Use equation (ref:eq:6) to find the $q$ chosen by a worker facing a bonus contract with $w_a,w_g$.
+
+*** two forms of asymmetric information
+
+Suppose now that there are two types of traders: one talented and the other less so. The bank cannot distinguish these types by just observing them. They may have the same education degrees and work experience. But some have a "knack" for observing opportunities and taking risks, which the others lack.
+
+The bank is willing to pay a lot to remunerate the top traders, but not the average ones. However, the average ones will try to look like the top traders to also earn these stellar incomes. To avoid the average ones to take these risks, the bank needs to pay them enough to stop them from mimicking the top traders.
+
+To simplify the analysis here, we make a number of assumptions:
++ first, the fraction of top traders equals 0.5
++ the outside option of the average traders is so low that top traders are never interested in mimicking average traders; but average traders do want to mimic top traders
++ top traders are only paid in terms of bonus payments ($w_a,w_g$); not a fixed income component
++ when we optimize below over the top trader's wages below, we take the $q$ for the average traders and the profit they generate as given (and equal to their optimal profit for the bank)
+
+The last two points can actually be proved (in this sense, they are not assumptions); but we are not going to worry about this.
+
+Since top traders only receive bonus payments, it must be the case that:
+\begin{equation}
+\label{eq:7}
+outside\_option=qw_a + \alpha_h (1-q)(1+q) w_g
+\end{equation}
+Defining the bonus ratio are $R=w_a/w_g$, we see that
+\begin{equation}
+\label{eq:8}
+w_g = \frac{outside\_option}{qR+\alpha_h(1-q)(1+q)}
+\end{equation}
+and hence we find that $w_a = R w_g$.
+
+The code below derives the optimal value of the bonus ratio $R$.
+#+BEGIN_SRC ipython
+α_l = 0.1
+α_h = 0.5
+
+def profit(R,outside_option):
+    q = R/(2*α_h)
+    w_g = outside_option/(R*q + q_g(q,α_h))
+    mimic_q = R/(2*α_l)
+    w_a = R*w_g
+    wage_l = mimic_q*w_a+q_g(mimic_q,α_l)*w_g
+    profit = 0.5*(q*y_a + q_g(q,α_h)*y_g+(1-q-q_g(q,α_h))*y_b - outside_option) - 0.5*wage_l
+    return [profit, q]
+
+initial_guess = 0.5
+
+def outcome_h(outside_option):
+    wages_h = optimize.fmin(lambda x: -profit(x,outside_option)[0],initial_guess, disp=0)
+    return profit(wages_h,outside_option)[1]
+   
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[14]:
+:END:
+
+Finally, we plot the optimal value of $q$ as a function of the outside option.
+#+BEGIN_SRC ipython
+plt.plot(range_outside_options,[outcome_h(o) for o in range_outside_options])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[20]:
+# text/plain
+: [<matplotlib.lines.Line2D at 0x1c1a9f35c0>]
+
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-TaoT32.png]]
+:END:
+
+
+
+*Question* What does the graph above show? What is the intuition for this?
+
+
+
+:ANSWER:
+The graph shows that as competition for top traders increases their outside options, banks induce them to take more risks. Even more risk than is optimal for the bank itself.
+
+The intuition is for this is: start at first best bonus $w$ for the top traders. Distorting $w$ towards more risk only has a second order effect on profits from top traders. However, since average traders are not so good at taking risks, it allows the bank to reduce the wage paid to these traders. This is a first order effect.
+
+In other words, part of the higher remuneration that is paid to top traders "leaks away" to average traders. To prevent this leak, more is paid out in the good state ($w_g$ is increased) as top traders are better in getting this good outcome.
+:END:
+
 
 
 * Using python for empirical research
@@ -1198,6 +1396,11 @@ wb.search_indicators("gdp per capita")
 #+END_SRC
 
 #+RESULTS:
+:RESULTS:
+# Out[3]:
+:END:
+
+
 :RESULTS:
 # Out[33]:
 # output
@@ -2668,3 +2871,10 @@ A simple introductions to Bayesian estimation with python can be found [[https:/
 
 
 
+
+
+\newpage
+# Put your references into a file called references.bib
+# here we have journal titles defined in a separate file, with aliases in references.bib
+bibliographystyle:plainnat
+bibliography:~/Dropbox/bibliography/references.bib
