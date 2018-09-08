@@ -17,18 +17,18 @@
 
 * Introduction
 
-This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is based on cite:tirole_2017.
+This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on cite:tirole_2017.
 
-The point is not that we go into models in detail. Instead, we sketch the trade offs and then model these in python. We then make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than "taking the third derivative".
+The point is not that we go into models in detail. Instead, we sketch the trade offs and then model these in python. We make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than "taking the third derivative".
 
-When we go through the notes below, there will be *Questions* and *Assignments*. Questions we will typically do in class together. Assignments will take more time and you do these at home. If you have questions about these, ask in class.
+When we go through the notes below, there will be *Questions* and *Assignments*. Questions we will typically do in class together. Assignments will take more time and you do these at home. If you have questions about these, come back to it in class.
 
 
 * Python packages that we will be using
 
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either ~pip install~ or ~conda install~.
 
-#+BEGIN_SRC ipython :exports none
+#+BEGIN_SRC ipython :exports code
 import pandas as pd
 import numpy as np
 import pymc3 as pm
@@ -52,6 +52,8 @@ plt.style.use('seaborn')
 :END:
 
 * The market
+
+This part is based on Tirole chapters: 1, 2, 6.
 
 ** why do we love the market?
 
@@ -79,7 +81,7 @@ valuations = sorted(pm.Normal.dist(100,20).random(size=number_of_agents),reverse
 
 #+RESULTS:
 :RESULTS:
-# Out[79]:
+# Out[55]:
 :END:
 
 Note that we are using [[http://docs.pymc.io/notebooks/getting_started][pymc3]] here to generate random numbers from a distribution. There are also other python libraries which can do this, e.g [[https://scipy.org/][scipy]]. We use pymc3 as we will use it later for estimation as well.
@@ -93,9 +95,9 @@ print("{0:.2f}".format(valuations[number_of_goods]))
 
 #+RESULTS:
 :RESULTS:
-# Out[80]:
+# Out[56]:
 # output
-: 125.15
+: 125.21
 : 
 :END:
 
@@ -110,9 +112,9 @@ print("{0:.2f}".format(max_welfare))
 
 #+RESULTS:
 :RESULTS:
-# Out[81]:
+# Out[57]:
 # output
-: 13407.45
+: 13464.87
 : 
 :END:
 
@@ -132,7 +134,7 @@ def demand(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[82]:
+# Out[58]:
 :END:
 
 **Question** Using ~matplotlib~ plot (fixed) supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
@@ -150,12 +152,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[83]:
+# Out[59]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-ag5CcX.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-d0XxXL.png]]
 :END:
 
 In order to calculate the equilibrium price, we define a function ~excess_demand~. We will then look for the price where ~excess_demand~ equals 0; this is the equilibrium price.
@@ -167,23 +169,16 @@ def excess_demand(p,valuations,number_of_goods):
 
 #+RESULTS:
 :RESULTS:
-# Out[84]:
+# Out[60]:
 :END:
 
 In order to find the equilibrium price, we use from ~scipy.optimize~ the function [[https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html][fsolve]]. If you want to know more about solve, there are people at [[https://stackoverflow.com/questions/8739227/how-to-solve-a-pair-of-nonlinear-equations-using-python][stackoverflow]] discussing this function. Stackoverflow is generally a great resource if you are wondering how to solve a problem in python.
 
 #+BEGIN_SRC ipython
 price = optimize.fsolve(lambda x: excess_demand(x,valuations,number_of_goods),120)
-print(price)
+print("{0:.2f}".format(price))
 #+END_SRC
 
-#+RESULTS:
-:RESULTS:
-# Out[85]:
-# output
-: [125.18448497]
-: 
-:END:
 
 So, now we know the equilibrium price
 
@@ -196,23 +191,23 @@ np.sum(valuations[:demand(price,valuations)])
 
 #+RESULTS:
 :RESULTS:
-# Out[88]:
+# Out[62]:
 # text/plain
-: 13407.45396157873
+: 13464.866134617674
 :END:
 
 
 **Question** How does this welfare compare to the maximum welfare that the omniscient social planner can achieve? Recall that this level is:
 
 #+BEGIN_SRC ipython
-max_welfare
+"{0:.2f}".format(max_welfare)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[86]:
+# Out[93]:
 # text/plain
-: 13407.45396157873
+: '13464.87'
 :END:
 
 *** elastic demand and supply
@@ -229,7 +224,7 @@ valuations_demand = valuations[number_of_goods:]
 
 #+RESULTS:
 :RESULTS:
-# Out[89]:
+# Out[64]:
 :END:
 
 
@@ -242,7 +237,7 @@ def supply(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[90]:
+# Out[65]:
 :END:
 
 **Question** Use ~matplotlib~ to plot demand and supply in a single figure. 
@@ -260,12 +255,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[91]:
+# Out[66]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-x44Dlu.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-znV4gM.png]]
 :END:
 
 
@@ -288,9 +283,9 @@ optimize.fsolve(lambda x: demand_minus_supply(x,valuations_demand,valuations_sup
 
 #+RESULTS:
 :RESULTS:
-# Out[92]:
+# Out[67]:
 # text/plain
-: array([125.18448497])
+: array([125.27357427])
 :END:
 
 **Question** How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
@@ -301,15 +296,19 @@ price
 
 #+RESULTS:
 :RESULTS:
-# Out[93]:
+# Out[68]:
 # text/plain
-: array([125.18448497])
+: array([125.27357427])
+:END:
+
+:ANSWER: 
+It is the same: either suppliers will consume themselves (then they would have done so above as well) or they sell; if they sell, they sell to the same agents as above (with highest valuation).
 :END:
 
 
 ** why do others not love the market?
 
-Although the results above look great, the assumptions we made, may not be realistic in every market. Without saying so, we assumed above that the market was perfectly competitive without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
+Although the results above look great, the assumptions we made, may not be realistic in every market. To illustrate, without saying so, we assumed above that the market is perfectly competitive and without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 
 *** income distribution
 
@@ -325,7 +324,7 @@ incomes = pm.Normal.dist(100,20).random(size=number_of_agents)
 
 #+RESULTS:
 :RESULTS:
-# Out[94]:
+# Out[69]:
 :END:
 
 Next, we need to redefine demand, now denoted ~demand_2~ which takes into account both whether an agent values the good more than $p$ and whether she can afford $p$.
@@ -343,7 +342,7 @@ def demand_2(p,valuations,incomes):
 
 #+RESULTS:
 :RESULTS:
-# Out[95]:
+# Out[70]:
 :END:
 
 
@@ -356,7 +355,7 @@ def excess_demand_2(p,valuations,incomes,number_of_goods):
 
 #+RESULTS:
 :RESULTS:
-# Out[96]:
+# Out[71]:
 :END:
 
 **Question** Use ~fsolve~ to determine the equilibrium price in this case. Is this price higher or lower than above? Why?
@@ -372,9 +371,9 @@ print(price_2)
 
 #+RESULTS:
 :RESULTS:
-# Out[97]:
+# Out[72]:
 # output
-: [109.24260459]
+: [110.17332081]
 : 
 :END:
 
@@ -384,9 +383,9 @@ price
 
 #+RESULTS:
 :RESULTS:
-# Out[98]:
+# Out[73]:
 # text/plain
-: array([125.18448497])
+: array([125.27357427])
 :END:
 
 **Question** Calculate welfare in the market equilibrium. How does it compare to ~max_welfare~?
@@ -399,10 +398,10 @@ print(max_welfare)
 
 #+RESULTS:
 :RESULTS:
-# Out[39]:
+# Out[74]:
 # output
-: 11891.938233742447
-: 13228.830798358596
+: 12228.096806592494
+: 13464.866134617674
 : 
 :END:
 
@@ -432,10 +431,13 @@ print(np.sum(afford(price_40,incomes_40)*wtp(price_40,valuations_2)*valuations_2
 
 #+RESULTS:
 :RESULTS:
-# Out[138]:
+# Out[75]:
 # output
-: 10664.02383305476
-: 10287.32738229688
+: 10667.846675240511
+: 10314.577161570669
+: /Users/boone/anaconda3/lib/python3.6/site-packages/scipy/optimize/minpack.py:163: RuntimeWarning: The iteration is not making good progress, as measured by the 
+:   improvement from the last ten iterations.
+:   warnings.warn(msg, RuntimeWarning)
 : 
 :END:
 
@@ -459,11 +461,11 @@ def profit(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[140]:
+# Out[76]:
 :END:
 
 
-#+BEGIN_SRC ipython :exports no
+#+BEGIN_SRC ipython
 range_p = np.arange(0,140)
 
 plt.plot(range_p, [profit(p,valuations) for p in range_p], label = "profit")
@@ -475,12 +477,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[142]:
+# Out[77]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-HqyjxJ.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-cTecbZ.png]]
 :END:
 
 It looks like the profit maximizing price is around 80. Recall the equilibrium price under perfect competition above:
@@ -492,9 +494,9 @@ price
 
 #+RESULTS:
 :RESULTS:
-# Out[143]:
+# Out[78]:
 # text/plain
-: array([125.18448497])
+: array([125.27357427])
 :END:
 
 
@@ -505,18 +507,18 @@ price
 **Assignment** Calculate the profit maximizing price in this case.
 
 
-#+BEGIN_SRC ipython :exports no
+#+BEGIN_SRC ipython :exports none
 def profit(p,valuations):
     return p*min(demand(p,valuations),number_of_goods)
 #+END_SRC
 
 #+RESULTS:
 :RESULTS:
-# Out[150]:
+# Out[79]:
 :END:
 
 
-#+BEGIN_SRC ipython :exports no
+#+BEGIN_SRC ipython :exports none
 range_p = np.arange(120,140)
 
 plt.plot(range_p, [profit(p,valuations) for p in range_p], label = "profit")
@@ -528,12 +530,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[151]:
+# Out[80]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-Y6knzx.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-8EdGjp.png]]
 :END:
 
 
@@ -544,6 +546,8 @@ Is it possible that monop. price equals perf. compet. price? yes it is, if loss 
 
 
 *** merger simulation
+
+This part is based on Tirole chapter 13.
 
 In this section, we model a more standard oligopoly market with
 Cournot competition. We start with three firms and then calculate what
@@ -589,7 +593,7 @@ def fixed_point_three_firms(vector_q,vector_c):
 
 #+RESULTS:
 :RESULTS:
-# Out[7]:
+# Out[81]:
 :END:
 
 We calculate the equilibrium output level, price and the Herfindahl index. The Herhindahl index is defined as the sum of squared market shares:
@@ -617,7 +621,7 @@ print("Herfn. index: {:.3f}".format(H0))
 
 #+RESULTS:
 :RESULTS:
-# Out[8]:
+# Out[82]:
 # output
 : Before the merger
 : =================
@@ -646,7 +650,7 @@ optimize.fsolve(lambda q: fixed_point_two_firms(q,[0,0]), initial_guess)
 
 #+RESULTS:
 :RESULTS:
-# Out[9]:
+# Out[83]:
 # text/plain
 : array([0.33333333, 0.33333333])
 :END:
@@ -676,7 +680,7 @@ q2_after_merger = [optimize.fsolve(lambda q: fixed_point_two_firms(q,[c0,c]), in
 
 #+RESULTS:
 :RESULTS:
-# Out[10]:
+# Out[84]:
 :END:
 
 **Question** Create a dataframe called ~df_after_merger~ with
@@ -692,7 +696,7 @@ df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger,
 
 #+RESULTS:
 :RESULTS:
-# Out[11]:
+# Out[85]:
 :END:
 
 **Question** Add three columns to the dataframe with resp. total
@@ -707,7 +711,7 @@ df_after_merger['H'] = (df_after_merger.output_non_merging_firm/df_after_merger.
 
 #+RESULTS:
 :RESULTS:
-# Out[12]:
+# Out[86]:
 :END:
 
 **Question** Make a histogram of the equilibrium price ~P~ after
@@ -728,12 +732,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[14]:
+# Out[87]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-05b9xo.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-2Nu1P7.png]]
 :END:
 
 
@@ -749,9 +753,9 @@ np.sum(df_after_merger.P < P0)/len(df_after_merger.P)
 
 #+RESULTS:
 :RESULTS:
-# Out[20]:
+# Out[88]:
 # text/plain
-: 0.5
+: 0.32
 :END:
 
 
@@ -771,7 +775,7 @@ plt.ylabel('$P$')
 
 #+RESULTS:
 :RESULTS:
-# Out[25]:
+# Out[89]:
 # text/plain
 : Text(0,0.5,'$P$')
 
@@ -779,7 +783,7 @@ plt.ylabel('$P$')
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-82xrfQ.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-fcWaFf.png]]
 :END:
 
 
@@ -820,13 +824,13 @@ def welfare_e(p,valuations):
 
 #+RESULTS:
 :RESULTS:
-# Out[24]:
+# Out[90]:
 :END:
 
 **Question** Show graphically that the welfare maximizing price exceeds the profit maximizing price.
 
 
-#+BEGIN_SRC ipython :exports no
+#+BEGIN_SRC ipython :exports none
 range_p = np.arange(60,150)
 
 plt.plot(range_p, [profit_c(p,valuations) for p in range_p], label = "profit")
@@ -839,12 +843,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[27]:
+# Out[91]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-tlUkGt.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-mBAZru.png]]
 :END:
 
 
@@ -1917,6 +1921,138 @@ show(plot)
 In the last chapter of the Datacemp course [[https://www.datacamp.com/courses/intermediate-python-for-data-science][Intermediate Python for Data Science]] you have seen hacker statistics. The idea is to simulate a random process, say, 10,000 times. Then if you want to know the probability that a certain condition is satisfied (say, number of heads bigger than 10 when you throw a coin 15 times), you calculate the number of outcomes where this condition is satisfied and divide it by 10,000.
 
 If you can program, you can recap all the statistics that you were taught (and probably forgot).
+
+*** high school puzzles
+
+Remember when you did statistics at high school? "In a dark cupboard there are 10 red and 20 white socks...", "you throw dice 20 times and ..." etc.
+
+Then you had to do the most counter-intuitive mental jumping around to "understand" why the outcome was "one third".
+
+When you can program, there is no need for this anymore. Program the probability process, replicate it 10,000 times and see what the frequency of an event is.
+
+We will practice this, using the example given in this [[https://www.ted.com/talks/peter_donnelly_shows_how_stats_fool_juries#t-479966][Ted talk]].
+
++ Experiment 1: you throw a coin a number of times and wait for the pattern "HTH" to emerge;
++ Experiment 2: you throw a coin a number of times and wait for the pattern "HTT" to emerge.
+
+In expectation, which experiment is over sooner (i.e. takes less throws to see the required pattern)?
+
+:ANSWER:
+  HTT is "faster": you throw HT (this is good for both patterns). Suppose the next throw is "not good". In exp. 1 you throw T (instead of required H), you have to start all over again in the next throw. In exp. 2 you throw H (instead of required T), you are already 1/3rd into your next sequence of HTT.
+:END:
+
+*Question* Define a function ~check~ which checks whether a list ~coin_throws~ ends with the required ~patter~ (also a list).
+
+
+#+BEGIN_SRC ipython :exports none
+def check(coin_throws, pattern):
+    n = len(pattern)
+    return (coin_throws[-n:] == pattern)
+#+END_SRC
+
+
+*Question* Explain what the following code block does:
+
+#+BEGIN_SRC ipython
+outcomes = ['H','T']
+
+def waiting_time(pattern):
+    throws = list(np.random.choice(outcomes,size=3))
+    while not check(throws,pattern):
+        throws.append(random.choice(outcomes))
+    return len(throws)
+
+
+
+#+END_SRC
+
+
+*Question* Create an empty list ~waiting_times~. Then run the first experiment 50,000 times. Record the waiting time for the pattern ~['H','T','H']~ to appear --for each of these 50,000 experiments-- in the list ~wating_times~. Calculate the average waiting time and give a histogram for the waiting times.
+
+#+BEGIN_SRC ipython :exports none
+waiting_times=[]
+
+[waiting_times.append(waiting_time(['H','T','H'])) for i in range(50000)]
+print(np.mean(waiting_times))
+
+plt.hist(waiting_times,bins=30)
+plt.show()
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[53]:
+# output
+: 9.94404
+: 
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-k7lrTa.png]]
+:END:
+
+
+*Question* Do the same as the previous question for experiment 2.
+
+#+BEGIN_SRC ipython :exports none
+waiting_times=[]
+
+[waiting_times.append(waiting_time(['H','T','T'])) for i in range(50000)]
+print(np.mean(waiting_times))
+
+plt.hist(waiting_times,bins=30)
+plt.show()
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[54]:
+# output
+: 8.03474
+: 
+# text/plain
+: <Figure size 432x288 with 1 Axes>
+
+# image/png
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-zRoSn6.png]]
+:END:
+
+
+
+#+BEGIN_SRC ipython
+check(['T','H','T'],['T','H'])
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[32]:
+# text/plain
+: False
+:END:
+
+
+
+#+BEGIN_SRC ipython
+
+test = list(np.random.choice(outcomes,size=5))
+test.append('T')
+test
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+# Out[27]:
+# text/plain
+: ['H', 'T', 'H', 'H', 'T', 'T']
+:END:
+
+
+
+
+*** statistics
 
 Let's start simple. Suppose we have two normally distributed variables $x,y$ with $\mu_x = 10, \mu_y = 20, \sigma_x = 3, \sigma_y =4$. We are interested in the variable $z = x+y$. Suppose you forgot what you know about the sum of normal distributions and wondered what the expectation and standard deviation is of $z$.
 
@@ -2992,7 +3128,7 @@ bibliography:~/Dropbox/bibliography/references.bib
 
 
 
-#  ov-highlight-data: KCgzMDQwMSAzMDQxNCAob3YtdHlwZSAicGluayIgb3YtaGlnaGxpZ2h0ZXIgdCBmYWNlICg6YmFja2dyb3VuZCAiUGluayIpKSkp
+#  ov-highlight-data: KCgzMDk0MSAzMDk1NCAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
 
 # Local Variables:
 # eval: (ov-highlight-load)
