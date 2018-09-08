@@ -857,6 +857,8 @@ plt.show()
 
 * Asymmetric information
 
+Tirole chapter 15.
+
 One of the reasons why markets (or other institutions for that matter) work less well than a naive observer may think is asymmetric information. We consider here both adverse selection and moral hazard. Adverse selection we analyze in the context of insurance and moral hazard in the context of taxation.
 
 
@@ -883,7 +885,7 @@ number_of_agents = 50
 
 #+RESULTS:
 :RESULTS:
-# Out[29]:
+# Out[94]:
 :END:
 
 Since we assume that $\rho \in \langle 0, 1 \rangle$, agents are risk averse and would like to buy insurance which covers the loss. We assume that insurance covers the loss completely at a premium $\sigma$. As we assume that the probability of loss, $\pi$, is exogenous, there is no reason to have co-payments of any sort.
@@ -904,7 +906,7 @@ def insurance_demand(σ):
 
 #+RESULTS:
 :RESULTS:
-# Out[31]:
+# Out[95]:
 :END:
 
 We assume that this insurance market is perfectly competitive. That is, for each quantity supplied, insurance companies compete down the price such that the premium equals the average (expected) cost of the agents buying insurance.
@@ -918,7 +920,7 @@ def insurance_supply(Q):
 
 #+RESULTS:
 :RESULTS:
-# Out[30]:
+# Out[96]:
 :END:
 
 We plot demand and supply in one figure. In addition, we plot the marginal costs curve.
@@ -938,12 +940,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[33]:
+# Out[97]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-JAA6bz.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-LeKCIU.png]]
 :END:
 
 **Question** Interpret this figure. In particular, 
@@ -969,12 +971,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[35]:
+# Out[98]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-zW4CNz.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-cxp0iX.png]]
 :END:
 
 
@@ -1011,7 +1013,7 @@ def effort(c,τ):
 
 #+RESULTS:
 :RESULTS:
-# Out[51]:
+# Out[99]:
 :END:
 
 We use the following welfare function:
@@ -1023,7 +1025,7 @@ W = \left(\sum_i ( (1-\tau)x_i + \tau_0 - c_i x_i^2)^{\rho} \right)^{1/\rho}
 
 With $\rho=1$, the social planner just maximizes the sum of utility. With $\rho<1$, the planner has a taste for redistribution: agents with low utility get a relatively high weight in this welfare function.
 
-The function ~Welfare~ first calculates for a given $\tau$, what the value of $\tau_0$ is (using budget balance for the government). Then for this value of $\tau$ and $\tau_{0}$, $W$ is calculated.
+The function ~Welfare~ first calculates for a given $\tau$, what the value of $\tau_0$ is (using budget balance for the government). Then for these values of $\tau$ and $\tau_{0}$, $W$ is calculated.
 
 #+BEGIN_SRC ipython
 def Welfare(τ,ρ):
@@ -1033,7 +1035,7 @@ def Welfare(τ,ρ):
 
 #+RESULTS:
 :RESULTS:
-# Out[52]:
+# Out[100]:
 :END:
 
 **Question** Plot ~Welfare~ as a function of $\tau$ for $\rho=1$. What is the welfare maximizing tax rate? Why?
@@ -1048,12 +1050,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[55]:
+# Out[101]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-2D0DAB.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-yDPPAz.png]]
 :END:
 
 **Question** What happens to the optimal tax rate as $\rho<1$ falls?
@@ -1070,12 +1072,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[57]:
+# Out[102]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-odmGXG.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-oycrTw.png]]
 :END:
 
 
@@ -1100,12 +1102,12 @@ plt.show()
 
 #+RESULTS:
 :RESULTS:
-# Out[64]:
+# Out[103]:
 # text/plain
 : <Figure size 432x288 with 1 Axes>
 
 # image/png
-[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-MV7T1A.png]]
+[[file:obipy-resources/48de63ba873b65759d43f92c5813c7a6-Ro9QuC.png]]
 :END:
 
 
@@ -1115,6 +1117,8 @@ There is no effect of $g$ on $\tau$. The planner already maximizes the utility o
 
 
 * Financial crisis
+
+Tirole chapters: 11, 12
 
 We will look at two aspects of the financial crisis. First, why are financial markets problematic in the first place. Second, many people claim that the crisis was (partly) caused by the bonus contracts used by banks. Why do banks offer their employees such contracts?
 
@@ -3128,7 +3132,7 @@ bibliography:~/Dropbox/bibliography/references.bib
 
 
 
-#  ov-highlight-data: KCgzMDk0MSAzMDk1NCAoZmFjZSAoOmJhY2tncm91bmQgIlBpbmsiKSBvdi1oaWdobGlnaHRlciB0IG92LXR5cGUgInBpbmsiKSkp
+#  ov-highlight-data: bmls
 
 # Local Variables:
 # eval: (ov-highlight-load)
