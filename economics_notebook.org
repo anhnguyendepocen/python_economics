@@ -1,23 +1,9 @@
-#+Title: Doing economics with python
-#+Author: Jan Boone
-#+LANGUAGE:  en
-#+INFOJS_OPT: view:showall toc:t ltoc:t mouse:underline path:http://orgmode.org/org-info.js
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/notebook.css" />
-#+LaTeX_CLASS: article-nodefaults
-#+LaTeX_HEADER: \usepackage{sectsty}
-#+LaTeX_HEADER: \sectionfont{\normalfont\scshape}
-#+LaTeX_HEADER: \subsectionfont{\normalfont\itshape}
-#+latex_header: \usepackage[round,authoryear]{natbib}
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+OPTIONS: \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
-#+STARTUP: showall
-#+LaTeX: \maketitle
-#+OPTIONS: d:(not "ANSWER")
+#+TITLE: Doing Economics with python
+#+AUTHOR: Jan Boone
 
 * Introduction
 
-This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on cite:tirole_2017.
+This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on Tirole (2017).
 
 The point is not that we go into models in detail. Instead, we sketch the trade offs and then model these in python. We make graphs to explain the intuition. In this way, you learn both python and to use economics in a more "broad brush" fashion than "taking the third derivative".
 
@@ -1229,7 +1215,7 @@ plt.show()
 
 ** Why these bonus contracts?
 
-Bonus contracts are generally a reaction to [[Asymmetric information][asymmetric information]]. Let's first consider moral hazard.
+Bonus contracts are generally a reaction to asymmetric information. Let's first consider moral hazard.
 
 *** moral hazard
 
@@ -1237,9 +1223,9 @@ How do your employees choose their investment opportunities? There are a number 
 
 Since it is hard for banks to monitor exactly what investment opportunities their employees choose and how risky these are, it seems a good idea to give them some incentive to choose the right investment. One way to do this is to reward good outcomes. That is, the higher the return is, the higher their income will be. That is, employees get a bonus for good /outcomes/. Not for investments with a high expected outcome because that is hard to monitor.
 
-cite:tirole_2017 claims that before the financial crisis investments bank offered high bonuses to attract talented employees (page 345). These bonuses led to inefficient risky behaviour by these employees. But why should competition for talent lead to inefficiencies?
+Tirole (2017) claims that before the financial crisis investments bank offered high bonuses to attract talented employees (page 345). These bonuses led to inefficient risky behaviour by these employees. But why should competition for talent lead to inefficiencies?
 
-We follow cite:bijlsma2018 to model this question. The structure of this model is comparable to our analysis of [[moral hazard: optimal taxation]] above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
+We follow Bijlsma et al. (2018) to model this question. The structure of this model is comparable to our analysis of moral hazard in optimal taxation above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
 
 Assume that there are 3 states of the world: the good state where the bank receives $y_g$ as return on the investment; a bad state where the bank makes a loss $y_b <0$ on the project and an "average state" where the bank earns $y_a \in \langle 0, y_g \rangle$. The employee can choose from a set of investment projects that differ in their probabilities over these 3 states of the world. We model this as follows. 
 
@@ -2792,7 +2778,7 @@ np.sum(trace['μ'][:,19]>6.45)/len(trace['μ'][:,19])
 
 One explanation for the figure is that 17 year olds do not face a deductible, while 19 year olds do. But an other explanation is that health care expenditure simply differs by age (irrespective of a deductible). In order to control for the age effect, we re-do the analysis above for 2011. Also in 2011 we can take the difference in means for 17 and 19 year olds. If there is (only) a biological reason for the different expenditures between 17 and 19 year olds, the difference in 2011 should be the same as the difference in 2014. 
 
-If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section [[simple theory]] above: the yellow area is the additional effect due to the higher deductible in 2014.
+If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model above: the yellow area is the additional effect due to the higher deductible in 2014.
 
 Hence, we do the same analysis as above for 2011.
 
@@ -3130,26 +3116,3 @@ One can extend the analysis above to make it more convincing. Think of things li
 If you like this way of modelling with pymc3, you can look at [[https://www.youtube.com/watch?v=TMmSESkhRtI&t=9076s][this video]]
 
 A simple introduction to Bayesian estimation with python can be found [[https://www.youtube.com/watch?v=TpgiFIGXcT4&t=6s][here]]. Allen Downey also has [[http://www.allendowney.com/wp/books/][free books]] on statistics with python.
-
-
-
-
-# Put your references into a file called references.bib
-# here we have journal titles defined in a separate file, with aliases in references.bib
-bibliographystyle:plainnat
-bibliography:~/Dropbox/bibliography/references.bib
-
-
-
-
-
-
-
-#  ov-highlight-data: bmls
-
-# Local Variables:
-# eval: (ov-highlight-load)
-# End:
-
-
-

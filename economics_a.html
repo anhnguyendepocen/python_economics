@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-22 Sat 13:49 -->
+<!-- 2018-09-22 Sat 13:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doing economics with python</title>
@@ -329,68 +329,69 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgaafc76e">1. Introduction</a></li>
-<li><a href="#org5725910">2. Python packages that we will be using</a></li>
-<li><a href="#orgd947715">3. The market</a>
+<li><a href="#orgb90cd78">1. Introduction</a></li>
+<li><a href="#org49fac13">2. Python packages that we will be using</a></li>
+<li><a href="#org67bab89">3. The market</a>
 <ul>
-<li><a href="#org73f6cc5">3.1. why do we love the market?</a>
+<li><a href="#org57f686c">3.1. why do we love the market?</a>
 <ul>
-<li><a href="#orgf676e92">3.1.1. market outcome</a></li>
-<li><a href="#orgdc46752">3.1.2. elastic demand and supply</a></li>
+<li><a href="#org0c8a208">3.1.1. market outcome</a></li>
+<li><a href="#org7a5e762">3.1.2. elastic demand and supply</a></li>
 </ul>
 </li>
-<li><a href="#org2c7afd7">3.2. why do others not love the market?</a>
+<li><a href="#orgefe01bd">3.2. why do others not love the market?</a>
 <ul>
-<li><a href="#org427c09b">3.2.1. income distribution</a></li>
-<li><a href="#orgfce9a88">3.2.2. market power</a></li>
-<li><a href="#org5515c84">3.2.3. merger simulation</a></li>
-<li><a href="#org19114f3">3.2.4. external effects</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org26dd65d">4. Asymmetric information</a>
-<ul>
-<li><a href="#orgd6b9633">4.1. adverse selection</a></li>
-<li><a href="#org316467d">4.2. moral hazard: optimal taxation</a></li>
-</ul>
-</li>
-<li><a href="#org42633e4">5. Financial crisis</a>
-<ul>
-<li><a href="#orgf7fbce2">5.1. Why is there a problem in financial markets?</a></li>
-<li><a href="#org4b14f6d">5.2. Why these bonus contracts?</a>
-<ul>
-<li><a href="#org57928b9">5.2.1. moral hazard</a></li>
-<li><a href="#org83256fe">5.2.2. moral hazard and adverse selection</a></li>
+<li><a href="#org2f0b4f9">3.2.1. income distribution</a></li>
+<li><a href="#org72ba434">3.2.2. market power</a></li>
+<li><a href="#org20af3af">3.2.3. merger simulation</a></li>
+<li><a href="#org0b7da17">3.2.4. external effects</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgdf6a2f8">6. Using python for empirical research</a>
+<li><a href="#orgfc6a735">4. Asymmetric information</a>
 <ul>
-<li><a href="#orgd543cec">6.1. API's to get data</a></li>
-<li><a href="#orgaffa742">6.2. Hacker statistics</a>
+<li><a href="#org0d02139">4.1. adverse selection</a></li>
+<li><a href="#org93d8f0f">4.2. moral hazard: optimal taxation</a></li>
+</ul>
+</li>
+<li><a href="#org025ea78">5. Financial crisis</a>
 <ul>
-<li><a href="#org4866647">6.2.1. high school puzzles</a></li>
-<li><a href="#org2bc2628">6.2.2. statistics</a></li>
+<li><a href="#org5a7b878">5.1. Why is there a problem in financial markets?</a></li>
+<li><a href="#orga7c818c">5.2. Why these bonus contracts?</a>
+<ul>
+<li><a href="#org87f71f9">5.2.1. moral hazard</a></li>
+<li><a href="#org9c1c687">5.2.2. moral hazard and adverse selection</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org52ebddc">7. Regulation in health care markets</a>
+<li><a href="#org4705acf">6. Using python for empirical research</a>
 <ul>
-<li><a href="#org98408d8">7.1. simple theory</a></li>
-<li><a href="#org94f4dcd">7.2. some data</a></li>
-<li><a href="#org5398c9b">7.3. matplotlib</a></li>
-<li><a href="#org3ac982d">7.4. reversing the probability distributions</a></li>
+<li><a href="#org486697a">6.1. API's to get data</a></li>
+<li><a href="#orgf36e902">6.2. Hacker statistics</a>
+<ul>
+<li><a href="#org38f60ce">6.2.1. high school puzzles</a></li>
+<li><a href="#org02bd0ed">6.2.2. statistics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd69c7b4">7. Regulation in health care markets</a>
+<ul>
+<li><a href="#orgfd9ea6b">7.1. simple theory</a></li>
+<li><a href="#org3353503">7.2. some data</a></li>
+<li><a href="#orge4f6c22">7.3. matplotlib</a></li>
+<li><a href="#orgc67bbcc">7.4. reversing the probability distributions</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgaafc76e" class="outline-2">
-<h2 id="orgaafc76e"><span class="section-number-2">1</span> Introduction</h2>
+
+<div id="outline-container-orgb90cd78" class="outline-2">
+<h2 id="orgb90cd78"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
@@ -407,8 +408,8 @@ When we go through the notes below, there will be <b>Questions</b> and <b>Assign
 </div>
 
 
-<div id="outline-container-org5725910" class="outline-2">
-<h2 id="org5725910"><span class="section-number-2">2</span> Python packages that we will be using</h2>
+<div id="outline-container-org49fac13" class="outline-2">
+<h2 id="org49fac13"><span class="section-number-2">2</span> Python packages that we will be using</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either <code>pip install</code> or <code>conda install</code>.
@@ -431,16 +432,16 @@ plt.style.use(<span style="color: #2d9574;">'seaborn'</span>)
 </div>
 </div>
 
-<div id="outline-container-orgd947715" class="outline-2">
-<h2 id="orgd947715"><span class="section-number-2">3</span> The market</h2>
+<div id="outline-container-org67bab89" class="outline-2">
+<h2 id="org67bab89"><span class="section-number-2">3</span> The market</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This part is based on Tirole chapters: 1, 2, 6.
 </p>
 </div>
 
-<div id="outline-container-org73f6cc5" class="outline-3">
-<h3 id="org73f6cc5"><span class="section-number-3">3.1</span> why do we love the market?</h3>
+<div id="outline-container-org57f686c" class="outline-3">
+<h3 id="org57f686c"><span class="section-number-3">3.1</span> why do we love the market?</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his <a href="https://en.wikipedia.org/wiki/Invisible_hand">"invisible hand"</a>. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the <a href="https://en.wikipedia.org/wiki/Revolutions_of_1989">former Soviet Union</a>.
@@ -499,14 +500,20 @@ Suppose that we have an omniscient social planner who knows the valuation of eve
 <b><b>Question</b></b> Calculate the total welfare that this planner can achieve. Denote this value <code>max_welfare</code>.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">max_welfare</span> = np.<span style="color: #3a81c3;">sum</span>(valuations[:number_of_goods])
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"{0:.2f}"</span>.<span style="color: #3a81c3;">format</span>(max_welfare))
+</pre>
+</div>
+
 <p>
 Hence, this is the best that we can do. It gives us an upperbound on the welfare that can be achieved. Having an omniscient social planner seems unrealistic, but perhaps there is an institution that can achieve this outcome without omniscient intervention. You guessed it&#x2026;
 </p>
 </div>
 
 
-<div id="outline-container-orgf676e92" class="outline-4">
-<h4 id="orgf676e92"><span class="section-number-4">3.1.1</span> market outcome</h4>
+<div id="outline-container-org0c8a208" class="outline-4">
+<h4 id="org0c8a208"><span class="section-number-4">3.1.1</span> market outcome</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
@@ -516,9 +523,27 @@ Now we compare the maximum welfare that a planner can achieve with the market ou
 <b><b>Question</b></b> Define a function <code>demand(p,valuations)</code> which has as arguments a price \(p\) and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price \(p\). Since each agent who buys, buys exactly one unit in our set up, this function returns demand at each price.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">demand</span>(p,valuations):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">sum</span>(valuations&gt;p)
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Using <code>matplotlib</code> plot (fixed) supply and the function <code>demand</code> against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_p</span> = np.arange(60,150)
+
+plt.plot([demand(p,valuations) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p],range_p, label = <span style="color: #2d9574;">"demand"</span>)
+plt.plot([number_of_goods <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p],range_p, label=<span style="color: #2d9574;">"supply"</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">"$Q$"</span>)
+plt.ylabel(<span style="color: #2d9574;">"$P$"</span>)
+plt.show()
+</pre>
+</div>
 
 <p>
 In order to calculate the equilibrium price, we define a function <code>excess_demand</code>. We will then look for the price where <code>excess_demand</code> equals 0; this is the equilibrium price.
@@ -550,6 +575,12 @@ So, now we know the equilibrium price
 </p>
 
 
+<div class="org-src-container">
+<pre class="src src-ipython">np.<span style="color: #3a81c3;">sum</span>(valuations[:demand(price,valuations)])
+</pre>
+</div>
+
+
 <p>
 <b><b>Question</b></b> How does this welfare compare to the maximum welfare that the omniscient social planner can achieve? Recall that this level is:
 </p>
@@ -566,8 +597,8 @@ So, now we know the equilibrium price
 </div>
 </div>
 
-<div id="outline-container-orgdc46752" class="outline-4">
-<h4 id="orgdc46752"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
+<div id="outline-container-org7a5e762" class="outline-4">
+<h4 id="org7a5e762"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Up till now we assumed that supply was inelastic: there was a given endowment of goods and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
@@ -588,9 +619,28 @@ In particular, we give <code>number_of_goods</code> agents one unit of the good.
 <b><b>Question</b></b> Define a function <code>supply</code> which depends on the price and the valuations of the suppliers.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">supply</span>(p,valuations):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> <span style="color: #3a81c3;">sum</span>(valuations&lt;p)
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Use <code>matplotlib</code> to plot demand and supply in a single figure. 
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_p</span> = np.arange(60,150)
+
+plt.plot([demand(p,valuations_demand) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p],range_p, label = <span style="color: #2d9574;">"demand"</span>)
+plt.plot([supply(p,valuations_supply) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p],range_p, label=<span style="color: #2d9574;">"supply"</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">"$Q$"</span>)
+plt.ylabel(<span style="color: #2d9574;">"$P$"</span>)
+plt.show()
+</pre>
+</div>
+
 
 <p>
 <b><b>Question</b></b> Define the function <code>demand_minus_supply</code> which looks
@@ -603,24 +653,44 @@ the valuations of people supplying it.
 Then use <code>fsolve</code> to find the equilibrium price.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">demand_minus_supply</span>(p,valuations_demand,valuations_supply):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> demand(p,valuations_demand)-supply(p,valuations_supply)
+
+optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: demand_minus_supply(x,valuations_demand,valuations_supply),120)
+
+
+
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">price
+</pre>
+</div>
+
+<p>
+It is the same: either suppliers will consume themselves (then they would have done so above as well) or they sell; if they sell, they sell to the same agents as above (with highest valuation).
 </p>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org2c7afd7" class="outline-3">
-<h3 id="org2c7afd7"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
+<div id="outline-container-orgefe01bd" class="outline-3">
+<h3 id="orgefe01bd"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Although the results above look great, the assumptions we made, may not be realistic in every market. To illustrate, without saying so, we assumed above that the market is perfectly competitive and without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 </p>
 </div>
 
-<div id="outline-container-org427c09b" class="outline-4">
-<h4 id="org427c09b"><span class="section-number-4">3.2.1</span> income distribution</h4>
+<div id="outline-container-org2f0b4f9" class="outline-4">
+<h4 id="org2f0b4f9"><span class="section-number-4">3.2.1</span> income distribution</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
@@ -659,22 +729,75 @@ Next, we need to redefine demand, now denoted <code>demand_2</code> which takes 
 <b><b>Question</b></b> Define the function <code>excess_demand_2</code> which depends on \(p\), agents' valuations, incomes and number of goods (which we assume to be inelastically supplied again).
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">excess_demand_2</span>(p,valuations,incomes,number_of_goods):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> demand_2(p,valuations,incomes)-number_of_goods
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Use <code>fsolve</code> to determine the equilibrium price in this case. Is this price higher or lower than above? Why?
 </p>
 
 <p>
+price is always lower because income constraint binds; agents always pay less, never more
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">price_2</span> = optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: excess_demand_2(x,valuations,incomes,number_of_goods),120)
+<span style="color: #3a81c3;">print</span>(price_2)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">price
+</pre>
+</div>
+
+<p>
 <b><b>Question</b></b> Calculate welfare in the market equilibrium. How does it compare to <code>max_welfare</code>?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">welfare_2</span> = np.<span style="color: #3a81c3;">sum</span>(afford(price_2,incomes)*wtp(price_2,valuations)*valuations)
+<span style="color: #3a81c3;">print</span>(welfare_2)
+<span style="color: #3a81c3;">print</span>(max_welfare)
+</pre>
+</div>
+
 
 <p>
 <b><b>Assignment</b></b> Model an economy where an increase in income inequality reduces welfare.
 </p>
+
+<p>
+With 100 goods and 1000 agents, only few agents buy the good. By increasing the variance, some high value agents may actually get a higher income due to increased inequality. This can increase welfare. If we have 100 goods and 150 agents, the last agent to buy has income below the mean (100). Increasing inequality will tend to reduce this agent's income. This reduces the equilibrium price and hence welfare.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">number_of_agents_2</span> = 150
+<span style="color: #715ab1;">valuations_2</span> = <span style="color: #3a81c3;">sorted</span>(pm.Normal.dist(100,20).random(size=number_of_agents_2),reverse = <span style="color: #4e3163;">True</span>)
+
+<span style="color: #715ab1;">income_std</span> = 20
+<span style="color: #715ab1;">incomes_20</span> = pm.Normal.dist(100,income_std).random(size=number_of_agents_2)
+<span style="color: #715ab1;">price_20</span> = optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: excess_demand_2(x,valuations_2,incomes_20,number_of_goods),80)
+<span style="color: #3a81c3;">print</span>(np.<span style="color: #3a81c3;">sum</span>(afford(price_20,incomes_20)*wtp(price_20,valuations_2)*valuations_2))
+
+<span style="color: #715ab1;">income_std</span> = 40
+<span style="color: #715ab1;">incomes_40</span> = pm.Normal.dist(100,income_std).random(size=number_of_agents_2)
+<span style="color: #715ab1;">price_40</span> = optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: excess_demand_2(x,valuations_2,incomes_40,number_of_goods),80)
+<span style="color: #3a81c3;">print</span>(np.<span style="color: #3a81c3;">sum</span>(afford(price_40,incomes_40)*wtp(price_40,valuations_2)*valuations_2))
+
+
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgfce9a88" class="outline-4">
-<h4 id="orgfce9a88"><span class="section-number-4">3.2.2</span> market power</h4>
+
+
+<div id="outline-container-org72ba434" class="outline-4">
+<h4 id="org72ba434"><span class="section-number-4">3.2.2</span> market power</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <b><b>Warning</b></b> We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
@@ -746,13 +869,37 @@ array([125.27357427])
 <p>
 <b><b>Assignment</b></b> Calculate the profit maximizing price in this case.
 </p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">profit</span>(p,valuations):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> p*<span style="color: #3a81c3;">min</span>(demand(p,valuations),number_of_goods)
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_p</span> = np.arange(120,140)
+
+plt.plot(range_p, [profit(p,valuations) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p], label = <span style="color: #2d9574;">"profit"</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">"$P$"</span>)
+plt.ylabel(<span style="color: #2d9574;">"$\pi$"</span>)
+plt.show()
+</pre>
+</div>
+
+
+<p>
+Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing \(p\)) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as \(p>110\)) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get \((p-120)\) instead of \(p\) times quantity.
+</p>
 </div>
 </div>
 
 
 
-<div id="outline-container-org5515c84" class="outline-4">
-<h4 id="org5515c84"><span class="section-number-4">3.2.3</span> merger simulation</h4>
+<div id="outline-container-org20af3af" class="outline-4">
+<h4 id="org20af3af"><span class="section-number-4">3.2.3</span> merger simulation</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 This part is based on Tirole chapter 13.
@@ -858,6 +1005,17 @@ Test this function by showing that each of the two firms produces
 0.3333 in case both firms have zero costs; use <code>fsolve</code> as above.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">fixed_point_two_firms</span>(vector_q,vector_c):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> [vector_q[0]-reaction(vector_q[1],vector_c[0]),
+<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   vector_q[1]-reaction(vector_q[0],vector_c[1])]
+
+<span style="color: #715ab1;">initial_guess</span> = [0,0]
+
+optimize.fsolve(<span style="color: #3a81c3;">lambda</span> q: fixed_point_two_firms(q,[0,0]), initial_guess)
+</pre>
+</div>
+
 <p>
 A competition authority (CA) is asked to evaluate the effects
 of a merger between firms 2 and 3. Firms 2 and 3 claim that by merging
@@ -895,11 +1053,25 @@ three columns: <code>c_merged_firm</code>, <code>output_non_merging_firm</code>,
 the output level of firm 1 and the output level of firm 2.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">df_after_merger</span> = pd.DataFrame({<span style="color: #2d9574;">'c_merged_firm'</span>: c_after_merger, 
+<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="color: #2d9574;">'output_non_merging_firm'</span>: q1_after_merger,
+<span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="background-color: #ecf3ec;"> </span>   <span style="color: #2d9574;">'output_merged_firm'</span>: q2_after_merger})
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Add three columns to the dataframe with resp. total
 equilibrium output on the market, <code>Q</code>, equilibrium price, <code>P</code> and the
 Herfindahl index, <code>H</code>.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">df_after_merger</span>[<span style="color: #2d9574;">'Q'</span>] = df_after_merger.output_non_merging_firm + df_after_merger.output_merged_firm
+<span style="color: #715ab1;">df_after_merger</span>[<span style="color: #2d9574;">'P'</span>] = p(df_after_merger.Q)
+<span style="color: #715ab1;">df_after_merger</span>[<span style="color: #2d9574;">'H'</span>] = (df_after_merger.output_non_merging_firm/df_after_merger.Q)**2+(df_after_merger.output_merged_firm/df_after_merger.Q)**2
+</pre>
+</div>
 
 <p>
 <b><b>Question</b></b> Make a histogram of the equilibrium price <code>P</code> after
@@ -912,6 +1084,16 @@ the merger <code>P0</code>. Label the horizontal axis with \(P\).
 make this graph (e.g use google to find these functions); but feel free
 to use something else]
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.hist(df_after_merger.P, bins = 30, density = 1, label = <span style="color: #2d9574;">'after merger'</span>)
+plt.vlines(P0,0,25, color = <span style="color: #2d9574;">'red'</span>, label = <span style="color: #2d9574;">'before merger'</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">'$P$'</span>)
+plt.show()
+</pre>
+</div>
+
 
 <p>
 <b><b>Excersise</b></b> Explain why sometimes the equilibrium price after
@@ -942,6 +1124,16 @@ dataframe. Add in another color, the pre-merger combination <code>(H0,P0)</code>
 that we calculated above.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">plt.scatter(df_after_merger.H,df_after_merger.P,label=<span style="color: #2d9574;">'after merger'</span>)
+plt.scatter(H0,P0,label=<span style="color: #2d9574;">'pre merger'</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">'$H$'</span>)
+plt.ylabel(<span style="color: #2d9574;">'$P$'</span>)
+</pre>
+</div>
+
+
 <p>
 <b><b>Question</b></b> What does the figure above illustrate about the relation
 between the Herfindahl index and the equilibrium price? To illustrate,
@@ -951,8 +1143,8 @@ associated with more competitive outcome. Would you agree with this?
 </div>
 </div>
 
-<div id="outline-container-org19114f3" class="outline-4">
-<h4 id="org19114f3"><span class="section-number-4">3.2.4</span> external effects</h4>
+<div id="outline-container-org0b7da17" class="outline-4">
+<h4 id="org0b7da17"><span class="section-number-4">3.2.4</span> external effects</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost \(c q\). But production leads to an external effect equal to \(\gamma q\). Hence, the social cost of production equals \((c+\gamma)q\)
@@ -992,6 +1184,19 @@ We can model this as follows.
 </p>
 
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_p</span> = np.arange(60,150)
+
+plt.plot(range_p, [profit_c(p,valuations) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p], label = <span style="color: #2d9574;">"profit"</span>)
+plt.plot(range_p, [welfare_e(p,valuations) <span style="color: #3a81c3;">for</span> p <span style="color: #3a81c3;">in</span> range_p], label = <span style="color: #2d9574;">"welfare"</span>)
+plt.legend()
+plt.xlabel(<span style="color: #2d9574;">"$P$"</span>)
+plt.ylabel(<span style="color: #2d9574;">"$\pi$, welfare"</span>)
+plt.show()
+</pre>
+</div>
+
+
 <p>
 <b><b>Question</b></b> What is the interpretation of this result? Which policy instrument can the government use here?
 </p>
@@ -1001,8 +1206,8 @@ We can model this as follows.
 </div>
 
 
-<div id="outline-container-org26dd65d" class="outline-2">
-<h2 id="org26dd65d"><span class="section-number-2">4</span> Asymmetric information</h2>
+<div id="outline-container-orgfc6a735" class="outline-2">
+<h2 id="orgfc6a735"><span class="section-number-2">4</span> Asymmetric information</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Tirole chapter 15.
@@ -1014,8 +1219,8 @@ One of the reasons why markets (or other institutions for that matter) work less
 </div>
 
 
-<div id="outline-container-orgd6b9633" class="outline-3">
-<h3 id="orgd6b9633"><span class="section-number-3">4.1</span> adverse selection</h3>
+<div id="outline-container-org0d02139" class="outline-3">
+<h3 id="org0d02139"><span class="section-number-3">4.1</span> adverse selection</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b><b>Question</b></b> What is adverse selection?
@@ -1059,6 +1264,12 @@ u(\text{income}-\sigma) > \pi u(\text{income}-\text{cost}) + (1-\pi) u(\text{inc
 <p>
 <b><b>Question</b></b> Define a function <code>insurance_demand</code> that returns the number of agents buying insurance as a function of the premium \(\sigma\).
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">insurance_demand</span>(&#963;):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> np.<span style="color: #3a81c3;">sum</span>(u(income-&#963;)-(&#960;*u(income-cost)+(1-&#960;)*u(income))&gt;0)
+</pre>
+</div>
 
 <p>
 We assume that this insurance market is perfectly competitive. That is, for each quantity supplied, insurance companies compete down the price such that the premium equals the average (expected) cost of the agents buying insurance.
@@ -1117,11 +1328,25 @@ plt.show()
 <p>
 <b><b>Assignment</b></b> Show graphically the effect of an increase in income on the market outcome. Does the inefficiency increase or decrease with income? Why?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">income</span> = 2
+
+<span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">insurance_demand</span>(&#963;):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> np.<span style="color: #3a81c3;">sum</span>(u(income-&#963;)-(&#960;*u(income-cost)+(1-&#960;)*u(income))&gt;0)
+plt.plot(range_Q,[insurance_supply(Q) <span style="color: #3a81c3;">for</span> Q <span style="color: #3a81c3;">in</span> range_Q],label=<span style="color: #2d9574;">"insurance supply"</span>)
+plt.plot([insurance_demand(sigma) <span style="color: #3a81c3;">for</span> sigma <span style="color: #3a81c3;">in</span> range_sigma],range_sigma,label=<span style="color: #2d9574;">"insurance demand"</span>)
+plt.plot(range_Q,[&#960;[-Q]*cost <span style="color: #3a81c3;">for</span> Q <span style="color: #3a81c3;">in</span> range_Q],label=<span style="color: #2d9574;">"marginal cost"</span>)
+plt.legend()
+plt.show()
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org316467d" class="outline-3">
-<h3 id="org316467d"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
+
+<div id="outline-container-org93d8f0f" class="outline-3">
+<h3 id="org93d8f0f"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
@@ -1197,20 +1422,64 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 <b><b>Question</b></b> Plot <code>Welfare</code> as a function of \(\tau\) for \(\rho=1\). What is the welfare maximizing tax rate? Why?
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_tax</span> = np.arange(0,1.1,0.1)
+plt.plot(range_tax,[Welfare(&#964;,1) <span style="color: #3a81c3;">for</span> &#964; <span style="color: #3a81c3;">in</span> range_tax])
+plt.xlabel(<span style="color: #2d9574;">'$\\tau$'</span>)
+plt.ylabel(<span style="color: #2d9574;">'$W$'</span>)
+plt.show()
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> What happens to the optimal tax rate as \(\rho<1\) falls?
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_tax</span> = np.arange(0,1.1,0.1)
+plt.plot(range_tax,[Welfare(&#964;,-1.5) <span style="color: #3a81c3;">for</span> &#964; <span style="color: #3a81c3;">in</span> range_tax], label=<span style="color: #2d9574;">"$\\rho=-1.5$"</span>)
+plt.plot(range_tax,[Welfare(&#964;,-1.9) <span style="color: #3a81c3;">for</span> &#964; <span style="color: #3a81c3;">in</span> range_tax], label=<span style="color: #2d9574;">"$\\rho=-1.9$"</span>)
+plt.xlabel(<span style="color: #2d9574;">'$\\tau$'</span>)
+plt.ylabel(<span style="color: #2d9574;">'$W$'</span>)
+plt.legend()
+plt.show()
+</pre>
+</div>
+
+
+
 <p>
 <b><b>Assignment</b></b> Redefine the function <code>Welfare</code> above such that it uses <a href="https://en.wikipedia.org/wiki/A_Theory_of_Justice">Rawls' criterion</a> of maximizing the utility of the person who is worse off in society. Further, suppose that the government needs \(g\) per head to finance a public good. What is the effect of \(g\) on the optimal marginal tax rate?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">Welfare_g</span>(&#964;,g):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">&#964;_0</span> = np.mean([&#964;*effort(c,&#964;) <span style="color: #3a81c3;">for</span> c <span style="color: #3a81c3;">in</span> effort_costs])-g
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> np.<span style="color: #3a81c3;">min</span>([((1-&#964;)*effort(c,&#964;)+&#964;_0 - c*effort(c,&#964;)**2) <span style="color: #3a81c3;">for</span> c <span style="color: #3a81c3;">in</span> effort_costs])
+
+plt.plot(range_tax,[Welfare_g(&#964;,0.01) <span style="color: #3a81c3;">for</span> &#964; <span style="color: #3a81c3;">in</span> range_tax], label=<span style="color: #2d9574;">"$g=0$"</span>)
+plt.plot(range_tax,[Welfare_g(&#964;,0.05) <span style="color: #3a81c3;">for</span> &#964; <span style="color: #3a81c3;">in</span> range_tax], label=<span style="color: #2d9574;">"$g=1$"</span>)
+plt.xlabel(<span style="color: #2d9574;">'$\\tau$'</span>)
+plt.ylabel(<span style="color: #2d9574;">'$W$'</span>)
+plt.legend()
+plt.show()
+
+
+
+</pre>
+</div>
+
+
+<p>
+There is no effect of \(g\) on \(\tau\). The planner already maximizes the utility of the person who is worse off (disregarding everyone else's utility). An increase in \(g\) does not affect this trade off and hence there is no effect on \(\tau\).
 </p>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org42633e4" class="outline-2">
-<h2 id="org42633e4"><span class="section-number-2">5</span> Financial crisis</h2>
+<div id="outline-container-org025ea78" class="outline-2">
+<h2 id="org025ea78"><span class="section-number-2">5</span> Financial crisis</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Tirole chapters: 11, 12
@@ -1222,8 +1491,8 @@ We will look at two aspects of the financial crisis. First, why are financial ma
 </div>
 
 
-<div id="outline-container-orgf7fbce2" class="outline-3">
-<h3 id="orgf7fbce2"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
+<div id="outline-container-org5a7b878" class="outline-3">
+<h3 id="org5a7b878"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The first problem in financial (and other) markets is limited liability. When banks go bankrupt they "only" loose their equity even if the debts that they accumulated exceed their equity. We run some simulations to show that this leads to banks taking excessive risks from a social point of view.
@@ -1243,6 +1512,16 @@ Let \(x\) denote an investment opportunity: \(x\) is a vector with dimension 100
 <b><b>Question</b></b> Plot the function <code>profit</code> for the case where ~equity~=10 and \(x\) is a scalar.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">x_values</span> = np.arange(-40,20,0.1)
+plt.plot(x_values,[profit(x,10) <span style="color: #3a81c3;">for</span> x <span style="color: #3a81c3;">in</span> x_values])
+plt.xlabel(<span style="color: #2d9574;">'$x$'</span>)
+plt.ylabel(<span style="color: #2d9574;">'profit'</span>)
+plt.show()
+</pre>
+</div>
+
+
 <p>
 Note that although we think of \(x\) as a vector (and we will use this in a second), python does not know this nor does it care. Hence, we can plot <code>profit</code> as a function of the scalar \(x\).
 </p>
@@ -1252,13 +1531,29 @@ Note that although we think of \(x\) as a vector (and we will use this in a seco
 <b><b>Question</b></b> Create an investment opportunity <code>vector_returns</code> where the returns are normally distributed with mean \(-10\) and standard deviation 100. As mentioned above, we assume that there are 1000 states of the world.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">vector_returns</span> = pm.Normal.dist(-10,100).random(size=1000)
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Calculate the expected (social) return from this investment <code>vector_returns</code>.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">np.mean(vector_returns)
+</pre>
+</div>
+
 <p>
 <b><b>Question</b></b> Calculate the expected profits of the <code>vector_returns</code>. Compare the outcome to the one above. What is the interpretation?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">profit(vector_returns)
+</pre>
+</div>
+
 
 <p>
 <b><b>Question</b></b> Explain what is coded in the following code cell. E.g. what is the point of the 10000?
@@ -1294,16 +1589,16 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org4b14f6d" class="outline-3">
-<h3 id="org4b14f6d"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
+<div id="outline-container-orga7c818c" class="outline-3">
+<h3 id="orga7c818c"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Bonus contracts are generally a reaction to <a href="#org26dd65d">asymmetric information</a>. Let's first consider moral hazard.
+Bonus contracts are generally a reaction to <a href="#orgfc6a735">asymmetric information</a>. Let's first consider moral hazard.
 </p>
 </div>
 
-<div id="outline-container-org57928b9" class="outline-4">
-<h4 id="org57928b9"><span class="section-number-4">5.2.1</span> moral hazard</h4>
+<div id="outline-container-org87f71f9" class="outline-4">
+<h4 id="org87f71f9"><span class="section-number-4">5.2.1</span> moral hazard</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 How do your employees choose their investment opportunities? There are a number of things that you may worry about. Suppose you would pay everyone a fixed salary that does not depend on performance. Then your employees may randomly pick an investment opportunity without analyzing whether this is the best opportunity. The rest of the time, they simply enjoy the sun. Or they may invest your money in the new webshop of their brother in law. This may increase their status in their family but does not necessarily boost your profits. 
@@ -1318,7 +1613,7 @@ Since it is hard for banks to monitor exactly what investment opportunities thei
 </p>
 
 <p>
-We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#org316467d">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
+We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#org93d8f0f">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
 </p>
 
 <p>
@@ -1358,6 +1653,14 @@ We specify values for \(y_{g,a,b}\), define the functions for \(q_g\) and \(q_b\
 <b><b>Question</b></b> Define a function <code>q_choice</code> of the wage vector \(w\) and <code>ability</code> of the employee. [hint: the vector \(w\) only needs to have 2 dimensions]
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">q_choice</span>(w,ability): <span style="color: #8D8D84;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">w = [w_a,w_g]</span>
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">choice</span> = optimize.fminbound(<span style="color: #3a81c3;">lambda</span> x: -(q_g(x,ability)*w[1] + x*w[0]),0,1,disp=0) <span style="color: #8D8D84;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">note the minus sign in front of the lambda function</span>
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> choice
+
+</pre>
+</div>
+
 <p>
 Given the function <code>q_choice</code>, the function <code>bank_choices</code> derives the optimal wage vector \(w=[w_a,w_g]\) for a given <code>ability</code> of the employee. Then contract derives optimal risk choice \(q\) as a function of <code>ability</code> and the outside option of the employee. If the outside option of the employee is so high that it is no longer profitable for the bank to hire this employee, the function returns \(-1\).
 </p>
@@ -1385,8 +1688,20 @@ Given the function <code>q_choice</code>, the function <code>bank_choices</code>
 <b>Question</b> Plot the optimal \(q\) for the bank as a function of the outside option of an employee with <code>ability</code> equal to \(0.5\). Do this for outside options between 0 and 4.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">range_outside_options</span> = np.arange(0,4.01,0.01)
+plt.plot(range_outside_options, [contract(0.5,o) <span style="color: #3a81c3;">for</span> o <span style="color: #3a81c3;">in</span> range_outside_options])
+plt.show()
+</pre>
+</div>
+
+
 <p>
 <b>Question</b> Do we see that as competition for talented employees intensifies, thereby increasing their outside options, banks tend to offer them more risky contracts? Why (not)?
+</p>
+
+<p>
+Hence, we see that more competition for talented traders which increases their outside options (offers from other banks) does not increase the risks that the banks induce traders to take. Hence, we need to add something to the story to make sense of this. Therefore we will elaborate the model.
 </p>
 
 <p>
@@ -1426,8 +1741,8 @@ What is the optimal \(q\) for a trader with \(\alpha=0.5\)?
 </div>
 </div>
 
-<div id="outline-container-org83256fe" class="outline-4">
-<h4 id="org83256fe"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
+<div id="outline-container-org9c1c687" class="outline-4">
+<h4 id="org9c1c687"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Suppose now that there are two types of traders: one talented and the other less so. The bank cannot distinguish these types by just observing them. They may have the same education degrees and work experience. But some have a "knack" for observing opportunities and taking risks, which the others lack.
@@ -1526,21 +1841,35 @@ plt.show()
 <p>
 <b>Question</b> What does the graph above show? What is the intuition for this?
 </p>
+
+
+
+<p>
+The graph shows that as competition for top traders increases their outside options, banks induce them to take more risks. Even more risk than is optimal for the bank itself.
+</p>
+
+<p>
+The intuition for this is: start at first best bonus \(w\) for the top traders. Distorting \(w\) towards more risk only has a second order effect on profits from top traders. However, since average traders are not so good at taking risks, it allows the bank to reduce the wage paid to these average traders. This is a first order effect.
+</p>
+
+<p>
+In other words, part of the higher remuneration that is paid to top traders "leaks away" to average traders. To prevent this leak, more is paid out in the good state (\(w_g\) is increased) as top traders are better in getting this good outcome.
+</p>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdf6a2f8" class="outline-2">
-<h2 id="orgdf6a2f8"><span class="section-number-2">6</span> Using python for empirical research</h2>
+<div id="outline-container-org4705acf" class="outline-2">
+<h2 id="org4705acf"><span class="section-number-2">6</span> Using python for empirical research</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 We consider two ways in which python can be useful for empirical research. First, the use of API's to download datasets. Second, the use of hacker statistics.
 </p>
 </div>
 
-<div id="outline-container-orgd543cec" class="outline-3">
-<h3 id="orgd543cec"><span class="section-number-3">6.1</span> API's to get data</h3>
+<div id="outline-container-org486697a" class="outline-3">
+<h3 id="org486697a"><span class="section-number-3">6.1</span> API's to get data</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
@@ -1671,6 +2000,11 @@ df_wb.head()
 <b>Question</b> What do the last 10 rows look like?
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">df_wb.tail(10)
+</pre>
+</div>
+
 <p>
 If you like the dataframe that you have downloaded from the web, you can save it with pandas <code>to_csv</code>. We save the data in the subdirectory "data".
 </p>
@@ -1694,6 +2028,11 @@ Let's compare the distribution of gdp per head in 1990 with the distribution in 
 <b>Question</b> What does the dataframe <code>df_1990</code> look like?
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">df_1990.head()
+</pre>
+</div>
+
 <p>
 Both dataframes have a column <code>country</code>. Hence, we can merge the dataframes on this column. There are a number of <code>how</code> methods, here we use 'inner' which means that only countries that are present in both datasets will be in <code>df_merged</code>. To distinguish the columns, like <code>GDP_per_head</code> from the two dataframes, we can provide suffixes. All columns from <code>df_1990</code> (except for <code>country</code>) will be suffixed with '_1990'; and similarly for 2017.
 </p>
@@ -1708,10 +2047,29 @@ Both dataframes have a column <code>country</code>. Hence, we can merge the data
 <b>Question</b> To see how the suffixes work, check what <code>df_merged</code> looks like.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">df_merged.head()
+</pre>
+</div>
+
 <p>
 <b>Question</b> Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
 </p>
 
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.scatter(df_merged[<span style="color: #2d9574;">'GDP_per_head_1990'</span>],df_merged[<span style="color: #2d9574;">'GDP_per_head_2017'</span>])
+plt.plot(np.arange(0,100000),np.arange(0,100000))
+plt.xlabel(<span style="color: #2d9574;">'gdp per head in 1990'</span>)
+plt.ylabel(<span style="color: #2d9574;">'gdp per head in 2017'</span>)
+plt.show()
+</pre>
+</div>
+
+
+<p>
+If all points would be on the 45-degree line, the distribution of income across countries in 2017 would be the same as in 1990. Instead we see that countries with high incomes in 1990, have even higher incomes in 2017, while this is less the case for countries with low incomes in 1990.
+</p>
 
 <p>
 You may wonder which observations ("dots") correspond to which countries. For this we need a plotting library that is more sophisticated on interactions than <code>matplotlib</code>. A number of these libraries are available; here we consider <a href="https://bokeh.pydata.org/en/latest/docs/user_guide/quickstart.html">bokeh</a>. If you want to know more about bokeh, there is a <a href="https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh">datacamp course</a>.
@@ -1742,8 +2100,8 @@ show(plot)
 </div>
 
 
-<div id="outline-container-orgaffa742" class="outline-3">
-<h3 id="orgaffa742"><span class="section-number-3">6.2</span> Hacker statistics</h3>
+<div id="outline-container-orgf36e902" class="outline-3">
+<h3 id="orgf36e902"><span class="section-number-3">6.2</span> Hacker statistics</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 In the last chapter of the Datacamp course <a href="https://www.datacamp.com/courses/intermediate-python-for-data-science">Intermediate Python for Data Science</a> you have seen hacker statistics. The idea is to simulate a random process, say, 10,000 times. Then if you want to know the probability that a certain condition is satisfied (say, number of heads bigger than 10 when you throw a coin 15 times), you calculate the number of outcomes where this condition is satisfied and divide it by 10,000.
@@ -1754,8 +2112,8 @@ If you can program, you can recap all the statistics that you were taught (and p
 </p>
 </div>
 
-<div id="outline-container-org4866647" class="outline-4">
-<h4 id="org4866647"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
+<div id="outline-container-org38f60ce" class="outline-4">
+<h4 id="org38f60ce"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 Remember when you did statistics at high school? "In a dark cupboard there are 10 red and 20 white socks&#x2026;", "you throw dice 20 times and &#x2026;" etc.
@@ -1783,12 +2141,24 @@ In expectation, which experiment is over sooner (i.e. takes less throws to see t
 </p>
 
 <p>
+HTT is "faster": you throw HT (this is good for both patterns). Suppose the next throw is "not good". In exp. 1 you throw T (instead of required H), you have to start all over again in the next throw. In exp. 2 you throw H (instead of required T), you are already 1/3rd into your next sequence of HTT.
+</p>
+
+<p>
 <b>Question</b> Define a function <code>check</code> which checks whether a list <code>coin_throws</code> ends with the required <code>pattern</code> (also a list).
 </p>
 
 <p>
 In terms of python, you need to use your knowledge of "slicing" lists.
 </p>
+
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">check</span>(coin_throws, pattern):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #715ab1;">n</span> = <span style="color: #3a81c3;">len</span>(pattern)
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> (coin_throws[-n:] == pattern)
+</pre>
+</div>
 
 
 <p>
@@ -1811,9 +2181,35 @@ In terms of python, you need to use your knowledge of "slicing" lists.
 <b>Question</b> Create an empty list <code>waiting_times</code>. Then run the first experiment 50,000 times. Record the waiting time for the pattern <code>['H','T','H']</code> to appear &#x2013;for each of these 50,000 experiments&#x2013; in the list <code>wating_times</code>. Calculate the average waiting time and give a histogram for the waiting times.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">waiting_times</span>=[]
+
+[waiting_times.append(waiting_time([<span style="color: #2d9574;">'H'</span>,<span style="color: #2d9574;">'T'</span>,<span style="color: #2d9574;">'H'</span>])) <span style="color: #3a81c3;">for</span> i <span style="color: #3a81c3;">in</span> <span style="color: #3a81c3;">range</span>(50000)]
+<span style="color: #3a81c3;">print</span>(np.mean(waiting_times))
+
+plt.hist(waiting_times,bins=30)
+plt.show()
+
+</pre>
+</div>
+
+
 <p>
 <b>Question</b> Do the same as the previous question for experiment 2.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">waiting_times</span>=[]
+
+[waiting_times.append(waiting_time([<span style="color: #2d9574;">'H'</span>,<span style="color: #2d9574;">'T'</span>,<span style="color: #2d9574;">'T'</span>])) <span style="color: #3a81c3;">for</span> i <span style="color: #3a81c3;">in</span> <span style="color: #3a81c3;">range</span>(50000)]
+<span style="color: #3a81c3;">print</span>(np.mean(waiting_times))
+
+plt.hist(waiting_times,bins=30)
+plt.show()
+
+</pre>
+</div>
+
 
 <p>
 <b>Question</b> Which experiment leads to the lower waiting time in expectation? Do you have an intuition?
@@ -1821,8 +2217,8 @@ In terms of python, you need to use your knowledge of "slicing" lists.
 </div>
 </div>
 
-<div id="outline-container-org2bc2628" class="outline-4">
-<h4 id="org2bc2628"><span class="section-number-4">6.2.2</span> statistics</h4>
+<div id="outline-container-org02bd0ed" class="outline-4">
+<h4 id="org02bd0ed"><span class="section-number-4">6.2.2</span> statistics</h4>
 <div class="outline-text-4" id="text-6-2-2">
 <p>
 Let's start simple. Suppose we have two normally distributed variables \(x,y\) with \(\mu_x = 10, \mu_y = 20, \sigma_x = 3, \sigma_y =4\). We are interested in the variable \(z = x+y\). Suppose you forgot what you know about the sum of normal distributions and wondered what the expectation and standard deviation is of \(z\).
@@ -1832,6 +2228,15 @@ Let's start simple. Suppose we have two normally distributed variables \(x,y\) w
 <b>Question</b> Simulate \(z\) and calculate its mean and standard deviation.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">x</span> = pm.Normal.dist(10,3).random(size=10000)
+<span style="color: #715ab1;">y</span> = pm.Normal.dist(20,4).random(size=10000)
+<span style="color: #715ab1;">z</span> = x+y
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"mean z: {:.2f}"</span>.<span style="color: #3a81c3;">format</span>(np.mean(z)))
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"std. z: {:.2f}"</span>.<span style="color: #3a81c3;">format</span>(np.std(z)))
+</pre>
+</div>
+
 <p>
 And, indeed, we know that \(\mu_z = \mu_x + \mu_y\) and \(\sigma_z = \sqrt{\sigma_x^2 + \sigma_y^2}\)
 </p>
@@ -1839,6 +2244,15 @@ And, indeed, we know that \(\mu_z = \mu_x + \mu_y\) and \(\sigma_z = \sqrt{\sigm
 <p>
 <b>Question</b> Let \(x\) be normally distributed with \(\mu_x=0,\sigma_x=1\) and \(y\) has a poisson distribution with \(\lambda_y=5\). What is the expectation and standard deviation of \(z=xy\)?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #715ab1;">x</span> = pm.Normal.dist(0,1).random(size=10000)
+<span style="color: #715ab1;">y</span> = pm.Poisson.dist(5).random(size=10000)
+<span style="color: #715ab1;">z</span> = x*y
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"mean z: {:.2f}"</span>.<span style="color: #3a81c3;">format</span>(np.mean(z)))
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"std. z: {:.2f}"</span>.<span style="color: #3a81c3;">format</span>(np.std(z)))
+</pre>
+</div>
 
 <p>
 Many students find it to hard to think of the distribution of an average or the distribution of a standard deviation.
@@ -1864,6 +2278,12 @@ Many students find it to hard to think of the distribution of an average or the 
 <p>
 <b>Question</b> Redefine the function <code>my_function(n)</code> such that it goes through the points in the figure below. [hint: you do not need to fit a function, just use your knowledge of statistics]
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">my_function</span>(n):
+<span style="background-color: #ecf3ec;"> </span>   <span style="color: #3a81c3;">return</span> sd/np.sqrt(n)
+</pre>
+</div>
 
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #3a81c3;">def</span> <span style="color: #6c3163;">my_function</span>(n):
@@ -1901,6 +2321,10 @@ plt.show()
 <b>Question</b> Explain what the following distribution below is.
 </p>
 
+<p>
+This is the distribution of the average of 10 (and 100) draws from a normal distribution with average <code>mu</code> and standard deviation <code>sd</code>.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-ipython">plt.hist(moments(10)[0],bins=30,label=<span style="color: #2d9574;">'$n=10$'</span>,density=<span style="color: #4e3163;">True</span>)
 plt.hist(moments(100)[0],bins=30,alpha=0.6,label=<span style="color: #2d9574;">'$n=100$'</span>,density=<span style="color: #4e3163;">True</span>)
@@ -1924,9 +2348,29 @@ plt.show()
 <b>Question</b> Compare the probability that the green, blue distribution resp. exceeds 1015.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython"><span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"blue prob. higher than 1015: {:.3f}"</span>.<span style="color: #3a81c3;">format</span>(np.<span style="color: #3a81c3;">sum</span>(moments(10)[0]&gt;1015)/<span style="color: #3a81c3;">len</span>(moments(10)[0])))
+<span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"green prob. higher than 1015: {:.3f}"</span>.<span style="color: #3a81c3;">format</span>(np.<span style="color: #3a81c3;">sum</span>(moments(100)[0]&gt;1015)/<span style="color: #3a81c3;">len</span>(moments(100)[0])))
+</pre>
+</div>
+
+
 <p>
 <b>Question</b> Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">(np.<span style="color: #3a81c3;">sum</span>(moments(100)[0]&gt;1020))/number_of_samples
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ipython">plt.hist(moments(100)[0],bins=30,density=<span style="color: #4e3163;">True</span>)
+plt.vlines(1020,0,0.06)
+</pre>
+</div>
+
 
 <p>
 If you like this approach, see <a href="https://www.youtube.com/watch?time_continue=1&amp;v=ssVsVhZEQ9M">this video</a> for more examples. There is also a free book (in the form of jupyter notebooks) to <a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">recap your statistics</a>.
@@ -1937,8 +2381,8 @@ If you like this approach, see <a href="https://www.youtube.com/watch?time_conti
 </div>
 
 
-<div id="outline-container-org52ebddc" class="outline-2">
-<h2 id="org52ebddc"><span class="section-number-2">7</span> Regulation in health care markets</h2>
+<div id="outline-container-orgd69c7b4" class="outline-2">
+<h2 id="orgd69c7b4"><span class="section-number-2">7</span> Regulation in health care markets</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Tirole: chapters 15, 17
@@ -1963,8 +2407,8 @@ Some institutional background:
 </ul>
 </div>
 
-<div id="outline-container-org98408d8" class="outline-3">
-<h3 id="org98408d8"><span class="section-number-3">7.1</span> simple theory</h3>
+<div id="outline-container-orgfd9ea6b" class="outline-3">
+<h3 id="orgfd9ea6b"><span class="section-number-3">7.1</span> simple theory</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Consider the following simple theoretical framework. People get
@@ -2015,8 +2459,8 @@ plt.show()
 
 
 
-<div id="outline-container-org94f4dcd" class="outline-3">
-<h3 id="org94f4dcd"><span class="section-number-3">7.2</span> some data</h3>
+<div id="outline-container-org3353503" class="outline-3">
+<h3 id="org3353503"><span class="section-number-3">7.2</span> some data</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 To find the effect of an increase in deductible, we compare health care expenditures in the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro). We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. To use the code below, download these csv-files into the sub-directory "data" (i.e. "data" is sub-directory of the directory in which this notebook resides). 
@@ -2105,8 +2549,8 @@ The outcome of this <code>groupby</code> we plot below.
 </div>
 
 
-<div id="outline-container-org5398c9b" class="outline-3">
-<h3 id="org5398c9b"><span class="section-number-3">7.3</span> matplotlib</h3>
+<div id="outline-container-orge4f6c22" class="outline-3">
+<h3 id="orge4f6c22"><span class="section-number-3">7.3</span> matplotlib</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 We plot the distribution of health care expenditure per head with age for males and females.
@@ -2145,8 +2589,8 @@ ax.legend([<span style="color: #2d9574;">'male'</span>,<span style="color: #2d95
 </div>
 </div>
 
-<div id="outline-container-org3ac982d" class="outline-3">
-<h3 id="org3ac982d"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
+<div id="outline-container-orgc67bbcc" class="outline-3">
+<h3 id="orgc67bbcc"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from. To illustrate this, consider the distribution of (average) costs for 30 year old males. Since, health care costs have a skewed distribution, we actually plot the distribution of log costs.
@@ -2178,6 +2622,10 @@ This distribution looks (sort of) normal. Hence, we assume that for each age and
 
 <p>
 <b>Question</b> Why are there no zeroes in this figure? Lots of people have no health care expenditure in a year? How does our <code>log_costs_per_head</code> deal with zero costs? Should there be a spike at 0?
+</p>
+
+<p>
+This is costs per postal code area. To get zero costs: everyone (of certain age and gender) must have zero costs for the average costs to equal 0. This is quite an unlikely event.
 </p>
 
 <p>
@@ -2298,15 +2746,24 @@ plt.legend()
 
 
 <p>
+No these are the distributions of the parameters \(\mu_{17,19}\). Not the individual draws out of the expenditure distributions for 17 and 19 year olds.
+</p>
+
+<p>
 <b>Questions</b> Focus on 19 year olds. What is the probability that \(\mu_{19}>6.45\)?
 </p>
+
+<div class="org-src-container">
+<pre class="src src-ipython">np.<span style="color: #3a81c3;">sum</span>(trace[<span style="color: #2d9574;">'&#956;'</span>][:,19]&gt;6.45)/<span style="color: #3a81c3;">len</span>(trace[<span style="color: #2d9574;">'&#956;'</span>][:,19])
+</pre>
+</div>
 
 <p>
 One explanation for the figure is that 17 year olds do not face a deductible, while 19 year olds do. But an other explanation is that health care expenditure simply differs by age (irrespective of a deductible). In order to control for the age effect, we re-do the analysis above for 2011. Also in 2011 we can take the difference in means for 17 and 19 year olds. If there is (only) a biological reason for the different expenditures between 17 and 19 year olds, the difference in 2011 should be the same as the difference in 2014. 
 </p>
 
 <p>
-If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#org98408d8">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
+If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#orgfd9ea6b">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
 </p>
 
 <p>
@@ -2411,6 +2868,11 @@ plt.legend()
 <b>Question</b> Calculate the probability that in fact the parameter difference \(\mu_{17}-\mu_{19}\) is bigger in 2011 than in 2014.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ipython">np.<span style="color: #3a81c3;">sum</span>(trace_2011[<span style="color: #2d9574;">'&#956;'</span>][:,17]-trace_2011[<span style="color: #2d9574;">'&#956;'</span>][:,19] &gt; trace[<span style="color: #2d9574;">'&#956;'</span>][:,17]-trace[<span style="color: #2d9574;">'&#956;'</span>][:,19])/<span style="color: #3a81c3;">len</span>(trace[<span style="color: #2d9574;">'&#956;'</span>][:,19])
+</pre>
+</div>
+
 <p>
 Hence we find that government regulation in terms of a deductible has an effect on health care expenditures. People spend less on health care if they face a higher deductible.
 </p>
@@ -2448,7 +2910,7 @@ A simple introduction to Bayesian estimation with python can be found <a href="h
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Boone</p>
-<p class="date">Created: 2018-09-22 Sat 13:49</p>
+<p class="date">Created: 2018-09-22 Sat 13:59</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
