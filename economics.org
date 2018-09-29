@@ -540,7 +540,7 @@ plt.show()
 
 
 :ANSWER:
-Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing $p$) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as $p>110$) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get $(p-120)$ instead of $p$ times quantity.
+Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing $p$) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as $p>120$) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get $(p-120)$ instead of $p$ times quantity.
 :END:
 
 
@@ -866,7 +866,7 @@ One of the reasons why markets (or other institutions for that matter) work less
 
 **Question** What is adverse selection?
 
-Consider an economy with ~number_of_agents~ agents. Each agent has an endowment/income equal to ~income~ and faces a potential loss of the size ~cost~. Agents differ in the probability $\pi$ of this loss. We randomly draw 100 values for $\pi$ assuming it is uniformly distributed on $[0,1]$.
+Consider an economy with ~number_of_agents~ agents. Each agent has an endowment/income equal to ~income~ and faces a potential loss of the size ~cost~. Agents differ in the probability $\pi$ of this loss. We randomly draw 50 values for $\pi$ assuming it is uniformly distributed on $[0,1]$.
 
 Further, agents have a utility function of the form $u(x)=x^{\rho}$.
 
@@ -1139,7 +1139,7 @@ def profit(x,equity=0):
 # Out[1]:
 :END:
 
-**Question** Plot the function ~profit~ for the case where ~equity~=10 and $x$ is a scalar.
+**Question** Plot the function ~profit~ for the case where ~equity~ =10 and $x$ is a scalar.
 
 #+BEGIN_SRC ipython :exports none
 x_values = np.arange(-40,20,0.1)

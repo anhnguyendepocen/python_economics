@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-22 Sat 13:59 -->
+<!-- 2018-09-29 Sat 15:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doing economics with python</title>
@@ -329,60 +329,60 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb90cd78">1. Introduction</a></li>
-<li><a href="#org49fac13">2. Python packages that we will be using</a></li>
-<li><a href="#org67bab89">3. The market</a>
+<li><a href="#orgb2cbb92">1. Introduction</a></li>
+<li><a href="#org9b9b926">2. Python packages that we will be using</a></li>
+<li><a href="#org2e543ae">3. The market</a>
 <ul>
-<li><a href="#org57f686c">3.1. why do we love the market?</a>
+<li><a href="#org89facae">3.1. why do we love the market?</a>
 <ul>
-<li><a href="#org0c8a208">3.1.1. market outcome</a></li>
-<li><a href="#org7a5e762">3.1.2. elastic demand and supply</a></li>
+<li><a href="#org428ff9a">3.1.1. market outcome</a></li>
+<li><a href="#orgb9d6f8b">3.1.2. elastic demand and supply</a></li>
 </ul>
 </li>
-<li><a href="#orgefe01bd">3.2. why do others not love the market?</a>
+<li><a href="#orgb7b32a2">3.2. why do others not love the market?</a>
 <ul>
-<li><a href="#org2f0b4f9">3.2.1. income distribution</a></li>
-<li><a href="#org72ba434">3.2.2. market power</a></li>
-<li><a href="#org20af3af">3.2.3. merger simulation</a></li>
-<li><a href="#org0b7da17">3.2.4. external effects</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgfc6a735">4. Asymmetric information</a>
-<ul>
-<li><a href="#org0d02139">4.1. adverse selection</a></li>
-<li><a href="#org93d8f0f">4.2. moral hazard: optimal taxation</a></li>
-</ul>
-</li>
-<li><a href="#org025ea78">5. Financial crisis</a>
-<ul>
-<li><a href="#org5a7b878">5.1. Why is there a problem in financial markets?</a></li>
-<li><a href="#orga7c818c">5.2. Why these bonus contracts?</a>
-<ul>
-<li><a href="#org87f71f9">5.2.1. moral hazard</a></li>
-<li><a href="#org9c1c687">5.2.2. moral hazard and adverse selection</a></li>
+<li><a href="#org6e565cf">3.2.1. income distribution</a></li>
+<li><a href="#org5c5c1c1">3.2.2. market power</a></li>
+<li><a href="#org6a9f62e">3.2.3. merger simulation</a></li>
+<li><a href="#org67bee7f">3.2.4. external effects</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4705acf">6. Using python for empirical research</a>
+<li><a href="#org7ac7ae6">4. Asymmetric information</a>
 <ul>
-<li><a href="#org486697a">6.1. API's to get data</a></li>
-<li><a href="#orgf36e902">6.2. Hacker statistics</a>
+<li><a href="#org0795afb">4.1. adverse selection</a></li>
+<li><a href="#orge040385">4.2. moral hazard: optimal taxation</a></li>
+</ul>
+</li>
+<li><a href="#orge302434">5. Financial crisis</a>
 <ul>
-<li><a href="#org38f60ce">6.2.1. high school puzzles</a></li>
-<li><a href="#org02bd0ed">6.2.2. statistics</a></li>
+<li><a href="#org65cc690">5.1. Why is there a problem in financial markets?</a></li>
+<li><a href="#org54d82d1">5.2. Why these bonus contracts?</a>
+<ul>
+<li><a href="#org4aa64b3">5.2.1. moral hazard</a></li>
+<li><a href="#org4daf5d4">5.2.2. moral hazard and adverse selection</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd69c7b4">7. Regulation in health care markets</a>
+<li><a href="#org47512bb">6. Using python for empirical research</a>
 <ul>
-<li><a href="#orgfd9ea6b">7.1. simple theory</a></li>
-<li><a href="#org3353503">7.2. some data</a></li>
-<li><a href="#orge4f6c22">7.3. matplotlib</a></li>
-<li><a href="#orgc67bbcc">7.4. reversing the probability distributions</a></li>
+<li><a href="#org8c2c317">6.1. API's to get data</a></li>
+<li><a href="#orgc6f0bb6">6.2. Hacker statistics</a>
+<ul>
+<li><a href="#org6682b3b">6.2.1. high school puzzles</a></li>
+<li><a href="#org43043ca">6.2.2. statistics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org69ed322">7. Regulation in health care markets</a>
+<ul>
+<li><a href="#orgf0c34bc">7.1. simple theory</a></li>
+<li><a href="#org29cda12">7.2. some data</a></li>
+<li><a href="#org4cf0f67">7.3. matplotlib</a></li>
+<li><a href="#org8311b34">7.4. reversing the probability distributions</a></li>
 </ul>
 </li>
 </ul>
@@ -390,8 +390,8 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-orgb90cd78" class="outline-2">
-<h2 id="orgb90cd78"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgb2cbb92" class="outline-2">
+<h2 id="orgb2cbb92"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
@@ -408,8 +408,8 @@ When we go through the notes below, there will be <b>Questions</b> and <b>Assign
 </div>
 
 
-<div id="outline-container-org49fac13" class="outline-2">
-<h2 id="org49fac13"><span class="section-number-2">2</span> Python packages that we will be using</h2>
+<div id="outline-container-org9b9b926" class="outline-2">
+<h2 id="org9b9b926"><span class="section-number-2">2</span> Python packages that we will be using</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either <code>pip install</code> or <code>conda install</code>.
@@ -432,16 +432,16 @@ plt.style.use(<span style="color: #2d9574;">'seaborn'</span>)
 </div>
 </div>
 
-<div id="outline-container-org67bab89" class="outline-2">
-<h2 id="org67bab89"><span class="section-number-2">3</span> The market</h2>
+<div id="outline-container-org2e543ae" class="outline-2">
+<h2 id="org2e543ae"><span class="section-number-2">3</span> The market</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This part is based on Tirole chapters: 1, 2, 6.
 </p>
 </div>
 
-<div id="outline-container-org57f686c" class="outline-3">
-<h3 id="org57f686c"><span class="section-number-3">3.1</span> why do we love the market?</h3>
+<div id="outline-container-org89facae" class="outline-3">
+<h3 id="org89facae"><span class="section-number-3">3.1</span> why do we love the market?</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his <a href="https://en.wikipedia.org/wiki/Invisible_hand">"invisible hand"</a>. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the <a href="https://en.wikipedia.org/wiki/Revolutions_of_1989">former Soviet Union</a>.
@@ -506,14 +506,20 @@ Suppose that we have an omniscient social planner who knows the valuation of eve
 </pre>
 </div>
 
+<pre class="example">
+13464.87
+
+
+</pre>
+
 <p>
 Hence, this is the best that we can do. It gives us an upperbound on the welfare that can be achieved. Having an omniscient social planner seems unrealistic, but perhaps there is an institution that can achieve this outcome without omniscient intervention. You guessed it&#x2026;
 </p>
 </div>
 
 
-<div id="outline-container-org0c8a208" class="outline-4">
-<h4 id="org0c8a208"><span class="section-number-4">3.1.1</span> market outcome</h4>
+<div id="outline-container-org428ff9a" class="outline-4">
+<h4 id="org428ff9a"><span class="section-number-4">3.1.1</span> market outcome</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
@@ -543,6 +549,17 @@ plt.xlabel(<span style="color: #2d9574;">"$Q$"</span>)
 plt.ylabel(<span style="color: #2d9574;">"$P$"</span>)
 plt.show()
 </pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-d0XxXL.png" alt="48de63ba873b65759d43f92c5813c7a6-d0XxXL.png" />
+</p>
 </div>
 
 <p>
@@ -580,6 +597,11 @@ So, now we know the equilibrium price
 </pre>
 </div>
 
+<pre class="example">
+13464.866134617674
+
+</pre>
+
 
 <p>
 <b><b>Question</b></b> How does this welfare compare to the maximum welfare that the omniscient social planner can achieve? Recall that this level is:
@@ -597,8 +619,8 @@ So, now we know the equilibrium price
 </div>
 </div>
 
-<div id="outline-container-org7a5e762" class="outline-4">
-<h4 id="org7a5e762"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
+<div id="outline-container-orgb9d6f8b" class="outline-4">
+<h4 id="orgb9d6f8b"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Up till now we assumed that supply was inelastic: there was a given endowment of goods and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
@@ -641,6 +663,17 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-znV4gM.png" alt="48de63ba873b65759d43f92c5813c7a6-znV4gM.png" />
+</p>
+</div>
+
 
 <p>
 <b><b>Question</b></b> Define the function <code>demand_minus_supply</code> which looks
@@ -664,6 +697,11 @@ optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: demand_minus_supp
 </pre>
 </div>
 
+<pre class="example">
+array([125.27357427])
+
+</pre>
+
 <p>
 <b><b>Question</b></b> How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
 </p>
@@ -673,6 +711,11 @@ optimize.fsolve(<span style="color: #3a81c3;">lambda</span> x: demand_minus_supp
 </pre>
 </div>
 
+<pre class="example">
+array([125.27357427])
+
+</pre>
+
 <p>
 It is the same: either suppliers will consume themselves (then they would have done so above as well) or they sell; if they sell, they sell to the same agents as above (with highest valuation).
 </p>
@@ -681,16 +724,16 @@ It is the same: either suppliers will consume themselves (then they would have d
 </div>
 
 
-<div id="outline-container-orgefe01bd" class="outline-3">
-<h3 id="orgefe01bd"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
+<div id="outline-container-orgb7b32a2" class="outline-3">
+<h3 id="orgb7b32a2"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Although the results above look great, the assumptions we made, may not be realistic in every market. To illustrate, without saying so, we assumed above that the market is perfectly competitive and without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 </p>
 </div>
 
-<div id="outline-container-org2f0b4f9" class="outline-4">
-<h4 id="org2f0b4f9"><span class="section-number-4">3.2.1</span> income distribution</h4>
+<div id="outline-container-org6e565cf" class="outline-4">
+<h4 id="org6e565cf"><span class="section-number-4">3.2.1</span> income distribution</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
@@ -749,10 +792,21 @@ price is always lower because income constraint binds; agents always pay less, n
 </pre>
 </div>
 
+<pre class="example">
+[110.17332081]
+
+
+</pre>
+
 <div class="org-src-container">
 <pre class="src src-ipython">price
 </pre>
 </div>
+
+<pre class="example">
+array([125.27357427])
+
+</pre>
 
 <p>
 <b><b>Question</b></b> Calculate welfare in the market equilibrium. How does it compare to <code>max_welfare</code>?
@@ -764,6 +818,13 @@ price is always lower because income constraint binds; agents always pay less, n
 <span style="color: #3a81c3;">print</span>(max_welfare)
 </pre>
 </div>
+
+<pre class="example">
+12228.096806592494
+13464.866134617674
+
+
+</pre>
 
 
 <p>
@@ -791,13 +852,23 @@ With 100 goods and 1000 agents, only few agents buy the good. By increasing the 
 
 </pre>
 </div>
+
+<pre class="example">
+10667.846675240511
+10314.577161570669
+/Users/boone/anaconda3/lib/python3.6/site-packages/scipy/optimize/minpack.py:163: RuntimeWarning: The iteration is not making good progress, as measured by the 
+  improvement from the last ten iterations.
+  warnings.warn(msg, RuntimeWarning)
+
+
+</pre>
 </div>
 </div>
 
 
 
-<div id="outline-container-org72ba434" class="outline-4">
-<h4 id="org72ba434"><span class="section-number-4">3.2.2</span> market power</h4>
+<div id="outline-container-org5c5c1c1" class="outline-4">
+<h4 id="org5c5c1c1"><span class="section-number-4">3.2.2</span> market power</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <b><b>Warning</b></b> We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
@@ -877,7 +948,6 @@ array([125.27357427])
 </pre>
 </div>
 
-
 <div class="org-src-container">
 <pre class="src src-ipython"><span style="color: #715ab1;">range_p</span> = np.arange(120,140)
 
@@ -889,17 +959,28 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-8EdGjp.png" alt="48de63ba873b65759d43f92c5813c7a6-8EdGjp.png" />
+</p>
+</div>
+
 
 <p>
-Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing \(p\)) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as \(p>110\)) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get \((p-120)\) instead of \(p\) times quantity.
+Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing \(p\)) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as \(p>120\)) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get \((p-120)\) instead of \(p\) times quantity.
 </p>
 </div>
 </div>
 
 
 
-<div id="outline-container-org20af3af" class="outline-4">
-<h4 id="org20af3af"><span class="section-number-4">3.2.3</span> merger simulation</h4>
+<div id="outline-container-org6a9f62e" class="outline-4">
+<h4 id="org6a9f62e"><span class="section-number-4">3.2.3</span> merger simulation</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 This part is based on Tirole chapter 13.
@@ -1016,6 +1097,11 @@ optimize.fsolve(<span style="color: #3a81c3;">lambda</span> q: fixed_point_two_f
 </pre>
 </div>
 
+<pre class="example">
+array([0.33333333, 0.33333333])
+
+</pre>
+
 <p>
 A competition authority (CA) is asked to evaluate the effects
 of a merger between firms 2 and 3. Firms 2 and 3 claim that by merging
@@ -1094,6 +1180,17 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-2Nu1P7.png" alt="48de63ba873b65759d43f92c5813c7a6-2Nu1P7.png" />
+</p>
+</div>
+
 
 <p>
 <b><b>Excersise</b></b> Explain why sometimes the equilibrium price after
@@ -1133,6 +1230,22 @@ plt.ylabel(<span style="color: #2d9574;">'$P$'</span>)
 </pre>
 </div>
 
+<pre class="example">
+Text(0,0.5,'$P$')
+
+</pre>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-fcWaFf.png" alt="48de63ba873b65759d43f92c5813c7a6-fcWaFf.png" />
+</p>
+</div>
+
 
 <p>
 <b><b>Question</b></b> What does the figure above illustrate about the relation
@@ -1143,8 +1256,8 @@ associated with more competitive outcome. Would you agree with this?
 </div>
 </div>
 
-<div id="outline-container-org0b7da17" class="outline-4">
-<h4 id="org0b7da17"><span class="section-number-4">3.2.4</span> external effects</h4>
+<div id="outline-container-org67bee7f" class="outline-4">
+<h4 id="org67bee7f"><span class="section-number-4">3.2.4</span> external effects</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost \(c q\). But production leads to an external effect equal to \(\gamma q\). Hence, the social cost of production equals \((c+\gamma)q\)
@@ -1196,6 +1309,17 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-mBAZru.png" alt="48de63ba873b65759d43f92c5813c7a6-mBAZru.png" />
+</p>
+</div>
+
 
 <p>
 <b><b>Question</b></b> What is the interpretation of this result? Which policy instrument can the government use here?
@@ -1206,8 +1330,8 @@ plt.show()
 </div>
 
 
-<div id="outline-container-orgfc6a735" class="outline-2">
-<h2 id="orgfc6a735"><span class="section-number-2">4</span> Asymmetric information</h2>
+<div id="outline-container-org7ac7ae6" class="outline-2">
+<h2 id="org7ac7ae6"><span class="section-number-2">4</span> Asymmetric information</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Tirole chapter 15.
@@ -1219,15 +1343,15 @@ One of the reasons why markets (or other institutions for that matter) work less
 </div>
 
 
-<div id="outline-container-org0d02139" class="outline-3">
-<h3 id="org0d02139"><span class="section-number-3">4.1</span> adverse selection</h3>
+<div id="outline-container-org0795afb" class="outline-3">
+<h3 id="org0795afb"><span class="section-number-3">4.1</span> adverse selection</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b><b>Question</b></b> What is adverse selection?
 </p>
 
 <p>
-Consider an economy with <code>number_of_agents</code> agents. Each agent has an endowment/income equal to <code>income</code> and faces a potential loss of the size <code>cost</code>. Agents differ in the probability \(\pi\) of this loss. We randomly draw 100 values for \(\pi\) assuming it is uniformly distributed on \([0,1]\).
+Consider an economy with <code>number_of_agents</code> agents. Each agent has an endowment/income equal to <code>income</code> and faces a potential loss of the size <code>cost</code>. Agents differ in the probability \(\pi\) of this loss. We randomly draw 50 values for \(\pi\) assuming it is uniformly distributed on \([0,1]\).
 </p>
 
 <p>
@@ -1341,12 +1465,23 @@ plt.legend()
 plt.show()
 </pre>
 </div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-cxp0iX.png" alt="48de63ba873b65759d43f92c5813c7a6-cxp0iX.png" />
+</p>
+</div>
 </div>
 </div>
 
 
-<div id="outline-container-org93d8f0f" class="outline-3">
-<h3 id="org93d8f0f"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
+<div id="outline-container-orge040385" class="outline-3">
+<h3 id="orge040385"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
@@ -1431,6 +1566,17 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-yDPPAz.png" alt="48de63ba873b65759d43f92c5813c7a6-yDPPAz.png" />
+</p>
+</div>
+
 <p>
 <b><b>Question</b></b> What happens to the optimal tax rate as \(\rho<1\) falls?
 </p>
@@ -1444,6 +1590,17 @@ plt.ylabel(<span style="color: #2d9574;">'$W$'</span>)
 plt.legend()
 plt.show()
 </pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-oycrTw.png" alt="48de63ba873b65759d43f92c5813c7a6-oycrTw.png" />
+</p>
 </div>
 
 
@@ -1469,6 +1626,17 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-Ro9QuC.png" alt="48de63ba873b65759d43f92c5813c7a6-Ro9QuC.png" />
+</p>
+</div>
+
 
 <p>
 There is no effect of \(g\) on \(\tau\). The planner already maximizes the utility of the person who is worse off (disregarding everyone else's utility). An increase in \(g\) does not affect this trade off and hence there is no effect on \(\tau\).
@@ -1478,8 +1646,8 @@ There is no effect of \(g\) on \(\tau\). The planner already maximizes the utili
 </div>
 
 
-<div id="outline-container-org025ea78" class="outline-2">
-<h2 id="org025ea78"><span class="section-number-2">5</span> Financial crisis</h2>
+<div id="outline-container-orge302434" class="outline-2">
+<h2 id="orge302434"><span class="section-number-2">5</span> Financial crisis</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Tirole chapters: 11, 12
@@ -1491,8 +1659,8 @@ We will look at two aspects of the financial crisis. First, why are financial ma
 </div>
 
 
-<div id="outline-container-org5a7b878" class="outline-3">
-<h3 id="org5a7b878"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
+<div id="outline-container-org65cc690" class="outline-3">
+<h3 id="org65cc690"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The first problem in financial (and other) markets is limited liability. When banks go bankrupt they "only" loose their equity even if the debts that they accumulated exceed their equity. We run some simulations to show that this leads to banks taking excessive risks from a social point of view.
@@ -1509,7 +1677,7 @@ Let \(x\) denote an investment opportunity: \(x\) is a vector with dimension 100
 </div>
 
 <p>
-<b><b>Question</b></b> Plot the function <code>profit</code> for the case where ~equity~=10 and \(x\) is a scalar.
+<b><b>Question</b></b> Plot the function <code>profit</code> for the case where <code>equity</code> =10 and \(x\) is a scalar.
 </p>
 
 <div class="org-src-container">
@@ -1519,6 +1687,17 @@ plt.xlabel(<span style="color: #2d9574;">'$x$'</span>)
 plt.ylabel(<span style="color: #2d9574;">'profit'</span>)
 plt.show()
 </pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-1xFx9T.png" alt="48de63ba873b65759d43f92c5813c7a6-1xFx9T.png" />
+</p>
 </div>
 
 
@@ -1545,6 +1724,11 @@ Note that although we think of \(x\) as a vector (and we will use this in a seco
 </pre>
 </div>
 
+<pre class="example">
+-13.147758605065489
+
+</pre>
+
 <p>
 <b><b>Question</b></b> Calculate the expected profits of the <code>vector_returns</code>. Compare the outcome to the one above. What is the interpretation?
 </p>
@@ -1553,6 +1737,11 @@ Note that although we think of \(x\) as a vector (and we will use this in a seco
 <pre class="src src-ipython">profit(vector_returns)
 </pre>
 </div>
+
+<pre class="example">
+32.991619442843046
+
+</pre>
 
 
 <p>
@@ -1589,16 +1778,16 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-orga7c818c" class="outline-3">
-<h3 id="orga7c818c"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
+<div id="outline-container-org54d82d1" class="outline-3">
+<h3 id="org54d82d1"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Bonus contracts are generally a reaction to <a href="#orgfc6a735">asymmetric information</a>. Let's first consider moral hazard.
+Bonus contracts are generally a reaction to <a href="#org7ac7ae6">asymmetric information</a>. Let's first consider moral hazard.
 </p>
 </div>
 
-<div id="outline-container-org87f71f9" class="outline-4">
-<h4 id="org87f71f9"><span class="section-number-4">5.2.1</span> moral hazard</h4>
+<div id="outline-container-org4aa64b3" class="outline-4">
+<h4 id="org4aa64b3"><span class="section-number-4">5.2.1</span> moral hazard</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 How do your employees choose their investment opportunities? There are a number of things that you may worry about. Suppose you would pay everyone a fixed salary that does not depend on performance. Then your employees may randomly pick an investment opportunity without analyzing whether this is the best opportunity. The rest of the time, they simply enjoy the sun. Or they may invest your money in the new webshop of their brother in law. This may increase their status in their family but does not necessarily boost your profits. 
@@ -1613,7 +1802,7 @@ Since it is hard for banks to monitor exactly what investment opportunities thei
 </p>
 
 <p>
-We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#org93d8f0f">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
+We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#orge040385">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
 </p>
 
 <p>
@@ -1695,6 +1884,22 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+[&lt;matplotlib.lines.Line2D at 0x1c1dc57a58&gt;]
+
+</pre>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-le6soh.png" alt="48de63ba873b65759d43f92c5813c7a6-le6soh.png" />
+</p>
+</div>
+
 
 <p>
 <b>Question</b> Do we see that as competition for talented employees intensifies, thereby increasing their outside options, banks tend to offer them more risky contracts? Why (not)?
@@ -1741,8 +1946,8 @@ What is the optimal \(q\) for a trader with \(\alpha=0.5\)?
 </div>
 </div>
 
-<div id="outline-container-org9c1c687" class="outline-4">
-<h4 id="org9c1c687"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
+<div id="outline-container-org4daf5d4" class="outline-4">
+<h4 id="org4daf5d4"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Suppose now that there are two types of traders: one talented and the other less so. The bank cannot distinguish these types by just observing them. They may have the same education degrees and work experience. But some have a "knack" for observing opportunities and taking risks, which the others lack.
@@ -1860,16 +2065,16 @@ In other words, part of the higher remuneration that is paid to top traders "lea
 </div>
 </div>
 
-<div id="outline-container-org4705acf" class="outline-2">
-<h2 id="org4705acf"><span class="section-number-2">6</span> Using python for empirical research</h2>
+<div id="outline-container-org47512bb" class="outline-2">
+<h2 id="org47512bb"><span class="section-number-2">6</span> Using python for empirical research</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 We consider two ways in which python can be useful for empirical research. First, the use of API's to download datasets. Second, the use of hacker statistics.
 </p>
 </div>
 
-<div id="outline-container-org486697a" class="outline-3">
-<h3 id="org486697a"><span class="section-number-3">6.1</span> API's to get data</h3>
+<div id="outline-container-org8c2c317" class="outline-3">
+<h3 id="org8c2c317"><span class="section-number-3">6.1</span> API's to get data</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
@@ -2005,6 +2210,109 @@ df_wb.head()
 </pre>
 </div>
 
+<pre class="example">
+        country       date  GDP_per_head
+15302  Zimbabwe 1969-01-01           NaN
+15303  Zimbabwe 1968-01-01           NaN
+15304  Zimbabwe 1967-01-01           NaN
+15305  Zimbabwe 1966-01-01           NaN
+15306  Zimbabwe 1965-01-01           NaN
+15307  Zimbabwe 1964-01-01           NaN
+15308  Zimbabwe 1963-01-01           NaN
+15309  Zimbabwe 1962-01-01           NaN
+15310  Zimbabwe 1961-01-01           NaN
+15311  Zimbabwe 1960-01-01           NaN
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date</th>
+      <th>GDP_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15302</th>
+      <td>Zimbabwe</td>
+      <td>1969-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15303</th>
+      <td>Zimbabwe</td>
+      <td>1968-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15304</th>
+      <td>Zimbabwe</td>
+      <td>1967-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15305</th>
+      <td>Zimbabwe</td>
+      <td>1966-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15306</th>
+      <td>Zimbabwe</td>
+      <td>1965-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15307</th>
+      <td>Zimbabwe</td>
+      <td>1964-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15308</th>
+      <td>Zimbabwe</td>
+      <td>1963-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15309</th>
+      <td>Zimbabwe</td>
+      <td>1962-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15310</th>
+      <td>Zimbabwe</td>
+      <td>1961-01-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15311</th>
+      <td>Zimbabwe</td>
+      <td>1960-01-01</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <p>
 If you like the dataframe that you have downloaded from the web, you can save it with pandas <code>to_csv</code>. We save the data in the subdirectory "data".
 </p>
@@ -2033,6 +2341,74 @@ Let's compare the distribution of gdp per head in 1990 with the distribution in 
 </pre>
 </div>
 
+<pre class="example">
+                            country       date  GDP_per_head
+27                       Arab World 1990-01-01  10450.208542
+85           Caribbean small states 1990-01-01   9387.693760
+143  Central Europe and the Baltics 1990-01-01  12257.927436
+201      Early-demographic dividend 1990-01-01   4350.079341
+259             East Asia &amp; Pacific 1990-01-01   4964.741818
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date</th>
+      <th>GDP_per_head</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>27</th>
+      <td>Arab World</td>
+      <td>1990-01-01</td>
+      <td>10450.208542</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>Caribbean small states</td>
+      <td>1990-01-01</td>
+      <td>9387.693760</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>Central Europe and the Baltics</td>
+      <td>1990-01-01</td>
+      <td>12257.927436</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Early-demographic dividend</td>
+      <td>1990-01-01</td>
+      <td>4350.079341</td>
+    </tr>
+    <tr>
+      <th>259</th>
+      <td>East Asia &amp; Pacific</td>
+      <td>1990-01-01</td>
+      <td>4964.741818</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <p>
 Both dataframes have a column <code>country</code>. Hence, we can merge the dataframes on this column. There are a number of <code>how</code> methods, here we use 'inner' which means that only countries that are present in both datasets will be in <code>df_merged</code>. To distinguish the columns, like <code>GDP_per_head</code> from the two dataframes, we can provide suffixes. All columns from <code>df_1990</code> (except for <code>country</code>) will be suffixed with '_1990'; and similarly for 2017.
 </p>
@@ -2052,6 +2428,93 @@ Both dataframes have a column <code>country</code>. Hence, we can merge the data
 </pre>
 </div>
 
+<pre class="example">
+                          country  date_1990  GDP_per_head_1990  date_2017  \
+0                      Arab World 1990-01-01       10450.208542 2017-01-01   
+1          Caribbean small states 1990-01-01        9387.693760 2017-01-01   
+2  Central Europe and the Baltics 1990-01-01       12257.927436 2017-01-01   
+3      Early-demographic dividend 1990-01-01        4350.079341 2017-01-01   
+4             East Asia &amp; Pacific 1990-01-01        4964.741818 2017-01-01   
+
+   GDP_per_head_2017  
+0       15413.791998  
+1       14356.372119  
+2       26499.126110  
+3        8857.519723  
+4       16525.394471  
+
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>date_1990</th>
+      <th>GDP_per_head_1990</th>
+      <th>date_2017</th>
+      <th>GDP_per_head_2017</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Arab World</td>
+      <td>1990-01-01</td>
+      <td>10450.208542</td>
+      <td>2017-01-01</td>
+      <td>15413.791998</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Caribbean small states</td>
+      <td>1990-01-01</td>
+      <td>9387.693760</td>
+      <td>2017-01-01</td>
+      <td>14356.372119</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Central Europe and the Baltics</td>
+      <td>1990-01-01</td>
+      <td>12257.927436</td>
+      <td>2017-01-01</td>
+      <td>26499.126110</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Early-demographic dividend</td>
+      <td>1990-01-01</td>
+      <td>4350.079341</td>
+      <td>2017-01-01</td>
+      <td>8857.519723</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>East Asia &amp; Pacific</td>
+      <td>1990-01-01</td>
+      <td>4964.741818</td>
+      <td>2017-01-01</td>
+      <td>16525.394471</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <p>
 <b>Question</b> Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
 </p>
@@ -2064,6 +2527,17 @@ plt.xlabel(<span style="color: #2d9574;">'gdp per head in 1990'</span>)
 plt.ylabel(<span style="color: #2d9574;">'gdp per head in 2017'</span>)
 plt.show()
 </pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-hWZXkH.png" alt="48de63ba873b65759d43f92c5813c7a6-hWZXkH.png" />
+</p>
 </div>
 
 
@@ -2100,8 +2574,8 @@ show(plot)
 </div>
 
 
-<div id="outline-container-orgf36e902" class="outline-3">
-<h3 id="orgf36e902"><span class="section-number-3">6.2</span> Hacker statistics</h3>
+<div id="outline-container-orgc6f0bb6" class="outline-3">
+<h3 id="orgc6f0bb6"><span class="section-number-3">6.2</span> Hacker statistics</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 In the last chapter of the Datacamp course <a href="https://www.datacamp.com/courses/intermediate-python-for-data-science">Intermediate Python for Data Science</a> you have seen hacker statistics. The idea is to simulate a random process, say, 10,000 times. Then if you want to know the probability that a certain condition is satisfied (say, number of heads bigger than 10 when you throw a coin 15 times), you calculate the number of outcomes where this condition is satisfied and divide it by 10,000.
@@ -2112,8 +2586,8 @@ If you can program, you can recap all the statistics that you were taught (and p
 </p>
 </div>
 
-<div id="outline-container-org38f60ce" class="outline-4">
-<h4 id="org38f60ce"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
+<div id="outline-container-org6682b3b" class="outline-4">
+<h4 id="org6682b3b"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 Remember when you did statistics at high school? "In a dark cupboard there are 10 red and 20 white socks&#x2026;", "you throw dice 20 times and &#x2026;" etc.
@@ -2160,7 +2634,6 @@ In terms of python, you need to use your knowledge of "slicing" lists.
 </pre>
 </div>
 
-
 <p>
 <b>Question</b> Explain what the following code block does:
 </p>
@@ -2193,6 +2666,23 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+9.94672
+
+
+</pre>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-hEGe96.png" alt="48de63ba873b65759d43f92c5813c7a6-hEGe96.png" />
+</p>
+</div>
+
 
 <p>
 <b>Question</b> Do the same as the previous question for experiment 2.
@@ -2210,6 +2700,23 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+8.03
+
+
+</pre>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-vmZ1OE.png" alt="48de63ba873b65759d43f92c5813c7a6-vmZ1OE.png" />
+</p>
+</div>
+
 
 <p>
 <b>Question</b> Which experiment leads to the lower waiting time in expectation? Do you have an intuition?
@@ -2217,8 +2724,8 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org02bd0ed" class="outline-4">
-<h4 id="org02bd0ed"><span class="section-number-4">6.2.2</span> statistics</h4>
+<div id="outline-container-org43043ca" class="outline-4">
+<h4 id="org43043ca"><span class="section-number-4">6.2.2</span> statistics</h4>
 <div class="outline-text-4" id="text-6-2-2">
 <p>
 Let's start simple. Suppose we have two normally distributed variables \(x,y\) with \(\mu_x = 10, \mu_y = 20, \sigma_x = 3, \sigma_y =4\). We are interested in the variable \(z = x+y\). Suppose you forgot what you know about the sum of normal distributions and wondered what the expectation and standard deviation is of \(z\).
@@ -2237,6 +2744,13 @@ Let's start simple. Suppose we have two normally distributed variables \(x,y\) w
 </pre>
 </div>
 
+<pre class="example">
+mean z: 29.94
+std. z: 4.98
+
+
+</pre>
+
 <p>
 And, indeed, we know that \(\mu_z = \mu_x + \mu_y\) and \(\sigma_z = \sqrt{\sigma_x^2 + \sigma_y^2}\)
 </p>
@@ -2253,6 +2767,13 @@ And, indeed, we know that \(\mu_z = \mu_x + \mu_y\) and \(\sigma_z = \sqrt{\sigm
 <span style="color: #3a81c3;">print</span>(<span style="color: #2d9574;">"std. z: {:.2f}"</span>.<span style="color: #3a81c3;">format</span>(np.std(z)))
 </pre>
 </div>
+
+<pre class="example">
+mean z: -0.02
+std. z: 5.48
+
+
+</pre>
 
 <p>
 Many students find it to hard to think of the distribution of an average or the distribution of a standard deviation.
@@ -2354,6 +2875,13 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+blue prob. higher than 1015: 0.300
+green prob. higher than 1015: 0.060
+
+
+</pre>
+
 
 <p>
 <b>Question</b> Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
@@ -2365,10 +2893,26 @@ plt.show()
 </pre>
 </div>
 
+<pre class="example">
+0.02
+
+</pre>
+
 <div class="org-src-container">
 <pre class="src src-ipython">plt.hist(moments(100)[0],bins=30,density=<span style="color: #4e3163;">True</span>)
 plt.vlines(1020,0,0.06)
 </pre>
+</div>
+
+<pre class="example">
+&lt;Figure size 432x288 with 1 Axes&gt;
+
+</pre>
+
+
+<div class="figure">
+<p><img src="obipy-resources/48de63ba873b65759d43f92c5813c7a6-0Mqr8E.png" alt="48de63ba873b65759d43f92c5813c7a6-0Mqr8E.png" />
+</p>
 </div>
 
 
@@ -2381,8 +2925,8 @@ If you like this approach, see <a href="https://www.youtube.com/watch?time_conti
 </div>
 
 
-<div id="outline-container-orgd69c7b4" class="outline-2">
-<h2 id="orgd69c7b4"><span class="section-number-2">7</span> Regulation in health care markets</h2>
+<div id="outline-container-org69ed322" class="outline-2">
+<h2 id="org69ed322"><span class="section-number-2">7</span> Regulation in health care markets</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Tirole: chapters 15, 17
@@ -2407,8 +2951,8 @@ Some institutional background:
 </ul>
 </div>
 
-<div id="outline-container-orgfd9ea6b" class="outline-3">
-<h3 id="orgfd9ea6b"><span class="section-number-3">7.1</span> simple theory</h3>
+<div id="outline-container-orgf0c34bc" class="outline-3">
+<h3 id="orgf0c34bc"><span class="section-number-3">7.1</span> simple theory</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Consider the following simple theoretical framework. People get
@@ -2459,8 +3003,8 @@ plt.show()
 
 
 
-<div id="outline-container-org3353503" class="outline-3">
-<h3 id="org3353503"><span class="section-number-3">7.2</span> some data</h3>
+<div id="outline-container-org29cda12" class="outline-3">
+<h3 id="org29cda12"><span class="section-number-3">7.2</span> some data</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 To find the effect of an increase in deductible, we compare health care expenditures in the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro). We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. To use the code below, download these csv-files into the sub-directory "data" (i.e. "data" is sub-directory of the directory in which this notebook resides). 
@@ -2549,8 +3093,8 @@ The outcome of this <code>groupby</code> we plot below.
 </div>
 
 
-<div id="outline-container-orge4f6c22" class="outline-3">
-<h3 id="orge4f6c22"><span class="section-number-3">7.3</span> matplotlib</h3>
+<div id="outline-container-org4cf0f67" class="outline-3">
+<h3 id="org4cf0f67"><span class="section-number-3">7.3</span> matplotlib</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 We plot the distribution of health care expenditure per head with age for males and females.
@@ -2589,8 +3133,8 @@ ax.legend([<span style="color: #2d9574;">'male'</span>,<span style="color: #2d95
 </div>
 </div>
 
-<div id="outline-container-orgc67bbcc" class="outline-3">
-<h3 id="orgc67bbcc"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
+<div id="outline-container-org8311b34" class="outline-3">
+<h3 id="org8311b34"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from. To illustrate this, consider the distribution of (average) costs for 30 year old males. Since, health care costs have a skewed distribution, we actually plot the distribution of log costs.
@@ -2758,12 +3302,17 @@ No these are the distributions of the parameters \(\mu_{17,19}\). Not the indivi
 </pre>
 </div>
 
+<pre class="example">
+0.004875
+
+</pre>
+
 <p>
 One explanation for the figure is that 17 year olds do not face a deductible, while 19 year olds do. But an other explanation is that health care expenditure simply differs by age (irrespective of a deductible). In order to control for the age effect, we re-do the analysis above for 2011. Also in 2011 we can take the difference in means for 17 and 19 year olds. If there is (only) a biological reason for the different expenditures between 17 and 19 year olds, the difference in 2011 should be the same as the difference in 2014. 
 </p>
 
 <p>
-If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#orgfd9ea6b">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
+If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#orgf0c34bc">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
 </p>
 
 <p>
@@ -2873,6 +3422,11 @@ plt.legend()
 </pre>
 </div>
 
+<pre class="example">
+0.0
+
+</pre>
+
 <p>
 Hence we find that government regulation in terms of a deductible has an effect on health care expenditures. People spend less on health care if they face a higher deductible.
 </p>
@@ -2910,7 +3464,7 @@ A simple introduction to Bayesian estimation with python can be found <a href="h
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Boone</p>
-<p class="date">Created: 2018-09-22 Sat 13:59</p>
+<p class="date">Created: 2018-09-29 Sat 15:14</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

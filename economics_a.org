@@ -105,7 +105,7 @@ Suppose that we have an omniscient social planner who knows the valuation of eve
 
 **Question** Calculate the total welfare that this planner can achieve. Denote this value ~max_welfare~.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 max_welfare = np.sum(valuations[:number_of_goods])
 print("{0:.2f}".format(max_welfare))
 #+END_SRC
@@ -127,7 +127,7 @@ Now we compare the maximum welfare that a planner can achieve with the market ou
 
 **Question** Define a function ~demand(p,valuations)~ which has as arguments a price $p$ and a vector of agents' valuations. This function returns the number of agents who are willing to buy the product at price $p$. Since each agent who buys, buys exactly one unit in our set up, this function returns demand at each price.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def demand(p,valuations):
     return sum(valuations>p)
 #+END_SRC
@@ -139,7 +139,7 @@ def demand(p,valuations):
 
 **Question** Using ~matplotlib~ plot (fixed) supply and the function ~demand~ against price, where we maintain the economic convention of having quantity on the horizontal axis and price on the vertical axis.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_p = np.arange(60,150)
 
 plt.plot([demand(p,valuations) for p in range_p],range_p, label = "demand")
@@ -185,7 +185,7 @@ So, now we know the equilibrium price
 **Question** Calculate total welfare at this equilibrium price.
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 np.sum(valuations[:demand(price,valuations)])
 #+END_SRC
 
@@ -230,7 +230,7 @@ valuations_demand = valuations[number_of_goods:]
 
 **Question** Define a function ~supply~ which depends on the price and the valuations of the suppliers.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def supply(p,valuations):
     return sum(valuations<p)
 #+END_SRC
@@ -242,7 +242,7 @@ def supply(p,valuations):
 
 **Question** Use ~matplotlib~ to plot demand and supply in a single figure. 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_p = np.arange(60,150)
 
 plt.plot([demand(p,valuations_demand) for p in range_p],range_p, label = "demand")
@@ -271,7 +271,7 @@ the valuations of people supplying it.
 
 Then use ~fsolve~ to find the equilibrium price.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def demand_minus_supply(p,valuations_demand,valuations_supply):
     return demand(p,valuations_demand)-supply(p,valuations_supply)
 
@@ -290,7 +290,7 @@ optimize.fsolve(lambda x: demand_minus_supply(x,valuations_demand,valuations_sup
 
 **Question** How does the equilibrium price here compare to the equilibrium price above with exogenous supply? Is the price here higher? Why (not)? Is welfare higher here than above?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 price
 #+END_SRC
 
@@ -348,7 +348,7 @@ def demand_2(p,valuations,incomes):
 
 **Question** Define the function ~excess_demand_2~ which depends on $p$, agents' valuations, incomes and number of goods (which we assume to be inelastically supplied again).
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def excess_demand_2(p,valuations,incomes,number_of_goods):
     return demand_2(p,valuations,incomes)-number_of_goods
 #+END_SRC
@@ -364,7 +364,7 @@ def excess_demand_2(p,valuations,incomes,number_of_goods):
   price is always lower because income constraint binds; agents always pay less, never more
 :END:
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 price_2 = optimize.fsolve(lambda x: excess_demand_2(x,valuations,incomes,number_of_goods),120)
 print(price_2)
 #+END_SRC
@@ -377,7 +377,7 @@ print(price_2)
 : 
 :END:
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 price
 #+END_SRC
 
@@ -390,7 +390,7 @@ price
 
 **Question** Calculate welfare in the market equilibrium. How does it compare to ~max_welfare~?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 welfare_2 = np.sum(afford(price_2,incomes)*wtp(price_2,valuations)*valuations)
 print(welfare_2)
 print(max_welfare)
@@ -412,7 +412,7 @@ print(max_welfare)
 With 100 goods and 1000 agents, only few agents buy the good. By increasing the variance, some high value agents may actually get a higher income due to increased inequality. This can increase welfare. If we have 100 goods and 150 agents, the last agent to buy has income below the mean (100). Increasing inequality will tend to reduce this agent's income. This reduces the equilibrium price and hence welfare.
 :END:
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 number_of_agents_2 = 150
 valuations_2 = sorted(pm.Normal.dist(100,20).random(size=number_of_agents_2),reverse = True)
 
@@ -507,7 +507,7 @@ price
 **Assignment** Calculate the profit maximizing price in this case.
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def profit(p,valuations):
     return p*min(demand(p,valuations),number_of_goods)
 #+END_SRC
@@ -518,7 +518,7 @@ def profit(p,valuations):
 :END:
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_p = np.arange(120,140)
 
 plt.plot(range_p, [profit(p,valuations) for p in range_p], label = "profit")
@@ -540,7 +540,7 @@ plt.show()
 
 
 :ANSWER:
-Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing $p$) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as $p>110$) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get $(p-120)$ instead of $p$ times quantity.
+Is it possible that monop. price equals perf. compet. price? yes it is, if loss at the margin (from increasing $p$) exceeds the gain of the price increase. In the model we can change this by introducing a production cost equal to, say, 120. This cost does not affect the perfect compet. outcome (as $p>120$) but by reducing the margin, the monopolist willing to sell less in order to charge a higher price. In the function profit, we get $(p-120)$ instead of $p$ times quantity.
 :END:
 
 
@@ -638,7 +638,7 @@ it derives the equilibrium output levels for a duopoly (two firms).
 Test this function by showing that each of the two firms produces
 0.3333 in case both firms have zero costs; use ~fsolve~ as above.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def fixed_point_two_firms(vector_q,vector_c):
     return [vector_q[0]-reaction(vector_q[1],vector_c[0]),
             vector_q[1]-reaction(vector_q[0],vector_c[1])]
@@ -688,7 +688,7 @@ three columns: ~c_merged_firm~, ~output_non_merging_firm~,
 ~output_merged_firm~ containing resp. the cost level of the merged firm,
 the output level of firm 1 and the output level of firm 2.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger, 
                                 'output_non_merging_firm': q1_after_merger,
                                 'output_merged_firm': q2_after_merger})
@@ -703,7 +703,7 @@ df_after_merger = pd.DataFrame({'c_merged_firm': c_after_merger,
 equilibrium output on the market, ~Q~, equilibrium price, ~P~ and the
 Herfindahl index, ~H~.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 df_after_merger['Q'] = df_after_merger.output_non_merging_firm + df_after_merger.output_merged_firm
 df_after_merger['P'] = p(df_after_merger.Q)
 df_after_merger['H'] = (df_after_merger.output_non_merging_firm/df_after_merger.Q)**2+(df_after_merger.output_merged_firm/df_after_merger.Q)**2
@@ -722,7 +722,7 @@ the merger ~P0~. Label the horizontal axis with $P$.
 make this graph (e.g use google to find these functions); but feel free
 to use something else]
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 plt.hist(df_after_merger.P, bins = 30, density = 1, label = 'after merger')
 plt.vlines(P0,0,25, color = 'red', label = 'before merger')
 plt.legend()
@@ -765,7 +765,7 @@ straightforward for $(H,P)$ after the merger as both values are in the
 dataframe. Add in another color, the pre-merger combination ~(H0,P0)~
 that we calculated above.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 plt.scatter(df_after_merger.H,df_after_merger.P,label='after merger')
 plt.scatter(H0,P0,label='pre merger')
 plt.legend()
@@ -830,7 +830,7 @@ def welfare_e(p,valuations):
 **Question** Show graphically that the welfare maximizing price exceeds the profit maximizing price.
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_p = np.arange(60,150)
 
 plt.plot(range_p, [profit_c(p,valuations) for p in range_p], label = "profit")
@@ -866,7 +866,7 @@ One of the reasons why markets (or other institutions for that matter) work less
 
 **Question** What is adverse selection?
 
-Consider an economy with ~number_of_agents~ agents. Each agent has an endowment/income equal to ~income~ and faces a potential loss of the size ~cost~. Agents differ in the probability $\pi$ of this loss. We randomly draw 100 values for $\pi$ assuming it is uniformly distributed on $[0,1]$.
+Consider an economy with ~number_of_agents~ agents. Each agent has an endowment/income equal to ~income~ and faces a potential loss of the size ~cost~. Agents differ in the probability $\pi$ of this loss. We randomly draw 50 values for $\pi$ assuming it is uniformly distributed on $[0,1]$.
 
 Further, agents have a utility function of the form $u(x)=x^{\rho}$.
 
@@ -899,7 +899,7 @@ u(\text{income}-\sigma) > \pi u(\text{income}-\text{cost}) + (1-\pi) u(\text{inc
 
 **Question** Define a function ~insurance_demand~ that returns the number of agents buying insurance as a function of the premium $\sigma$.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def insurance_demand(σ):
     return np.sum(u(income-σ)-(π*u(income-cost)+(1-π)*u(income))>0)
 #+END_SRC
@@ -957,7 +957,7 @@ plt.show()
 
 **Assignment** Show graphically the effect of an increase in income on the market outcome. Does the inefficiency increase or decrease with income? Why?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 income = 2
 
 def insurance_demand(σ):
@@ -1040,7 +1040,7 @@ def Welfare(τ,ρ):
 
 **Question** Plot ~Welfare~ as a function of $\tau$ for $\rho=1$. What is the welfare maximizing tax rate? Why?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_tax = np.arange(0,1.1,0.1)
 plt.plot(range_tax,[Welfare(τ,1) for τ in range_tax])
 plt.xlabel('$\\tau$')
@@ -1060,7 +1060,7 @@ plt.show()
 
 **Question** What happens to the optimal tax rate as $\rho<1$ falls?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_tax = np.arange(0,1.1,0.1)
 plt.plot(range_tax,[Welfare(τ,-1.5) for τ in range_tax], label="$\\rho=-1.5$")
 plt.plot(range_tax,[Welfare(τ,-1.9) for τ in range_tax], label="$\\rho=-1.9$")
@@ -1084,7 +1084,7 @@ plt.show()
 
 **Assignment** Redefine the function ~Welfare~ above such that it uses [[https://en.wikipedia.org/wiki/A_Theory_of_Justice][Rawls' criterion]] of maximizing the utility of the person who is worse off in society. Further, suppose that the government needs $g$ per head to finance a public good. What is the effect of $g$ on the optimal marginal tax rate?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def Welfare_g(τ,g):
     τ_0 = np.mean([τ*effort(c,τ) for c in effort_costs])-g
     return np.min([((1-τ)*effort(c,τ)+τ_0 - c*effort(c,τ)**2) for c in effort_costs])
@@ -1139,9 +1139,9 @@ def profit(x,equity=0):
 # Out[1]:
 :END:
 
-**Question** Plot the function ~profit~ for the case where ~equity~=10 and $x$ is a scalar.
+**Question** Plot the function ~profit~ for the case where ~equity~ =10 and $x$ is a scalar.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 x_values = np.arange(-40,20,0.1)
 plt.plot(x_values,[profit(x,10) for x in x_values])
 plt.xlabel('$x$')
@@ -1165,7 +1165,7 @@ Note that although we think of $x$ as a vector (and we will use this in a second
 
 **Question** Create an investment opportunity ~vector_returns~ where the returns are normally distributed with mean $-10$ and standard deviation 100. As mentioned above, we assume that there are 1000 states of the world.
 
-#+BEGIN_SRC ipython :exports code  
+#+BEGIN_SRC ipython   
 vector_returns = pm.Normal.dist(-10,100).random(size=1000)
 #+END_SRC
 
@@ -1176,7 +1176,7 @@ vector_returns = pm.Normal.dist(-10,100).random(size=1000)
 
 **Question** Calculate the expected (social) return from this investment ~vector_returns~.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 np.mean(vector_returns)
 #+END_SRC
 
@@ -1189,7 +1189,7 @@ np.mean(vector_returns)
 
 **Question** Calculate the expected profits of the ~vector_returns~. Compare the outcome to the one above. What is the interpretation?
 
-#+BEGIN_SRC ipython  :exports code
+#+BEGIN_SRC ipython  
 profit(vector_returns)
 #+END_SRC
 
@@ -1270,7 +1270,7 @@ def q_b(q,ability):
 
 **Question** Define a function ~q_choice~ of the wage vector $w$ and ~ability~ of the employee. [hint: the vector $w$ only needs to have 2 dimensions]
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def q_choice(w,ability): # w = [w_a,w_g]
     choice = optimize.fminbound(lambda x: -(q_g(x,ability)*w[1] + x*w[0]),0,1,disp=0) #note the minus sign in front of the lambda function
     return choice
@@ -1309,7 +1309,7 @@ def contract(ability,outside_option):
 
 *Question* Plot the optimal $q$ for the bank as a function of the outside option of an employee with ~ability~ equal to $0.5$. Do this for outside options between 0 and 4.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 range_outside_options = np.arange(0,4.01,0.01)
 plt.plot(range_outside_options, [contract(0.5,o) for o in range_outside_options])
 plt.show()
@@ -1572,7 +1572,7 @@ df_wb.head()
 
 *Question* What do the last 10 rows look like?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 df_wb.tail(10)
 #+END_SRC
 
@@ -1710,7 +1710,7 @@ df_2017=df_wb[df_wb['date']=='2017-01-01']
 
 *Question* What does the dataframe ~df_1990~ look like?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 df_1990.head()
 #+END_SRC
 
@@ -1801,7 +1801,7 @@ df_merged = pd.merge(df_1990, df_2017, on=['country'], suffixes=['_1990', '_2017
 
 *Question* To see how the suffixes work, check what ~df_merged~ looks like.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 df_merged.head()
 #+END_SRC
 
@@ -1900,7 +1900,7 @@ df_merged.head()
 *Question* Plot GPD per head in 1990 against GDP per head in 2017. What do you conclude about the development in inequality in these 27 years?
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 plt.scatter(df_merged['GDP_per_head_1990'],df_merged['GDP_per_head_2017'])
 plt.plot(np.arange(0,100000),np.arange(0,100000))
 plt.xlabel('gdp per head in 1990')
@@ -1975,7 +1975,7 @@ In expectation, which experiment is over sooner (i.e. takes less throws to see t
 In terms of python, you need to use your knowledge of "slicing" lists.
 
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def check(coin_throws, pattern):
     n = len(pattern)
     return (coin_throws[-n:] == pattern)
@@ -2008,7 +2008,7 @@ def waiting_time(pattern):
 
 *Question* Create an empty list ~waiting_times~. Then run the first experiment 50,000 times. Record the waiting time for the pattern ~['H','T','H']~ to appear --for each of these 50,000 experiments-- in the list ~wating_times~. Calculate the average waiting time and give a histogram for the waiting times.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 waiting_times=[]
 
 [waiting_times.append(waiting_time(['H','T','H'])) for i in range(50000)]
@@ -2035,7 +2035,7 @@ plt.show()
 
 *Question* Do the same as the previous question for experiment 2.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 waiting_times=[]
 
 [waiting_times.append(waiting_time(['H','T','T'])) for i in range(50000)]
@@ -2068,7 +2068,7 @@ Let's start simple. Suppose we have two normally distributed variables $x,y$ wit
 
 *Question* Simulate $z$ and calculate its mean and standard deviation.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 x = pm.Normal.dist(10,3).random(size=10000)
 y = pm.Normal.dist(20,4).random(size=10000)
 z = x+y
@@ -2089,7 +2089,7 @@ And, indeed, we know that $\mu_z = \mu_x + \mu_y$ and $\sigma_z = \sqrt{\sigma_x
 
 *Question* Let $x$ be normally distributed with $\mu_x=0,\sigma_x=1$ and $y$ has a poisson distribution with $\lambda_y=5$. What is the expectation and standard deviation of $z=xy$?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 x = pm.Normal.dist(0,1).random(size=10000)
 y = pm.Poisson.dist(5).random(size=10000)
 z = x*y
@@ -2129,7 +2129,7 @@ def moments(n):
 
 *Question* Redefine the function ~my_function(n)~ such that it goes through the points in the figure below. [hint: you do not need to fit a function, just use your knowledge of statistics]
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 def my_function(n):
     return sd/np.sqrt(n)
 #+END_SRC
@@ -2196,7 +2196,7 @@ plt.show()
 
 *Question* Compare the probability that the green, blue distribution resp. exceeds 1015.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 print("blue prob. higher than 1015: {:.3f}".format(np.sum(moments(10)[0]>1015)/len(moments(10)[0])))
 print("green prob. higher than 1015: {:.3f}".format(np.sum(moments(100)[0]>1015)/len(moments(100)[0])))
 #+END_SRC
@@ -2213,7 +2213,7 @@ print("green prob. higher than 1015: {:.3f}".format(np.sum(moments(100)[0]>1015)
 
 *Question* Suppose you have a sample of 100 observations. The average of these observations equals 1020. Your hypothesis is that these observations were drawn from a normal distribution with mean 1000 and standard deviation 100. Would you reject this hypothesis?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 (np.sum(moments(100)[0]>1020))/number_of_samples
 
 #+END_SRC
@@ -2225,7 +2225,7 @@ print("green prob. higher than 1015: {:.3f}".format(np.sum(moments(100)[0]>1015)
 : 0.02
 :END:
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 plt.hist(moments(100)[0],bins=30,density=True)
 plt.vlines(1020,0,0.06)
 #+END_SRC
@@ -2779,7 +2779,7 @@ No these are the distributions of the parameters $\mu_{17,19}$. Not the individu
 
 *Questions* Focus on 19 year olds. What is the probability that $\mu_{19}>6.45$?
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 np.sum(trace['μ'][:,19]>6.45)/len(trace['μ'][:,19])
 #+END_SRC
 
@@ -3109,7 +3109,7 @@ plt.legend()
 
 *Question* Calculate the probability that in fact the parameter difference $\mu_{17}-\mu_{19}$ is bigger in 2011 than in 2014.
 
-#+BEGIN_SRC ipython :exports code
+#+BEGIN_SRC ipython 
 np.sum(trace_2011['μ'][:,17]-trace_2011['μ'][:,19] > trace['μ'][:,17]-trace['μ'][:,19])/len(trace['μ'][:,19])
 #+END_SRC
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-22 Sat 13:49 -->
+<!-- 2018-09-29 Sat 15:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Doing economics with python</title>
@@ -329,68 +329,68 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgaafc76e">1. Introduction</a></li>
-<li><a href="#org5725910">2. Python packages that we will be using</a></li>
-<li><a href="#orgd947715">3. The market</a>
+<li><a href="#org0a5ecfd">1. Introduction</a></li>
+<li><a href="#org5bc9ea8">2. Python packages that we will be using</a></li>
+<li><a href="#orgee00756">3. The market</a>
 <ul>
-<li><a href="#org73f6cc5">3.1. why do we love the market?</a>
+<li><a href="#org52dc38a">3.1. why do we love the market?</a>
 <ul>
-<li><a href="#orgf676e92">3.1.1. market outcome</a></li>
-<li><a href="#orgdc46752">3.1.2. elastic demand and supply</a></li>
+<li><a href="#org2ca22ec">3.1.1. market outcome</a></li>
+<li><a href="#org31136ad">3.1.2. elastic demand and supply</a></li>
 </ul>
 </li>
-<li><a href="#org2c7afd7">3.2. why do others not love the market?</a>
+<li><a href="#org2b98129">3.2. why do others not love the market?</a>
 <ul>
-<li><a href="#org427c09b">3.2.1. income distribution</a></li>
-<li><a href="#orgfce9a88">3.2.2. market power</a></li>
-<li><a href="#org5515c84">3.2.3. merger simulation</a></li>
-<li><a href="#org19114f3">3.2.4. external effects</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org26dd65d">4. Asymmetric information</a>
-<ul>
-<li><a href="#orgd6b9633">4.1. adverse selection</a></li>
-<li><a href="#org316467d">4.2. moral hazard: optimal taxation</a></li>
-</ul>
-</li>
-<li><a href="#org42633e4">5. Financial crisis</a>
-<ul>
-<li><a href="#orgf7fbce2">5.1. Why is there a problem in financial markets?</a></li>
-<li><a href="#org4b14f6d">5.2. Why these bonus contracts?</a>
-<ul>
-<li><a href="#org57928b9">5.2.1. moral hazard</a></li>
-<li><a href="#org83256fe">5.2.2. moral hazard and adverse selection</a></li>
+<li><a href="#org75b42e4">3.2.1. income distribution</a></li>
+<li><a href="#org007e2ed">3.2.2. market power</a></li>
+<li><a href="#org4fb1108">3.2.3. merger simulation</a></li>
+<li><a href="#orgbab3211">3.2.4. external effects</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgdf6a2f8">6. Using python for empirical research</a>
+<li><a href="#orgf96f294">4. Asymmetric information</a>
 <ul>
-<li><a href="#orgd543cec">6.1. API's to get data</a></li>
-<li><a href="#orgaffa742">6.2. Hacker statistics</a>
+<li><a href="#org490568d">4.1. adverse selection</a></li>
+<li><a href="#orgfa6de93">4.2. moral hazard: optimal taxation</a></li>
+</ul>
+</li>
+<li><a href="#orgee5eac1">5. Financial crisis</a>
 <ul>
-<li><a href="#org4866647">6.2.1. high school puzzles</a></li>
-<li><a href="#org2bc2628">6.2.2. statistics</a></li>
+<li><a href="#orgc264c3b">5.1. Why is there a problem in financial markets?</a></li>
+<li><a href="#org30e375d">5.2. Why these bonus contracts?</a>
+<ul>
+<li><a href="#orgacc887f">5.2.1. moral hazard</a></li>
+<li><a href="#org21f3870">5.2.2. moral hazard and adverse selection</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org52ebddc">7. Regulation in health care markets</a>
+<li><a href="#org5964af7">6. Using python for empirical research</a>
 <ul>
-<li><a href="#org98408d8">7.1. simple theory</a></li>
-<li><a href="#org94f4dcd">7.2. some data</a></li>
-<li><a href="#org5398c9b">7.3. matplotlib</a></li>
-<li><a href="#org3ac982d">7.4. reversing the probability distributions</a></li>
+<li><a href="#orgbca816c">6.1. API's to get data</a></li>
+<li><a href="#org3914ffe">6.2. Hacker statistics</a>
+<ul>
+<li><a href="#org2727731">6.2.1. high school puzzles</a></li>
+<li><a href="#org75a87fa">6.2.2. statistics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org088e845">7. Regulation in health care markets</a>
+<ul>
+<li><a href="#org1750cc6">7.1. simple theory</a></li>
+<li><a href="#org5e5feb5">7.2. some data</a></li>
+<li><a href="#org04f960d">7.3. matplotlib</a></li>
+<li><a href="#orgde473a2">7.4. reversing the probability distributions</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgaafc76e" class="outline-2">
-<h2 id="orgaafc76e"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org0a5ecfd" class="outline-2">
+<h2 id="org0a5ecfd"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is the notebook to accompany the course Applied Economic Analysis at Tilburg University. The idea is to bring economic concepts "alive" by programming them in python. The choice of topics is loosely based on <a class='org-ref-reference' href="#tirole_2017">tirole_2017</a>.
@@ -407,8 +407,8 @@ When we go through the notes below, there will be <b>Questions</b> and <b>Assign
 </div>
 
 
-<div id="outline-container-org5725910" class="outline-2">
-<h2 id="org5725910"><span class="section-number-2">2</span> Python packages that we will be using</h2>
+<div id="outline-container-org5bc9ea8" class="outline-2">
+<h2 id="org5bc9ea8"><span class="section-number-2">2</span> Python packages that we will be using</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We need the following packages to run the code below. If you get an error saying that the package is not available, you can install it using either <code>pip install</code> or <code>conda install</code>.
@@ -431,16 +431,16 @@ plt.style.use(<span style="color: #2d9574;">'seaborn'</span>)
 </div>
 </div>
 
-<div id="outline-container-orgd947715" class="outline-2">
-<h2 id="orgd947715"><span class="section-number-2">3</span> The market</h2>
+<div id="outline-container-orgee00756" class="outline-2">
+<h2 id="orgee00756"><span class="section-number-2">3</span> The market</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This part is based on Tirole chapters: 1, 2, 6.
 </p>
 </div>
 
-<div id="outline-container-org73f6cc5" class="outline-3">
-<h3 id="org73f6cc5"><span class="section-number-3">3.1</span> why do we love the market?</h3>
+<div id="outline-container-org52dc38a" class="outline-3">
+<h3 id="org52dc38a"><span class="section-number-3">3.1</span> why do we love the market?</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Many (but not all) economists love the market as an organizing institution. This affection for markets is traced back by some to Adam Smith and his <a href="https://en.wikipedia.org/wiki/Invisible_hand">"invisible hand"</a>. Others may not think that the market is so great, but basically distrust other organizing institutions like a government. They will point, for instance, to the fall of communism in the <a href="https://en.wikipedia.org/wiki/Revolutions_of_1989">former Soviet Union</a>.
@@ -505,8 +505,8 @@ Hence, this is the best that we can do. It gives us an upperbound on the welfare
 </div>
 
 
-<div id="outline-container-orgf676e92" class="outline-4">
-<h4 id="orgf676e92"><span class="section-number-4">3.1.1</span> market outcome</h4>
+<div id="outline-container-org2ca22ec" class="outline-4">
+<h4 id="org2ca22ec"><span class="section-number-4">3.1.1</span> market outcome</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 Now we compare the maximum welfare that a planner can achieve with the market outcome.
@@ -566,8 +566,8 @@ So, now we know the equilibrium price
 </div>
 </div>
 
-<div id="outline-container-orgdc46752" class="outline-4">
-<h4 id="orgdc46752"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
+<div id="outline-container-org31136ad" class="outline-4">
+<h4 id="org31136ad"><span class="section-number-4">3.1.2</span> elastic demand and supply</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <p>
 Up till now we assumed that supply was inelastic: there was a given endowment of goods and this was auctioned off to consumers. Now we assume that some agents initially own the goods. However, these agents are not necessarily the ones that value the goods the most.
@@ -611,16 +611,16 @@ Then use <code>fsolve</code> to find the equilibrium price.
 </div>
 
 
-<div id="outline-container-org2c7afd7" class="outline-3">
-<h3 id="org2c7afd7"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
+<div id="outline-container-org2b98129" class="outline-3">
+<h3 id="org2b98129"><span class="section-number-3">3.2</span> why do others not love the market?</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Although the results above look great, the assumptions we made, may not be realistic in every market. To illustrate, without saying so, we assumed above that the market is perfectly competitive and without external effects. Here we program three reasons why the market outcome may not necessarily lead to maximum welfare. First, we look at income inequality and the problem that this causes for the market. Then we consider market power and finally we model external effects.
 </p>
 </div>
 
-<div id="outline-container-org427c09b" class="outline-4">
-<h4 id="org427c09b"><span class="section-number-4">3.2.1</span> income distribution</h4>
+<div id="outline-container-org75b42e4" class="outline-4">
+<h4 id="org75b42e4"><span class="section-number-4">3.2.1</span> income distribution</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 In micro economics we usually do not do much with income distributions. Often because models where income distributions play a role are tricky to solve analytically. But here we program/simulate and hence we do not worry about analytical solutions.
@@ -673,8 +673,8 @@ Next, we need to redefine demand, now denoted <code>demand_2</code> which takes 
 </div>
 </div>
 
-<div id="outline-container-orgfce9a88" class="outline-4">
-<h4 id="orgfce9a88"><span class="section-number-4">3.2.2</span> market power</h4>
+<div id="outline-container-org007e2ed" class="outline-4">
+<h4 id="org007e2ed"><span class="section-number-4">3.2.2</span> market power</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 <b><b>Warning</b></b> We are going to do a couple of things wrong in this section. No need to panic; this actually happens a lot when you are programming. Use your economic intuition to see where the mistakes are and correct them.
@@ -751,8 +751,8 @@ array([125.27357427])
 
 
 
-<div id="outline-container-org5515c84" class="outline-4">
-<h4 id="org5515c84"><span class="section-number-4">3.2.3</span> merger simulation</h4>
+<div id="outline-container-org4fb1108" class="outline-4">
+<h4 id="org4fb1108"><span class="section-number-4">3.2.3</span> merger simulation</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 This part is based on Tirole chapter 13.
@@ -951,8 +951,8 @@ associated with more competitive outcome. Would you agree with this?
 </div>
 </div>
 
-<div id="outline-container-org19114f3" class="outline-4">
-<h4 id="org19114f3"><span class="section-number-4">3.2.4</span> external effects</h4>
+<div id="outline-container-orgbab3211" class="outline-4">
+<h4 id="orgbab3211"><span class="section-number-4">3.2.4</span> external effects</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 A final reason why people are not always enthusiastic about markets is the presence of external effects. One can think of pollution associated with the production of a good. We model this as follows. Assume a monopolist can produce the product at cost \(c q\). But production leads to an external effect equal to \(\gamma q\). Hence, the social cost of production equals \((c+\gamma)q\)
@@ -1001,8 +1001,8 @@ We can model this as follows.
 </div>
 
 
-<div id="outline-container-org26dd65d" class="outline-2">
-<h2 id="org26dd65d"><span class="section-number-2">4</span> Asymmetric information</h2>
+<div id="outline-container-orgf96f294" class="outline-2">
+<h2 id="orgf96f294"><span class="section-number-2">4</span> Asymmetric information</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Tirole chapter 15.
@@ -1014,15 +1014,15 @@ One of the reasons why markets (or other institutions for that matter) work less
 </div>
 
 
-<div id="outline-container-orgd6b9633" class="outline-3">
-<h3 id="orgd6b9633"><span class="section-number-3">4.1</span> adverse selection</h3>
+<div id="outline-container-org490568d" class="outline-3">
+<h3 id="org490568d"><span class="section-number-3">4.1</span> adverse selection</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 <b><b>Question</b></b> What is adverse selection?
 </p>
 
 <p>
-Consider an economy with <code>number_of_agents</code> agents. Each agent has an endowment/income equal to <code>income</code> and faces a potential loss of the size <code>cost</code>. Agents differ in the probability \(\pi\) of this loss. We randomly draw 100 values for \(\pi\) assuming it is uniformly distributed on \([0,1]\).
+Consider an economy with <code>number_of_agents</code> agents. Each agent has an endowment/income equal to <code>income</code> and faces a potential loss of the size <code>cost</code>. Agents differ in the probability \(\pi\) of this loss. We randomly draw 50 values for \(\pi\) assuming it is uniformly distributed on \([0,1]\).
 </p>
 
 <p>
@@ -1120,8 +1120,8 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org316467d" class="outline-3">
-<h3 id="org316467d"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
+<div id="outline-container-orgfa6de93" class="outline-3">
+<h3 id="orgfa6de93"><span class="section-number-3">4.2</span> moral hazard: optimal taxation</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 With moral hazard, agents take hidden actions. The actions that they take are affected by the incentives that they face. We consider this in the context of taxation. 
@@ -1209,8 +1209,8 @@ The function <code>Welfare</code> first calculates for a given \(\tau\), what th
 </div>
 
 
-<div id="outline-container-org42633e4" class="outline-2">
-<h2 id="org42633e4"><span class="section-number-2">5</span> Financial crisis</h2>
+<div id="outline-container-orgee5eac1" class="outline-2">
+<h2 id="orgee5eac1"><span class="section-number-2">5</span> Financial crisis</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Tirole chapters: 11, 12
@@ -1222,8 +1222,8 @@ We will look at two aspects of the financial crisis. First, why are financial ma
 </div>
 
 
-<div id="outline-container-orgf7fbce2" class="outline-3">
-<h3 id="orgf7fbce2"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
+<div id="outline-container-orgc264c3b" class="outline-3">
+<h3 id="orgc264c3b"><span class="section-number-3">5.1</span> Why is there a problem in financial markets?</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The first problem in financial (and other) markets is limited liability. When banks go bankrupt they "only" loose their equity even if the debts that they accumulated exceed their equity. We run some simulations to show that this leads to banks taking excessive risks from a social point of view.
@@ -1240,7 +1240,7 @@ Let \(x\) denote an investment opportunity: \(x\) is a vector with dimension 100
 </div>
 
 <p>
-<b><b>Question</b></b> Plot the function <code>profit</code> for the case where ~equity~=10 and \(x\) is a scalar.
+<b><b>Question</b></b> Plot the function <code>profit</code> for the case where <code>equity</code> =10 and \(x\) is a scalar.
 </p>
 
 <p>
@@ -1294,16 +1294,16 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-org4b14f6d" class="outline-3">
-<h3 id="org4b14f6d"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
+<div id="outline-container-org30e375d" class="outline-3">
+<h3 id="org30e375d"><span class="section-number-3">5.2</span> Why these bonus contracts?</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
-Bonus contracts are generally a reaction to <a href="#org26dd65d">asymmetric information</a>. Let's first consider moral hazard.
+Bonus contracts are generally a reaction to <a href="#orgf96f294">asymmetric information</a>. Let's first consider moral hazard.
 </p>
 </div>
 
-<div id="outline-container-org57928b9" class="outline-4">
-<h4 id="org57928b9"><span class="section-number-4">5.2.1</span> moral hazard</h4>
+<div id="outline-container-orgacc887f" class="outline-4">
+<h4 id="orgacc887f"><span class="section-number-4">5.2.1</span> moral hazard</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 How do your employees choose their investment opportunities? There are a number of things that you may worry about. Suppose you would pay everyone a fixed salary that does not depend on performance. Then your employees may randomly pick an investment opportunity without analyzing whether this is the best opportunity. The rest of the time, they simply enjoy the sun. Or they may invest your money in the new webshop of their brother in law. This may increase their status in their family but does not necessarily boost your profits. 
@@ -1318,7 +1318,7 @@ Since it is hard for banks to monitor exactly what investment opportunities thei
 </p>
 
 <p>
-We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#org316467d">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
+We follow <a class='org-ref-reference' href="#bijlsma2018">bijlsma2018</a> to model this question. The structure of this model is comparable to our analysis of <a href="#orgfa6de93">4.2</a> above. For a given bonus contract, employees choose the investment project that maximizes their own income. Knowing this, the bank sets the bonus contract to maximize its profits.
 </p>
 
 <p>
@@ -1426,8 +1426,8 @@ What is the optimal \(q\) for a trader with \(\alpha=0.5\)?
 </div>
 </div>
 
-<div id="outline-container-org83256fe" class="outline-4">
-<h4 id="org83256fe"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
+<div id="outline-container-org21f3870" class="outline-4">
+<h4 id="org21f3870"><span class="section-number-4">5.2.2</span> moral hazard and adverse selection</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Suppose now that there are two types of traders: one talented and the other less so. The bank cannot distinguish these types by just observing them. They may have the same education degrees and work experience. But some have a "knack" for observing opportunities and taking risks, which the others lack.
@@ -1531,16 +1531,16 @@ plt.show()
 </div>
 </div>
 
-<div id="outline-container-orgdf6a2f8" class="outline-2">
-<h2 id="orgdf6a2f8"><span class="section-number-2">6</span> Using python for empirical research</h2>
+<div id="outline-container-org5964af7" class="outline-2">
+<h2 id="org5964af7"><span class="section-number-2">6</span> Using python for empirical research</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 We consider two ways in which python can be useful for empirical research. First, the use of API's to download datasets. Second, the use of hacker statistics.
 </p>
 </div>
 
-<div id="outline-container-orgd543cec" class="outline-3">
-<h3 id="orgd543cec"><span class="section-number-3">6.1</span> API's to get data</h3>
+<div id="outline-container-orgbca816c" class="outline-3">
+<h3 id="orgbca816c"><span class="section-number-3">6.1</span> API's to get data</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 A good reason to use python for data analysis is the option to get on-line data directly into your notebook without going to the website first to download this data. A number of institutes have such python API's. To illustrate this, we use the Worldbank API as described on <a href="http://wbdata.readthedocs.io/en/latest/">this website</a>.
@@ -1742,8 +1742,8 @@ show(plot)
 </div>
 
 
-<div id="outline-container-orgaffa742" class="outline-3">
-<h3 id="orgaffa742"><span class="section-number-3">6.2</span> Hacker statistics</h3>
+<div id="outline-container-org3914ffe" class="outline-3">
+<h3 id="org3914ffe"><span class="section-number-3">6.2</span> Hacker statistics</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 In the last chapter of the Datacamp course <a href="https://www.datacamp.com/courses/intermediate-python-for-data-science">Intermediate Python for Data Science</a> you have seen hacker statistics. The idea is to simulate a random process, say, 10,000 times. Then if you want to know the probability that a certain condition is satisfied (say, number of heads bigger than 10 when you throw a coin 15 times), you calculate the number of outcomes where this condition is satisfied and divide it by 10,000.
@@ -1754,8 +1754,8 @@ If you can program, you can recap all the statistics that you were taught (and p
 </p>
 </div>
 
-<div id="outline-container-org4866647" class="outline-4">
-<h4 id="org4866647"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
+<div id="outline-container-org2727731" class="outline-4">
+<h4 id="org2727731"><span class="section-number-4">6.2.1</span> high school puzzles</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 Remember when you did statistics at high school? "In a dark cupboard there are 10 red and 20 white socks&#x2026;", "you throw dice 20 times and &#x2026;" etc.
@@ -1821,8 +1821,8 @@ In terms of python, you need to use your knowledge of "slicing" lists.
 </div>
 </div>
 
-<div id="outline-container-org2bc2628" class="outline-4">
-<h4 id="org2bc2628"><span class="section-number-4">6.2.2</span> statistics</h4>
+<div id="outline-container-org75a87fa" class="outline-4">
+<h4 id="org75a87fa"><span class="section-number-4">6.2.2</span> statistics</h4>
 <div class="outline-text-4" id="text-6-2-2">
 <p>
 Let's start simple. Suppose we have two normally distributed variables \(x,y\) with \(\mu_x = 10, \mu_y = 20, \sigma_x = 3, \sigma_y =4\). We are interested in the variable \(z = x+y\). Suppose you forgot what you know about the sum of normal distributions and wondered what the expectation and standard deviation is of \(z\).
@@ -1937,8 +1937,8 @@ If you like this approach, see <a href="https://www.youtube.com/watch?time_conti
 </div>
 
 
-<div id="outline-container-org52ebddc" class="outline-2">
-<h2 id="org52ebddc"><span class="section-number-2">7</span> Regulation in health care markets</h2>
+<div id="outline-container-org088e845" class="outline-2">
+<h2 id="org088e845"><span class="section-number-2">7</span> Regulation in health care markets</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Tirole: chapters 15, 17
@@ -1963,8 +1963,8 @@ Some institutional background:
 </ul>
 </div>
 
-<div id="outline-container-org98408d8" class="outline-3">
-<h3 id="org98408d8"><span class="section-number-3">7.1</span> simple theory</h3>
+<div id="outline-container-org1750cc6" class="outline-3">
+<h3 id="org1750cc6"><span class="section-number-3">7.1</span> simple theory</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Consider the following simple theoretical framework. People get
@@ -2015,8 +2015,8 @@ plt.show()
 
 
 
-<div id="outline-container-org94f4dcd" class="outline-3">
-<h3 id="org94f4dcd"><span class="section-number-3">7.2</span> some data</h3>
+<div id="outline-container-org5e5feb5" class="outline-3">
+<h3 id="org5e5feb5"><span class="section-number-3">7.2</span> some data</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 To find the effect of an increase in deductible, we compare health care expenditures in the years 2011 (deductible was 170 euro) and 2014 (deductible was 365 euro). We use data from <a href="http://www.vektis.nl/index.php/vektis-open-data">Vektis</a>. Download from this website the 'csv' files for 2011 and 2014. To use the code below, download these csv-files into the sub-directory "data" (i.e. "data" is sub-directory of the directory in which this notebook resides). 
@@ -2105,8 +2105,8 @@ The outcome of this <code>groupby</code> we plot below.
 </div>
 
 
-<div id="outline-container-org5398c9b" class="outline-3">
-<h3 id="org5398c9b"><span class="section-number-3">7.3</span> matplotlib</h3>
+<div id="outline-container-org04f960d" class="outline-3">
+<h3 id="org04f960d"><span class="section-number-3">7.3</span> matplotlib</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 We plot the distribution of health care expenditure per head with age for males and females.
@@ -2145,8 +2145,8 @@ ax.legend([<span style="color: #2d9574;">'male'</span>,<span style="color: #2d95
 </div>
 </div>
 
-<div id="outline-container-org3ac982d" class="outline-3">
-<h3 id="org3ac982d"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
+<div id="outline-container-orgde473a2" class="outline-3">
+<h3 id="orgde473a2"><span class="section-number-3">7.4</span> reversing the probability distributions</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Above we used <code>pymc3</code> to generate vectors of productivities, valuations, incomes etc. using probability distributions. Here we go the "other way around". We have here distributions of health care expenditures per head and we want to identify the distributions where these come from. To illustrate this, consider the distribution of (average) costs for 30 year old males. Since, health care costs have a skewed distribution, we actually plot the distribution of log costs.
@@ -2306,7 +2306,7 @@ One explanation for the figure is that 17 year olds do not face a deductible, wh
 </p>
 
 <p>
-If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#org98408d8">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
+If, however, the difference in expenditures is caused by the deductible, we expect a bigger difference in 2014 than in 2011 as the deductible was higher in 2014 than in 2011. In terms of our model in section <a href="#org1750cc6">7.1</a> above: the yellow area is the additional effect due to the higher deductible in 2014.
 </p>
 
 <p>
@@ -2448,7 +2448,7 @@ A simple introduction to Bayesian estimation with python can be found <a href="h
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jan Boone</p>
-<p class="date">Created: 2018-09-22 Sat 13:49</p>
+<p class="date">Created: 2018-09-29 Sat 15:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
